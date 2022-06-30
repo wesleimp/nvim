@@ -26,6 +26,8 @@ jobs:
         if: matrix.os == 'macOS-latest'
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install luarocks
+          luarocks install luacheck
 
       - name: Run luacheck
         run: luacheck init.lua lua
