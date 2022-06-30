@@ -33,6 +33,11 @@ require("packer").startup(function(use)
   -- Languages
   use({ "olexsmir/gopher.nvim" })
 
+  -- Sql
+  use({ "tpope/vim-dadbod" })
+  use({ "kristijanhusak/vim-dadbod-completion" })
+  use({ "kristijanhusak/vim-dadbod-ui" })
+
   -- Diagnostics
   use({ "j-hui/fidget.nvim" })
   use({ "folke/lsp-trouble.nvim", cmd = "Trouble" })
