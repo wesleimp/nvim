@@ -1,0 +1,25 @@
+name: "lua: linting and style checking"
+
+on: [push, pull_request]
+
+jobs:
+  luacheck:
+    name: luacheck on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare
+        run: |
+          sudo apt-get update
+          sudo add-apt-repository universe
+          sudo apt install luarocks -y
+          sudo luarocks install luacheck
+
+      - name: Run luacheck
+        run: luacheck init.lua lua
