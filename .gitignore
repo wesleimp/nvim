@@ -1,0 +1,7 @@
+/.vim/bundle*
+/.vim/plugged*
+/old/*
+
+rel/
+
+packer_compiled.lua
