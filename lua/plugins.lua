@@ -2,22 +2,23 @@ vim.cmd([[packadd packer.nvim]])
 
 -- plugins
 require("packer").startup(function(use)
-  local local_use = function(path, opts)
-    opts = opts or {}
-    if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. path)) == 1 then
-      opts[1] = "~/plugins/" .. path
-      use(opts)
-    else
-      error(string.format("Local plugin %s was not found", path))
-    end
-  end
+  -- local local_use = function(path, opts)
+  --   opts = opts or {}
+  --   if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. path)) == 1 then
+  --     opts[1] = "~/plugins/" .. path
+  --     use(opts)
+  --   else
+  --     error(string.format("Local plugin %s was not found", path))
+  --   end
+  -- end
 
   use({ "wbthomason/packer.nvim" })
 
   -- Local plugins
-  local_use("stylua.nvim")
-  local_use("telescope-windowizer.nvim")
-  local_use("notes.nvim")
+  -- local_use("telescope-windowizer.nvim")
+  -- local_use("notes.nvim")
+
+  use({ "wesleimp/stylua.nvim" })
 
   -- Code completion
   use({ "hrsh7th/nvim-cmp" })
@@ -40,7 +41,7 @@ require("packer").startup(function(use)
 
   -- Diagnostics
   use({ "j-hui/fidget.nvim" })
-  use({ "folke/lsp-trouble.nvim", cmd = "Trouble" })
+  use({ "folke/trouble.nvim", cmd = "Trouble" })
 
   -- Focusing
   use({ "folke/zen-mode.nvim" })
@@ -139,5 +140,5 @@ require("plugins.neoscroll")
 require("plugins.nvim-tree")
 require("plugins.telescope")
 require("plugins.treesitter")
-require("plugins.trouble")
+-- require("plugins.trouble")
 require("plugins.zenmode")

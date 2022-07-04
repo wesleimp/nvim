@@ -88,7 +88,7 @@ local on_attach = function(_, bufnr)
   vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "<leader>sd", vim.diagnostic.open_float, opts)
-  vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
+  vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting, opts)
   vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
   vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 end
@@ -133,15 +133,13 @@ lspconfig.gopls.setup(config({
 }))
 
 lspconfig.elixirls.setup(config({
-  cmd = { vim.fn.expand("~/elixir-ls/release/language_server.sh") },
+  cmd = { "elixir-ls" },
 }))
 
 lspconfig.rust_analyzer.setup(config())
 
-local sumneko_root_path = vim.fn.expand("~/lua-language-server")
-local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
 lspconfig.sumneko_lua.setup(config({
-  cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+  cmd = { "lua-language-server" },
   settings = {
     Lua = {
       runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
