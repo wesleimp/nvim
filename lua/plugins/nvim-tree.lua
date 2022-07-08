@@ -3,6 +3,11 @@ vim.api.nvim_set_keymap("n", "<F2>", ":NvimTreeToggle<CR>", {
   silent = true,
 })
 
+vim.api.nvim_set_keymap("n", "T", ":NvimTreeToggle<CR>", {
+  noremap = true,
+  silent = true,
+})
+
 vim.api.nvim_set_keymap("n", "<leader>tr", ":NvimTreeRefresh<CR>", {
   noremap = true,
   silent = true,

@@ -2,21 +2,7 @@ vim.cmd([[packadd packer.nvim]])
 
 -- plugins
 require("packer").startup(function(use)
-  -- local local_use = function(path, opts)
-  --   opts = opts or {}
-  --   if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. path)) == 1 then
-  --     opts[1] = "~/plugins/" .. path
-  --     use(opts)
-  --   else
-  --     error(string.format("Local plugin %s was not found", path))
-  --   end
-  -- end
-
   use({ "wbthomason/packer.nvim" })
-
-  -- Local plugins
-  -- local_use("telescope-windowizer.nvim")
-  -- local_use("notes.nvim")
 
   use({ "wesleimp/stylua.nvim" })
 

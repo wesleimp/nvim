@@ -113,17 +113,8 @@ lspconfig.tsserver.setup(config())
 lspconfig.cssls.setup(config())
 
 -- I'll uncomment this when I need it
--- lspconfig.svelte.setup(config()) -- svelte
 -- lspconfig.gleam.setup(config())  -- gleam
 -- lspconfig.hls.setup(config())    -- haskell
-
--- C#
-
-local pid = vim.fn.getpid()
-local omnisharp_bin = vim.fn.expand("~/.local/omnisharp/run")
-lspconfig.omnisharp.setup(config({
-  cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
-}))
 
 lspconfig.gopls.setup(config({
   cmd = { "gopls" },
@@ -135,6 +126,7 @@ lspconfig.gopls.setup(config({
 lspconfig.elixirls.setup(config({
   cmd = { "elixir-ls" },
 }))
+lspconfig.erlangls.setup(config())
 
 lspconfig.rust_analyzer.setup(config())
 
