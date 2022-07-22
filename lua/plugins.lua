@@ -16,6 +16,9 @@ require("packer").startup(function(use)
   use({ "neovim/nvim-lspconfig" })
   use({ "nvim-lua/lsp_extensions.nvim" })
   use({ "onsails/lspkind-nvim" })
+  use({ "williamboman/nvim-lsp-installer", config = function()
+    require("nvim-lsp-installer").setup({})
+  end })
 
   -- Languages
   use({ "olexsmir/gopher.nvim" })
