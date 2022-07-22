@@ -115,6 +115,7 @@ lspconfig.cssls.setup(config())
 -- I'll uncomment this when I need it
 -- lspconfig.gleam.setup(config())  -- gleam
 -- lspconfig.hls.setup(config())    -- haskell
+-- lspconfig.zls.setup(config())    -- zig
 
 lspconfig.gopls.setup(config({
   cmd = { "gopls" },

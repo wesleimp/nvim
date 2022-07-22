@@ -1,5 +1,5 @@
--- vim.g.gruvbox_contrast_dark = "hard"
-vim.g.catppuccin_flavour = "macchiato"
+vim.g.gruvbox_contrast_dark = "hard"
+vim.g.catppuccin_flavour = "mocha"
 
 vim.cmd("syntax on")
 vim.opt.background = "dark"
