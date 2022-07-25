@@ -70,7 +70,6 @@ telescope.setup({
       show_all_buffers = true,
       ignore_current_buffer = true,
       previewer = false,
-      theme = "dropdown",
       mappings = {
         i = { ["<c-x>"] = "delete_buffer" },
         n = { ["<c-x>"] = "delete_buffer" },
@@ -82,6 +81,9 @@ telescope.setup({
     },
     git_commits = {
       layout_config = { horizontal = { preview_width = 0.55 } },
+    },
+    diagnostics = {
+      path_display = { "tail" },
     },
   },
   extensions = {
@@ -102,15 +104,22 @@ telescope.setup({
 
 telescope.load_extension("fzy_native")
 telescope.load_extension("project")
-telescope.load_extension("tmux")
 telescope.load_extension("file_browser")
 telescope.load_extension("windowizer")
 
 local M = {}
 M.search_dotfiles = function()
   require("telescope.builtin").find_files({
-    prompt_title = "< VimRC >",
+    prompt_title = "< .dotfiles >",
     cwd = vim.env.DOTFILES,
+    hidden = true,
+  })
+end
+
+M.search_nvimconf = function()
+  require("telescope.builtin").find_files({
+    prompt_title = "< Nvim >",
+    cwd = vim.env.NVIMCONF,
     hidden = true,
   })
 end
