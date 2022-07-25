@@ -19,7 +19,8 @@ lspkind.init({ mode = "text" })
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
-    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+    and vim.api
+        .nvim_buf_get_lines(0, line - 1, line, true)[1]
         :sub(col, col)
         :match("%s")
       == nil
@@ -81,8 +82,6 @@ local on_attach = function(_, bufnr)
 
   vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, opts)
   vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, opts)
-  vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
   vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, opts)
   vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
@@ -91,6 +90,32 @@ local on_attach = function(_, bufnr)
   vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting, opts)
   vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
   vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+  vim.keymap.set("n", "<leader>gi", function()
+    require("telescope.builtin").lsp_implementations()
+  end, opts)
+
+  vim.keymap.set("n", "<leader>gr", function()
+    require("telescope.builtin").lsp_references()
+  end, opts)
+
+  vim.keymap.set("n", "<leader>gs", function()
+    require("telescope.builtin").lsp_document_symbols({
+      ignore_filename = true,
+    })
+  end, opts)
+
+  vim.keymap.set("n", "<leader>gds", function()
+    require("telescope.builtin").lsp_dynamic_workspace_symbols({
+      ignore_filename = true,
+    })
+  end, opts)
+
+  vim.keymap.set("n", "<leader>gsd", function()
+    require("telescope.builtin").diagnostics({
+        bufnr = bufnr
+    })
+  end, opts)
 end
 
 ------------------------------------------------------------

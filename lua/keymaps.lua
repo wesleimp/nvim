@@ -116,10 +116,7 @@ nmap(
   { noremap = true, silent = true }
 )
 
--- TMUX
-nmap("<C-s>", ":Telescope tmux sessions<cr>", { noremap = true })
-nmap("<leader>w", ":Telescope windowizer<cr>", { noremap = true })
-
+map("<f11>", ":lua require('plugins.telescope').search_nvimconf()<cr>")
 map("<f12>", ":lua require('plugins.telescope').search_dotfiles()<cr>")
 
 -- File browser
