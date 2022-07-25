@@ -1,6 +1,6 @@
 require("catppuccin").setup({
   styles = {
-    conditionals = "NONE",
+    conditionals = {},
   },
   integration = {
     nvimtree = {

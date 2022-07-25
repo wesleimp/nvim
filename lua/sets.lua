@@ -88,9 +88,3 @@ autocmd({ "BufWritePre" }, {
   pattern = "*",
   command = "%s/\\s\\+$//e",
 })
-
-autocmd({ "FileType" }, {
-  group = wesleimp_group,
-  pattern = "*",
-  command = "%s/\\s\\+$//e",
-})
