@@ -2,9 +2,20 @@ vim.cmd([[packadd packer.nvim]])
 
 -- plugins
 require("packer").startup(function(use)
+  local local_use = function(path, callback, opts)
+    opts = opts or {}
+    if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. path)) == 1 then
+      opts[1] = "~/plugins/" .. path
+      use(opts)
+    else
+      opts[1] = callback
+      use(opts)
+    end
+  end
+
   use({ "wbthomason/packer.nvim" })
 
-  use({ "wesleimp/stylua.nvim" })
+  local_use("stylua.nvim", "wesleimp/stylua.nvim")
 
   -- Code completion
   use({ "hrsh7th/nvim-cmp" })
@@ -16,9 +27,12 @@ require("packer").startup(function(use)
   use({ "neovim/nvim-lspconfig" })
   use({ "nvim-lua/lsp_extensions.nvim" })
   use({ "onsails/lspkind-nvim" })
-  use({ "williamboman/nvim-lsp-installer", config = function()
-    require("nvim-lsp-installer").setup({})
-  end })
+  use({
+    "williamboman/nvim-lsp-installer",
+    config = function()
+      require("nvim-lsp-installer").setup({})
+    end,
+  })
 
   -- Languages
   use({ "olexsmir/gopher.nvim" })
