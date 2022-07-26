@@ -19,8 +19,7 @@ lspkind.init({ mode = "text" })
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
-    and vim.api
-        .nvim_buf_get_lines(0, line - 1, line, true)[1]
+    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
         :sub(col, col)
         :match("%s")
       == nil
@@ -113,7 +112,7 @@ local on_attach = function(_, bufnr)
 
   vim.keymap.set("n", "<leader>gsd", function()
     require("telescope.builtin").diagnostics({
-        bufnr = bufnr
+      bufnr = bufnr,
     })
   end, opts)
 end

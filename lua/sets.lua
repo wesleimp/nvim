@@ -88,3 +88,12 @@ autocmd({ "BufWritePre" }, {
   pattern = "*",
   command = "%s/\\s\\+$//e",
 })
+
+-- Create folder on save if not exists
+autocmd({ "BufWritePre" }, {
+  group = wesleimp_group,
+  pattern = "*",
+  callback = function()
+    require("plugins.mkdir").run()
+  end,
+})

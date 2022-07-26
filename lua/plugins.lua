@@ -32,6 +32,7 @@ require("packer").startup(function(use)
 
   -- Languages
   use({ "olexsmir/gopher.nvim" })
+  use({ "elixir-editors/vim-elixir" })
 
   -- Sql
   use({ "tpope/vim-dadbod" })
@@ -85,12 +86,6 @@ require("packer").startup(function(use)
   use({ "matze/vim-move" })
   use({ "windwp/nvim-autopairs" })
   use({ "mbbill/undotree" })
-  use({
-    "andweeb/presence.nvim",
-    config = function()
-      require("presence"):setup()
-    end,
-  })
 
   use({
     "prettier/vim-prettier",
