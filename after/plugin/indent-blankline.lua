@@ -1,4 +1,9 @@
-require("indent_blankline").setup({
+local ok, bl = pcall(require, "bl")
+if not ok then
+    return
+end
+
+bl.setup({
   char = "▏",
   context_char = "▏",
   show_first_indent_level = false,

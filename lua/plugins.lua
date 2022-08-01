@@ -45,7 +45,6 @@ require("packer").startup(function(use)
 
   -- Diagnostics
   use({ "j-hui/fidget.nvim" })
-  use({ "folke/trouble.nvim", cmd = "Trouble" })
 
   -- Focusing
   use({ "folke/zen-mode.nvim" })
@@ -124,18 +123,3 @@ require("packer").startup(function(use)
   use({ "vim-test/vim-test" })
   use({ "lewis6991/impatient.nvim" })
 end)
-
-require("plugins.catppuccin")
-require("plugins.autopairs")
-require("plugins.fidget")
-require("plugins.gitsigns")
-require("plugins.lsp")
-require("plugins.lualine")
-require("plugins.luatab")
-require("plugins.indent-blankline")
-require("plugins.neoscroll")
-require("plugins.nvim-tree")
-require("plugins.telescope")
-require("plugins.treesitter")
--- require("plugins.trouble")
-require("plugins.zenmode")
