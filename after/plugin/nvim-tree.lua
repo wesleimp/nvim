@@ -1,3 +1,8 @@
+local ok, nt = pcall(require,"nvim-tree")
+if not ok then
+    return
+end
+
 vim.api.nvim_set_keymap("n", "<F2>", ":NvimTreeToggle<CR>", {
   noremap = true,
   silent = true,
@@ -8,7 +13,7 @@ vim.api.nvim_set_keymap("n", "<leader>tr", ":NvimTreeRefresh<CR>", {
   silent = true,
 })
 
-require("nvim-tree").setup({
+nt.setup({
   disable_netrw = false,
   update_focused_file = {
     enable = true,
