@@ -1,7 +1,7 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local ismac = vim.fn.has("macunix")
+local ismac = vim.fn.has("macunix") == 1
 
 -- Setup nvim-cmp.
 local cmp = require("cmp")
