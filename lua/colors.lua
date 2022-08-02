@@ -1,4 +1,4 @@
--- vim.g.gruvbox_contrast_dark = "hard"
+vim.g.gruvbox_contrast_dark = "hard"
 vim.g.catppuccin_flavour = "macchiato"
 
 vim.cmd("syntax on")
