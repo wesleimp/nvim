@@ -16,6 +16,7 @@ lualine.setup({
       { "diagnostics", sources = { "nvim_lsp" } },
     },
     lualine_x = {
+      require("plugins.pomodoro").status,
       "encoding",
       "fileformat",
       "filetype",
