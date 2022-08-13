@@ -78,5 +78,3 @@ syntax keyword luaMetatableEquivalence
     \ __eq
     \ __lt
     \ __le
-
-syntax match luaFunctionCall display /\<\(function\)\@!\w\+(/he=e-1

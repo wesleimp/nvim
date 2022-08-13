@@ -89,7 +89,12 @@ local on_attach = function(_, bufnr)
   vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "<leader>sd", vim.diagnostic.open_float, opts)
-  vim.keymap.set("n", "<leader>f", vim.lsp.buf.format or vim.lsp.buf.formatting, opts)
+  vim.keymap.set(
+    "n",
+    "<leader>f",
+    vim.lsp.buf.format or vim.lsp.buf.formatting,
+    opts
+  )
   vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
   vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
@@ -138,6 +143,19 @@ local lspconfig = require("lspconfig")
 
 lspconfig.tsserver.setup(config())
 lspconfig.cssls.setup(config())
+
+lspconfig.yamlls.setup(config({
+  settings = {
+    yaml = {
+      schemaStore = {
+        url = "https://www.schemastore.org/api/json/catalog.json",
+        enable = true,
+      },
+    },
+  },
+}))
+
+lspconfig.dockerls.setup(config())
 
 -- I'll uncomment this when I need it
 -- lspconfig.svelte.setup(config()) -- svelte

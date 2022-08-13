@@ -3,7 +3,7 @@ vim.g.catppuccin_flavour = "macchiato"
 
 vim.cmd("syntax on")
 vim.opt.background = "dark"
-vim.cmd("colorscheme catppuccin")
+vim.cmd("colorscheme gruvbox")
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)

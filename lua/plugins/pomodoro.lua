@@ -59,6 +59,7 @@ local function start(time)
 end
 
 function M.setup(opts)
+  opts = opts or {}
   local options = merge(DEFAULT_OPTIONS, opts)
   vim.g.pomodoro = options
 end

@@ -1,11 +1,11 @@
 local ok, lualine = pcall(require, "lualine")
 if not ok then
-    return
+  return
 end
 
 lualine.setup({
   options = {
-    theme = "catppuccin",
+    theme = "gruvbox",
     component_separators = { left = "|", right = "|" },
     section_separators = { left = "", right = "" },
   },
@@ -13,7 +13,11 @@ lualine.setup({
     lualine_b = { { "branch" } },
     lualine_c = {
       { "%f", separator = "" },
-      { "diagnostics", sources = { "nvim_lsp" } },
+      {
+        "diagnostics",
+        sources = { "nvim_lsp" },
+        sections = { "error", "warn", "info" },
+      },
     },
     lualine_x = {
       require("plugins.pomodoro").status,
