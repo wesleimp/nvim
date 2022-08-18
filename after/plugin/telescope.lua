@@ -95,16 +95,10 @@ telescope.setup({
       override_generic_sorter = false, -- override the generic sorter
       override_file_sorter = true, -- override the file sorter
     },
-    project = {
-      base_dirs = { "~/OSS", "~/workspace", "~/.dotfiles" },
-      hidden_files = true,
-    },
   },
 })
 
 telescope.load_extension("fzy_native")
-telescope.load_extension("project")
-telescope.load_extension("file_browser")
 
 local M = {}
 M.search_dotfiles = function()

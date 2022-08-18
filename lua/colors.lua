@@ -20,3 +20,7 @@ hl("SignColumn", {
 hl("CursorLineNR", {
   bg = "none",
 })
+
+hl("LineNR", {
+  fg = "#458588",
+})

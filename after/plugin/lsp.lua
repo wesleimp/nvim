@@ -21,8 +21,7 @@ lspkind.init({ mode = "text" })
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
-    and vim.api
-        .nvim_buf_get_lines(0, line - 1, line, true)[1]
+    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
         :sub(col, col)
         :match("%s")
       == nil
@@ -78,7 +77,67 @@ cmp.setup({
   }),
 })
 
-local on_attach = function(_, bufnr)
+local augroup_format = vim.api.nvim_create_augroup(
+  "wesleimp_lsp_format",
+  { clear = true }
+)
+
+local autocmd_format = function(opts)
+  opts = opts or {}
+  vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    buffer = 0,
+    callback = opts.callback or function()
+      vim.lsp.buf.format({ async = opts.async, filter = opts.filter })
+    end,
+  })
+end
+
+local filetype_attach = setmetatable({
+  elixir = function()
+    autocmd_format()
+  end,
+
+  go = function()
+    autocmd_format()
+  end,
+
+  rust = function()
+    autocmd_format()
+  end,
+
+  lua = function()
+    autocmd_format({
+      callback = function()
+        require("stylua").format()
+      end,
+    })
+  end,
+
+  scss = function()
+    autocmd_format()
+  end,
+
+  css = function()
+    autocmd_format()
+  end,
+
+  typescript = function()
+    autocmd_format({
+      filter = function(clients)
+        return vim.tbl_filter(function(client)
+          return client.name ~= "tsserver"
+        end, clients)
+      end,
+    })
+  end,
+}, {
+  __index = function()
+    return function() end
+  end,
+})
+
+local on_attach = function(client, bufnr)
   -- Mappings.
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -123,6 +182,10 @@ local on_attach = function(_, bufnr)
       bufnr = bufnr,
     })
   end, opts)
+
+  -- Attach any filetype specific options to the client
+  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+  filetype_attach[filetype](client)
 end
 
 ------------------------------------------------------------
@@ -141,7 +204,16 @@ end
 -- Languages
 local lspconfig = require("lspconfig")
 
-lspconfig.tsserver.setup(config())
+lspconfig.tsserver.setup(config({
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+  },
+}))
 lspconfig.cssls.setup(config())
 
 lspconfig.yamlls.setup(config({

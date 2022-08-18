@@ -15,12 +15,14 @@ opt.number = true
 opt.relativenumber = true
 opt.encoding = "utf8"
 opt.previewheight = 5
-opt.completeopt = "menu,menuone,noselect"
+opt.completeopt = "menu,menuone,noselect,preview,noinsert"
 opt.guifont = ""
 opt.termguicolors = true
 opt.list = true
-opt.listchars:append("eol:↲")
+opt.listchars:append("tab:→\\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨,space:·")
 opt.scrolloff = 5
+opt.splitbelow = true
+opt.splitright = true
 
 -- Cursor highlight
 opt.cursorline = true
@@ -48,9 +50,9 @@ opt.hidden = true
 opt.backspace = { "indent", "start", "eol" }
 
 -- Indentation
-opt.shiftwidth = 4
-opt.softtabstop = 4
-opt.tabstop = 4
+opt.shiftwidth = 2
+opt.softtabstop = 2
+opt.tabstop = 2
 opt.shiftround = true
 opt.expandtab = true
 
