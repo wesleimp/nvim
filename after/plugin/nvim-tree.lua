@@ -1,6 +1,6 @@
-local ok, nt = pcall(require,"nvim-tree")
+local ok, nt = pcall(require, "nvim-tree")
 if not ok then
-    return
+  return
 end
 
 vim.api.nvim_set_keymap("n", "<F2>", ":NvimTreeToggle<CR>", {
@@ -20,6 +20,7 @@ vim.api.nvim_set_keymap("n", "<leader>tr", ":NvimTreeRefresh<CR>", {
 
 nt.setup({
   disable_netrw = false,
+  sync_root_with_cwd = false,
   update_focused_file = {
     enable = true,
   },

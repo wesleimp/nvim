@@ -21,7 +21,8 @@ lspkind.init({ mode = "text" })
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
-    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+    and vim.api
+        .nvim_buf_get_lines(0, line - 1, line, true)[1]
         :sub(col, col)
         :match("%s")
       == nil
@@ -77,10 +78,9 @@ cmp.setup({
   }),
 })
 
-local augroup_format = vim.api.nvim_create_augroup(
-  "wesleimp_lsp_format",
-  { clear = true }
-)
+-- Auto Formatter
+local augroup_format =
+  vim.api.nvim_create_augroup("wesleimp_lsp_format", { clear = true })
 
 local autocmd_format = function(opts)
   opts = opts or {}
@@ -88,7 +88,10 @@ local autocmd_format = function(opts)
   vim.api.nvim_create_autocmd("BufWritePre", {
     buffer = 0,
     callback = opts.callback or function()
-      vim.lsp.buf.format({ async = opts.async, filter = opts.filter })
+      vim.lsp.buf.formatting({
+        async = opts.async or false,
+        filter = opts.filter,
+      })
     end,
   })
 end
@@ -137,47 +140,118 @@ local filetype_attach = setmetatable({
   end,
 })
 
-local on_attach = function(client, bufnr)
+vim.diagnostic.config({
+  underline = true,
+  virtual_text = {
+    severity = nil,
+    source = "if_many",
+    format = nil,
+  },
+  signs = true,
+
+  -- options for floating windows:
+  float = {
+    show_header = true,
+    format = function(d)
+      if not d.code and not d.user_data then
+        return d.message
+      end
+
+      local t = vim.deepcopy(d)
+      local code = d.code
+      if not code then
+        if not d.user_data.lsp then
+          return d.message
+        end
+
+        code = d.user_data.lsp.code
+      end
+      if code then
+        t.message = string.format("%s [%s]", t.message, code):gsub("1. ", "")
+      end
+      return t.message
+    end,
+  },
+
+  -- general purpose
+  severity_sort = true,
+  update_in_insert = false,
+})
+
+-- Go to the next diagnostic, but prefer going to errors first
+-- In general, I pretty much never want to go to the next hint
+local severity_levels = {
+  vim.diagnostic.severity.ERROR,
+  vim.diagnostic.severity.WARN,
+  vim.diagnostic.severity.INFO,
+  vim.diagnostic.severity.HINT,
+}
+
+local function get_highest_error_severity()
+  for _, level in ipairs(severity_levels) do
+    local diags = vim.diagnostic.get(0, { severity = { min = level } })
+    if #diags > 0 then
+      return level, diags
+    end
+  end
+end
+
+local function nmap(lhs, rhs, opts)
+  vim.keymap.set("n", lhs, rhs, opts)
+end
+
+local on_attach = function(_, bufnr)
   -- Mappings.
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
-  vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, opts)
-  vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-  vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, opts)
-  vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-  vim.keymap.set("n", "<leader>sd", vim.diagnostic.open_float, opts)
-  vim.keymap.set(
-    "n",
-    "<leader>f",
-    vim.lsp.buf.format or vim.lsp.buf.formatting,
-    opts
-  )
-  vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-  vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+  nmap("<leader>gD", vim.lsp.buf.declaration, opts)
+  nmap("<leader>gd", vim.lsp.buf.definition, opts)
+  nmap("<leader>rn", vim.lsp.buf.rename, opts)
+  nmap("<leader>k", vim.lsp.buf.hover, opts)
+  nmap("<leader>D", vim.lsp.buf.type_definition, opts)
+  nmap("<leader>ca", vim.lsp.buf.code_action, opts)
+  nmap("<leader>f", vim.lsp.buf.format or vim.lsp.buf.formatting, opts)
+  nmap("<leader>sd", function()
+    vim.diagnostic.open_float(0, { scope = "line" })
+  end, opts)
 
-  vim.keymap.set("n", "<leader>gi", function()
+  nmap("[d", function()
+    vim.diagnostic.goto_prev({
+      severity = get_highest_error_severity(),
+      wrap = true,
+      float = true,
+    })
+  end, opts)
+
+  nmap("]d", function()
+    vim.diagnostic.goto_next({
+      severity = get_highest_error_severity(),
+      wrap = true,
+      float = true,
+    })
+  end, opts)
+
+  nmap("<leader>gi", function()
     require("telescope.builtin").lsp_implementations()
   end, opts)
 
-  vim.keymap.set("n", "<leader>gr", function()
+  nmap("<leader>gr", function()
     require("telescope.builtin").lsp_references()
   end, opts)
 
-  vim.keymap.set("n", "<leader>gs", function()
+  nmap("<leader>gs", function()
     require("telescope.builtin").lsp_document_symbols({
       ignore_filename = true,
     })
   end, opts)
 
-  vim.keymap.set("n", "<leader>gds", function()
+  nmap("<leader>gds", function()
     require("telescope.builtin").lsp_dynamic_workspace_symbols({
       ignore_filename = true,
     })
   end, opts)
 
-  vim.keymap.set("n", "<leader>gsd", function()
+  nmap("<leader>gsd", function()
     require("telescope.builtin").diagnostics({
       bufnr = bufnr,
     })
@@ -185,7 +259,7 @@ local on_attach = function(client, bufnr)
 
   -- Attach any filetype specific options to the client
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  filetype_attach[filetype](client)
+  filetype_attach[filetype]()
 end
 
 ------------------------------------------------------------
@@ -233,6 +307,7 @@ lspconfig.dockerls.setup(config())
 -- lspconfig.svelte.setup(config()) -- svelte
 -- lspconfig.gleam.setup(config())  -- gleam
 -- lspconfig.hls.setup(config())    -- haskell
+lspconfig.pyright.setup(config()) -- python
 
 lspconfig.gopls.setup(config({
   cmd = { "gopls" },

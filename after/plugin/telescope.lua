@@ -1,6 +1,6 @@
-local ok, telescope = pcall(require,"telescope")
+local ok, telescope = pcall(require, "telescope")
 if not ok then
-    return
+  return
 end
 
 local previewers = require("telescope.previewers")
@@ -24,23 +24,24 @@ telescope.setup({
   defaults = {
     prompt_prefix = " ❯ ",
     selection_caret = "❯ ",
+    results_title = false,
 
     color_devicons = true,
     selection_strategy = "reset",
-    sorting_strategy = "descending",
-    scroll_strategy = "cycle",
+    sorting_strategy = "ascending",
 
+    scroll_strategy = "cycle",
     grep_previewer = previewers.vim_buffer_vimgrep.new,
     qflist_previewer = previewers.vim_buffer_qflist.new,
     file_previewer = previewers.vim_buffer_cat.new,
 
     borderchars = bchars,
     path_display = { "absolute", "truncate" },
-    layout_strategy = "horizontal",
     layout_config = {
-      prompt_position = "bottom",
-
-      horizontal = { preview_width = 0.45 },
+      horizontal = {
+        prompt_position = "top",
+        preview_width = 0.5,
+      },
     },
     winblend = 0,
     mappings = {
@@ -95,10 +96,15 @@ telescope.setup({
       override_generic_sorter = false, -- override the generic sorter
       override_file_sorter = true, -- override the file sorter
     },
+    ["ui-select"] = {
+      layout_config = { horizontal = { preview_width = 0.55 } },
+    },
   },
 })
 
 telescope.load_extension("fzy_native")
+telescope.load_extension("ui-select")
+telescope.load_extension("notify")
 
 local M = {}
 M.search_dotfiles = function()

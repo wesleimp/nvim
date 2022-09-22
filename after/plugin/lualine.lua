@@ -9,20 +9,47 @@ lualine.setup({
     component_separators = { left = "|", right = "|" },
     section_separators = { left = "", right = "" },
   },
-  sections = {
-    lualine_b = { { "branch" } },
-    lualine_c = {
+  winbar = {
+    lualine_a = {},
+    lualine_b = {
+      { "filetype", icon_only = true, separator = "" },
       { "%f", separator = "" },
+    },
+    lualine_c = {},
+  },
+  inactive_winbar = {
+    lualine_a = {},
+    lualine_b = {
+      { "filetype", icon_only = true, separator = "" },
+      { "%f", separator = "" },
+    },
+    lualine_c = {},
+  },
+  sections = {
+    lualine_b = { { "branch", icon = "" } },
+    lualine_c = {
+      { "%=%f", separator = "" },
+    },
+    lualine_x = {
       {
         "diagnostics",
         sources = { "nvim_lsp" },
         sections = { "error", "warn", "info" },
       },
+      "filetype",
+    },
+  },
+  inactive_sections = {
+    lualine_b = {},
+    lualine_c = {
+      { "filename" },
     },
     lualine_x = {
-      require("plugins.pomodoro").status,
-      "encoding",
-      "fileformat",
+      {
+        "diagnostics",
+        sources = { "nvim_lsp" },
+        sections = { "error", "warn", "info" },
+      },
       "filetype",
     },
   },

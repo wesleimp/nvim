@@ -172,3 +172,10 @@ nmap(
 -- Misc
 --------------------------------------------------
 nmap("<leader>u", ":UndotreeShow<CR>", { noremap = true })
+
+local M = {
+  map = map,
+  nmap = nmap,
+}
+
+return M

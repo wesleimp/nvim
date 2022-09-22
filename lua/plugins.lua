@@ -60,12 +60,14 @@ require("packer").startup(function(use)
   use({ "nvim-treesitter/nvim-treesitter" })
   use({ "nvim-treesitter/playground" })
 
+  -- Git
+  use({ "tpope/vim-fugitive" })
+  use({ "lewis6991/gitsigns.nvim" })
+
   -- Presentation
   use({ "kyazdani42/nvim-tree.lua" })
   use({ "RRethy/vim-illuminate" })
-  use({ "tpope/vim-fugitive" })
   use({ "nvim-lualine/lualine.nvim" })
-  use({ "lewis6991/gitsigns.nvim" })
   use({ "lukas-reineke/indent-blankline.nvim" })
   use({ "alvarosevilla95/luatab.nvim" })
   use({ "karb94/neoscroll.nvim" })
@@ -115,7 +117,10 @@ require("packer").startup(function(use)
   use({ "nvim-lua/plenary.nvim" })
   use({ "nvim-telescope/telescope.nvim" })
   use({ "nvim-telescope/telescope-fzy-native.nvim" })
+  use({ "nvim-telescope/telescope-ui-select.nvim" })
   use({ "ThePrimeagen/harpoon" })
+
+  use({ "rcarriga/nvim-notify" })
 
   use({ "sbdchd/neoformat" })
   use({ "vim-test/vim-test" })
