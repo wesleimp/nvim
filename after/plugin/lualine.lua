@@ -28,29 +28,18 @@ lualine.setup({
   sections = {
     lualine_b = { { "branch", icon = "" } },
     lualine_c = {
-      { "%=%f", separator = "" },
+      { "%f", separator = " " },
+      "diagnostics",
     },
     lualine_x = {
-      {
-        "diagnostics",
-        sources = { "nvim_lsp" },
-        sections = { "error", "warn", "info" },
-      },
       "filetype",
+      "fileformat",
+      "encoding",
     },
   },
   inactive_sections = {
-    lualine_b = {},
     lualine_c = {
-      { "filename" },
-    },
-    lualine_x = {
-      {
-        "diagnostics",
-        sources = { "nvim_lsp" },
-        sections = { "error", "warn", "info" },
-      },
-      "filetype",
+      { "%f" },
     },
   },
   extensions = { "nvim-tree" },

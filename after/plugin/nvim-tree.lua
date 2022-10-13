@@ -20,7 +20,7 @@ vim.api.nvim_set_keymap("n", "<leader>tr", ":NvimTreeRefresh<CR>", {
 
 nt.setup({
   disable_netrw = false,
-  sync_root_with_cwd = false,
+  -- sync_root_with_cwd = true,
   update_focused_file = {
     enable = true,
   },

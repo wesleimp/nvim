@@ -34,6 +34,7 @@ require("packer").startup(function(use)
       require("nvim-lsp-installer").setup({})
     end,
   })
+  use({ "jose-elias-alvarez/null-ls.nvim" })
 
   -- Languages
   use({ "olexsmir/gopher.nvim" })
@@ -70,13 +71,6 @@ require("packer").startup(function(use)
   use({ "nvim-lualine/lualine.nvim" })
   use({ "lukas-reineke/indent-blankline.nvim" })
   use({ "alvarosevilla95/luatab.nvim" })
-  use({ "karb94/neoscroll.nvim" })
-  use({
-    "petertriho/nvim-scrollbar",
-    config = function()
-      require("scrollbar").setup()
-    end,
-  })
 
   -- General plugins
   use({ "godlygeek/tabular" })
@@ -101,10 +95,7 @@ require("packer").startup(function(use)
   -- Themes
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "gruvbox-community/gruvbox" })
-  use({
-    "catppuccin/nvim",
-    as = "catppuccin",
-  })
+
   use({
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -118,11 +109,9 @@ require("packer").startup(function(use)
   use({ "nvim-telescope/telescope.nvim" })
   use({ "nvim-telescope/telescope-fzy-native.nvim" })
   use({ "nvim-telescope/telescope-ui-select.nvim" })
-  use({ "ThePrimeagen/harpoon" })
 
   use({ "rcarriga/nvim-notify" })
 
-  use({ "sbdchd/neoformat" })
   use({ "vim-test/vim-test" })
   use({ "lewis6991/impatient.nvim" })
 end)

@@ -1,6 +1,3 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 local ismac = vim.fn.has("macunix") == 1
 
 -- Setup nvim-cmp.
@@ -76,68 +73,6 @@ cmp.setup({
     { name = "buffer" },
     { name = "path" },
   }),
-})
-
--- Auto Formatter
-local augroup_format =
-  vim.api.nvim_create_augroup("wesleimp_lsp_format", { clear = true })
-
-local autocmd_format = function(opts)
-  opts = opts or {}
-  vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    buffer = 0,
-    callback = opts.callback or function()
-      vim.lsp.buf.formatting({
-        async = opts.async or false,
-        filter = opts.filter,
-      })
-    end,
-  })
-end
-
-local filetype_attach = setmetatable({
-  elixir = function()
-    autocmd_format()
-  end,
-
-  go = function()
-    autocmd_format()
-  end,
-
-  rust = function()
-    autocmd_format()
-  end,
-
-  lua = function()
-    autocmd_format({
-      callback = function()
-        require("stylua").format()
-      end,
-    })
-  end,
-
-  scss = function()
-    autocmd_format()
-  end,
-
-  css = function()
-    autocmd_format()
-  end,
-
-  typescript = function()
-    autocmd_format({
-      filter = function(clients)
-        return vim.tbl_filter(function(client)
-          return client.name ~= "tsserver"
-        end, clients)
-      end,
-    })
-  end,
-}, {
-  __index = function()
-    return function() end
-  end,
 })
 
 vim.diagnostic.config({
@@ -256,22 +191,19 @@ local on_attach = function(_, bufnr)
       bufnr = bufnr,
     })
   end, opts)
-
-  -- Attach any filetype specific options to the client
-  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  filetype_attach[filetype]()
 end
 
 ------------------------------------------------------------
 -- Language servers
 ------------------------------------------------------------
 -- Capabilities and mappings
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 local function config(conf)
   return vim.tbl_deep_extend("force", {
     on_attach = on_attach,
-    capabilities = require("cmp_nvim_lsp").update_capabilities(
-      vim.lsp.protocol.make_client_capabilities()
-    ),
+    capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities),
   }, conf or {})
 end
 
@@ -301,13 +233,13 @@ lspconfig.yamlls.setup(config({
   },
 }))
 
-lspconfig.dockerls.setup(config())
+lspconfig.dockerls.setup(config({ cmd = { "docker-ls" } }))
 
 -- I'll uncomment this when I need it
 -- lspconfig.svelte.setup(config()) -- svelte
 -- lspconfig.gleam.setup(config())  -- gleam
 -- lspconfig.hls.setup(config())    -- haskell
-lspconfig.pyright.setup(config()) -- python
+-- lspconfig.pyright.setup(config()) -- python
 
 lspconfig.gopls.setup(config({
   cmd = { "gopls" },
@@ -349,6 +281,14 @@ lspconfig.sumneko_lua.setup(config({
         },
       },
     },
+  },
+}))
+
+local null_ls = require("null-ls")
+null_ls.setup(config({
+  sources = {
+    null_ls.builtins.formatting.stylua,
+    null_ls.builtins.diagnostics.eslint,
   },
 }))
 

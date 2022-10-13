@@ -22,8 +22,8 @@ end
 
 telescope.setup({
   defaults = {
-    prompt_prefix = " ❯ ",
-    selection_caret = "❯ ",
+    prompt_prefix = "   ",
+    selection_caret = " ",
     results_title = false,
 
     color_devicons = true,
