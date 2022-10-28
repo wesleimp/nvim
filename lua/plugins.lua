@@ -86,6 +86,7 @@ require("packer").startup(function(use)
   use({ "matze/vim-move" })
   use({ "windwp/nvim-autopairs" })
   use({ "mbbill/undotree" })
+  use({ "AndrewRadev/splitjoin.vim" })
 
   use({
     "prettier/vim-prettier",
@@ -95,6 +96,17 @@ require("packer").startup(function(use)
   -- Themes
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "gruvbox-community/gruvbox" })
+  use({
+    "folke/tokyonight.nvim",
+    config = function()
+      require("tokyonight").setup({
+        style = "night",
+        styles = {
+          keywords = { italic = false },
+        },
+      })
+    end,
+  })
 
   use({
     "norcalli/nvim-colorizer.lua",

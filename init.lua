@@ -20,6 +20,7 @@ require("plugins")
 require("sets")
 require("colors")
 require("keymaps")
+require("cmd")
 
 vim.g.VM_leader = ","
 vim.g.format_on_save = 0

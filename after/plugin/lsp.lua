@@ -203,7 +203,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 local function config(conf)
   return vim.tbl_deep_extend("force", {
     on_attach = on_attach,
-    capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities),
+    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities),
   }, conf or {})
 end
 
