@@ -3,44 +3,32 @@ if not ok then
   return
 end
 
-lualine.setup({
-  options = {
-    theme = "tokyonight",
+lualine.setup {
+	options = {
+		icons_enabled = true,
+		theme = "gruvbox",
     component_separators = { left = "|", right = "|" },
     section_separators = { left = "", right = "" },
-  },
-  winbar = {
-    lualine_a = {},
-    lualine_b = {
-      { "filetype", icon_only = true, separator = "" },
-      { "%f", separator = "" },
-    },
-    lualine_c = {},
-  },
-  inactive_winbar = {
-    lualine_a = {},
-    lualine_b = {
-      { "filetype", icon_only = true, separator = "" },
-      { "%f", separator = "" },
-    },
-    lualine_c = {},
-  },
-  sections = {
-    lualine_b = { { "branch", icon = "" } },
-    lualine_c = {
-      { "%f", separator = " " },
-      "diagnostics",
-    },
-    lualine_x = {
-      "filetype",
-      "fileformat",
-      "encoding",
-    },
-  },
-  inactive_sections = {
-    lualine_c = {
-      { "%f" },
-    },
-  },
-  extensions = { "nvim-tree" },
-})
+		disabled_filetypes = {},
+		always_divide_middle = true,
+		globalstatus = true,
+	},
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { "branch", "diff" },
+		lualine_c = { "%f" , "diagnostics" },
+		lualine_x = { "filetype", "fileformat", "encoding" },
+		lualine_y = { "progress" },
+		lualine_z = { "location" },
+	},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = {},
+		lualine_x = {},
+		lualine_y = {},
+		lualine_z = {},
+	},
+	tabline = {},
+	extensions = { "nvim-tree" },
+}

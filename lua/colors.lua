@@ -1,9 +1,8 @@
 vim.g.gruvbox_contrast_dark = "hard"
-vim.g.catppuccin_flavour = "macchiato"
 
 vim.cmd("syntax on")
 vim.opt.background = "dark"
-vim.cmd("colorscheme tokyonight")
+vim.cmd("colorscheme gruvbox")
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)
@@ -19,8 +18,4 @@ hl("SignColumn", {
 
 hl("CursorLineNR", {
   bg = "none",
-})
-
-hl("LineNR", {
-  fg = "#458588",
 })
