@@ -19,7 +19,7 @@ opt.completeopt = "menu,menuone,noselect,preview,noinsert"
 opt.guifont = ""
 opt.termguicolors = true
 opt.list = true
-opt.listchars:append("tab:→\\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨,space:·")
+opt.listchars:append("tab:→\\ ,eol:↲,nbsp:␣,trail:•")
 opt.scrolloff = 5
 opt.splitbelow = true
 opt.splitright = true

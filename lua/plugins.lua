@@ -68,9 +68,8 @@ require("packer").startup(function(use)
   -- Presentation
   use({ "kyazdani42/nvim-tree.lua" })
   use({ "RRethy/vim-illuminate" })
-  use({ "nvim-lualine/lualine.nvim" })
-  use({ "lukas-reineke/indent-blankline.nvim" })
   use({ "alvarosevilla95/luatab.nvim" })
+  use({ "tjdevries/express_line.nvim" })
 
   -- General plugins
   use({ "godlygeek/tabular" })
@@ -97,6 +96,8 @@ require("packer").startup(function(use)
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "gruvbox-community/gruvbox" })
   use({ "catppuccin/nvim", as = "catppuccin" })
+  use({ "tjdevries/colorbuddy.nvim" })
+  use({ "tjdevries/gruvbuddy.nvim" })
 
   use({
     "norcalli/nvim-colorizer.lua",
