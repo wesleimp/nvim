@@ -1,6 +1,6 @@
-local ok, luatab = pcall(require,"luatab")
+local ok, luatab = pcall(require, "luatab")
 if not ok then
-    return
+  return
 end
 
 luatab.setup({

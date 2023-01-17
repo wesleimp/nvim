@@ -44,6 +44,7 @@ require("packer").startup(function(use)
   use({ "tpope/vim-dadbod" })
   use({ "kristijanhusak/vim-dadbod-completion" })
   use({ "kristijanhusak/vim-dadbod-ui" })
+  use({ "voldikss/vim-floaterm" })
 
   -- Diagnostics
   use({ "j-hui/fidget.nvim" })

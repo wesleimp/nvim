@@ -254,7 +254,7 @@ if ismac then
   }))
 else
   lspconfig.elixirls.setup(config({
-    cmd = { vim.fn.expand("~/elixir-ls/release/language_server.sh") },
+    cmd = { vim.fn.expand("~/elixir-ls/language_server.sh") },
   }))
 end
 

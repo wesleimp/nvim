@@ -1,6 +1,6 @@
 local ok, bl = pcall(require, "indent_blankline")
 if not ok then
-    return
+  return
 end
 
 bl.setup({

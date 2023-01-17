@@ -12,13 +12,18 @@ local Group = require("colorbuddy.group").Group
 local g = require("colorbuddy.group").groups
 local s = require("colorbuddy.style").styles
 
+Group.new("Normal", c.superwhite, g.Normal.bg:dark())
+
 Group.new("@variable", c.superwhite, nil)
 
 Group.new("InjectedLanguage", nil, g.Normal.bg:dark())
 
 Group.new("LspParameter", nil, nil, s.italic)
-Group.new("@function.bracket", g.Normal, g.Normal)
 Group.new("LspDeprecated", nil, nil, s.strikethrough)
+Group.new("@function.bracket", g.Normal, g.Normal)
+
+Group.new("CmpItemKind", c.purple)
+Group.new("FidgetTitle", c.purple)
 
 -- Group.new("@function.call.lua"
 vim.cmd([[highlight link @function.call.lua LuaFunctionCall]])
@@ -37,10 +42,6 @@ hl("SignColumn", {
 
 hl("LineNr", {
   bg = "none",
-})
-
-hl("LineNmu", {
-  bg = "#333842",
 })
 
 hl("ColorColumn", {

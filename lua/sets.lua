@@ -1,4 +1,5 @@
 local opt = vim.opt
+local g = vim.g
 
 -- History
 opt.history = 50
@@ -63,6 +64,8 @@ opt.wildmenu = true
 opt.wildignore:append(
   "*deps/*,*_build/*,**/coverage/*,**/node_modules/*,**/.git/*"
 )
+
+vim.g["test#strategy"] = "floaterm"
 
 -- filetype
 vim.cmd("filetype plugin indent on")

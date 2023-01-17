@@ -1,6 +1,6 @@
 local ok, zen = pcall(require, "zen-mode")
 if not ok then
-    return
+  return
 end
 
 zen.setup({

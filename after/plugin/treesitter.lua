@@ -1,4 +1,17 @@
 require("nvim-treesitter.configs").setup({
+  ensure_installed = {
+    "help",
+    "lua",
+    "rust",
+    "go",
+    "gomod",
+    "elixir",
+    "heex",
+    "json",
+    "dockerfile",
+    "yaml",
+    "vim",
+  },
   highlight = {
     enable = true, -- false will disable the whole extension
     additional_vim_regex_highlighting = true,
