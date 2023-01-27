@@ -1,6 +1,3 @@
-local ismac = vim.fn.has("macunix") == 1
-
--- Setup nvim-cmp.
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
@@ -18,10 +15,10 @@ lspkind.init({ mode = "text" })
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
-    and vim.api
-        .nvim_buf_get_lines(0, line - 1, line, true)[1]
-        :sub(col, col)
-        :match("%s")
+      and vim.api
+      .nvim_buf_get_lines(0, line - 1, line, true)[1]
+      :sub(col, col)
+      :match("%s")
       == nil
 end
 
@@ -30,6 +27,12 @@ cmp.setup({
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
     end,
+  },
+  window = {
+    documentation = vim.tbl_deep_extend("force", cmp.config.window.bordered(), {
+      max_height = 15,
+      max_width = 60,
+    }),
   },
   mapping = {
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
@@ -61,10 +64,14 @@ cmp.setup({
     end, { "i", "s" }),
   },
   formatting = {
-    format = function(entry, vim_item)
-      vim_item.kind = lspkind.presets.default[vim_item.kind]
-      vim_item.menu = source_mapping[entry.source.name]
-      return vim_item
+    fields = { "abbr", "menu", "kind" },
+    format = function(entry, item)
+      item.kind =
+      string.format("%s %s", lspkind.presets.default[item.kind], item.kind)
+
+      item.menu = source_mapping[entry.source.name]
+
+      return item
     end,
   },
   sources = cmp.config.sources({
@@ -87,49 +94,13 @@ vim.diagnostic.config({
   -- options for floating windows:
   float = {
     show_header = true,
-    format = function(d)
-      if not d.code and not d.user_data then
-        return d.message
-      end
-
-      local t = vim.deepcopy(d)
-      local code = d.code
-      if not code then
-        if not d.user_data.lsp then
-          return d.message
-        end
-
-        code = d.user_data.lsp.code
-      end
-      if code then
-        t.message = string.format("%s [%s]", t.message, code):gsub("1. ", "")
-      end
-      return t.message
-    end,
+    border = "rounded",
   },
 
   -- general purpose
   severity_sort = true,
   update_in_insert = false,
 })
-
--- Go to the next diagnostic, but prefer going to errors first
--- In general, I pretty much never want to go to the next hint
-local severity_levels = {
-  vim.diagnostic.severity.ERROR,
-  vim.diagnostic.severity.WARN,
-  vim.diagnostic.severity.INFO,
-  vim.diagnostic.severity.HINT,
-}
-
-local function get_highest_error_severity()
-  for _, level in ipairs(severity_levels) do
-    local diags = vim.diagnostic.get(0, { severity = { min = level } })
-    if #diags > 0 then
-      return level, diags
-    end
-  end
-end
 
 local function nmap(lhs, rhs, opts)
   vim.keymap.set("n", lhs, rhs, opts)
@@ -152,7 +123,6 @@ local on_attach = function(_, bufnr)
 
   nmap("[d", function()
     vim.diagnostic.goto_prev({
-      severity = get_highest_error_severity(),
       wrap = true,
       float = true,
     })
@@ -160,7 +130,6 @@ local on_attach = function(_, bufnr)
 
   nmap("]d", function()
     vim.diagnostic.goto_next({
-      severity = get_highest_error_severity(),
       wrap = true,
       float = true,
     })
@@ -193,6 +162,11 @@ local on_attach = function(_, bufnr)
   end, opts)
 end
 
+vim.lsp.handlers["textDocument/hover"] =
+vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+
+vim.lsp.handlers["textDocument/signatureHelp"] =
+vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 ------------------------------------------------------------
 -- Language servers
 ------------------------------------------------------------
@@ -207,6 +181,16 @@ local function config(conf)
   }, conf or {})
 end
 
+require("mason-lspconfig").setup({
+  ensure_installed = {
+    "sumneko_lua",
+    "rust_analyzer",
+    "gopls",
+    "elixirls",
+    "tsserver",
+  },
+})
+
 -- Languages
 local lspconfig = require("lspconfig")
 
@@ -220,26 +204,6 @@ lspconfig.tsserver.setup(config({
     "typescript.tsx",
   },
 }))
-lspconfig.cssls.setup(config())
-
-lspconfig.yamlls.setup(config({
-  settings = {
-    yaml = {
-      schemaStore = {
-        url = "https://www.schemastore.org/api/json/catalog.json",
-        enable = true,
-      },
-    },
-  },
-}))
-
-lspconfig.dockerls.setup(config({ cmd = { "docker-ls" } }))
-
--- I'll uncomment this when I need it
--- lspconfig.svelte.setup(config()) -- svelte
--- lspconfig.gleam.setup(config())  -- gleam
--- lspconfig.hls.setup(config())    -- haskell
--- lspconfig.pyright.setup(config()) -- python
 
 lspconfig.gopls.setup(config({
   cmd = { "gopls" },
@@ -248,28 +212,19 @@ lspconfig.gopls.setup(config({
   },
 }))
 
-if ismac then
-  lspconfig.elixirls.setup(config({
-    cmd = { "elixir-ls" },
-  }))
-else
-  lspconfig.elixirls.setup(config({
-    cmd = { vim.fn.expand("~/elixir-ls/language_server.sh") },
-  }))
-end
-
+lspconfig.elixirls.setup(config())
 lspconfig.rust_analyzer.setup(config())
 
-local luacmd
-if ismac then
-  luacmd = { "lua-language-server" }
-else
-  local sumneko_root_path = vim.fn.expand("~/lua-language-server")
-  local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
-  luacmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" }
-end
+-- local luacmd
+-- if ismac then
+--   luacmd = { "lua-language-server" }
+-- else
+--   local sumneko_root_path = vim.fn.expand("~/lua-language-server")
+--   local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
+--   luacmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" }
+-- end
 lspconfig.sumneko_lua.setup(config({
-  cmd = luacmd,
+  -- cmd = luacmd,
   settings = {
     Lua = {
       runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },

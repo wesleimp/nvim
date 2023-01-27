@@ -18,6 +18,10 @@ require("packer").startup(function(use)
   -- Local plugins
   local_use("stylua.nvim", "wesleimp/stylua.nvim")
 
+  use({ "williamboman/mason.nvim" })
+  use({ "williamboman/mason-lspconfig.nvim" })
+  use({ "neovim/nvim-lspconfig" })
+
   -- Code completion
   use({ "hrsh7th/nvim-cmp" })
   use({ "hrsh7th/cmp-nvim-lsp" })
@@ -25,7 +29,6 @@ require("packer").startup(function(use)
   use({ "hrsh7th/cmp-path" })
   use({ "saadparwaiz1/cmp_luasnip" })
 
-  use({ "neovim/nvim-lspconfig" })
   use({ "nvim-lua/lsp_extensions.nvim" })
   use({ "onsails/lspkind-nvim" })
   use({
@@ -35,10 +38,6 @@ require("packer").startup(function(use)
     end,
   })
   use({ "jose-elias-alvarez/null-ls.nvim" })
-
-  -- Languages
-  use({ "olexsmir/gopher.nvim" })
-  use({ "elixir-editors/vim-elixir" })
 
   -- Sql
   use({ "tpope/vim-dadbod" })
@@ -86,7 +85,6 @@ require("packer").startup(function(use)
   use({ "matze/vim-move" })
   use({ "windwp/nvim-autopairs" })
   use({ "mbbill/undotree" })
-  use({ "AndrewRadev/splitjoin.vim" })
 
   use({
     "prettier/vim-prettier",
@@ -96,7 +94,6 @@ require("packer").startup(function(use)
   -- Themes
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "gruvbox-community/gruvbox" })
-  use({ "catppuccin/nvim", as = "catppuccin" })
   use({ "tjdevries/colorbuddy.nvim" })
   use({ "tjdevries/gruvbuddy.nvim" })
 

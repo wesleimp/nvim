@@ -4,29 +4,9 @@ end
 
 vim.opt.termguicolors = true
 
-require("colorbuddy").colorscheme("gruvbuddy")
-require("colorizer").setup()
+vim.g.gruvbox_contrast_dark = "hard"
 
-local c = require("colorbuddy.color").colors
-local Group = require("colorbuddy.group").Group
-local g = require("colorbuddy.group").groups
-local s = require("colorbuddy.style").styles
-
-Group.new("Normal", c.superwhite, g.Normal.bg:dark())
-
-Group.new("@variable", c.superwhite, nil)
-
-Group.new("InjectedLanguage", nil, g.Normal.bg:dark())
-
-Group.new("LspParameter", nil, nil, s.italic)
-Group.new("LspDeprecated", nil, nil, s.strikethrough)
-Group.new("@function.bracket", g.Normal, g.Normal)
-
-Group.new("CmpItemKind", c.purple)
-Group.new("FidgetTitle", c.purple)
-
--- Group.new("@function.call.lua"
-vim.cmd([[highlight link @function.call.lua LuaFunctionCall]])
+vim.cmd [[colorscheme gruvbox]]
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)
@@ -42,8 +22,4 @@ hl("SignColumn", {
 
 hl("LineNr", {
   bg = "none",
-})
-
-hl("ColorColumn", {
-  bg = "#333842",
 })
