@@ -93,9 +93,8 @@ require("packer").startup(function(use)
 
   -- Themes
   use({ "kyazdani42/nvim-web-devicons" })
-  use({ "gruvbox-community/gruvbox" })
-  use({ "tjdevries/colorbuddy.nvim" })
-  use({ "tjdevries/gruvbuddy.nvim" })
+  use({ "ellisonleao/gruvbox.nvim" })
+  use({ "folke/tokyonight.nvim" })
 
   use({
     "norcalli/nvim-colorizer.lua",
@@ -110,9 +109,12 @@ require("packer").startup(function(use)
   use({ "nvim-telescope/telescope.nvim" })
   use({ "nvim-telescope/telescope-fzy-native.nvim" })
   use({ "nvim-telescope/telescope-ui-select.nvim" })
+  use({ "nvim-telescope/telescope-file-browser.nvim" })
 
   use({ "rcarriga/nvim-notify" })
 
   use({ "vim-test/vim-test" })
   use({ "lewis6991/impatient.nvim" })
 end)
+
+require("plugins.telescope")

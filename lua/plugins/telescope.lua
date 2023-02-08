@@ -130,6 +130,7 @@ M.file_browser = function()
     hidden = true,
     sorting_strategy = "ascending",
     scroll_strategy = "cycle",
+    previewer = false,
     layout_config = {
       prompt_position = "top",
     },
