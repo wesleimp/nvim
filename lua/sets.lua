@@ -65,7 +65,9 @@ opt.wildignore:append(
   "*deps/*,*_build/*,**/coverage/*,**/node_modules/*,**/.git/*"
 )
 
-vim.g["test#strategy"] = "floaterm"
+g.netrw_browse_split = 0
+g.netrw_banner = 0
+g.netrw_winsize = 25
 
 -- filetype
 vim.cmd("filetype plugin indent on")

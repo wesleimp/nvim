@@ -43,7 +43,6 @@ require("packer").startup(function(use)
   use({ "tpope/vim-dadbod" })
   use({ "kristijanhusak/vim-dadbod-completion" })
   use({ "kristijanhusak/vim-dadbod-ui" })
-  use({ "voldikss/vim-floaterm" })
 
   -- Diagnostics
   use({ "j-hui/fidget.nvim" })
@@ -66,13 +65,11 @@ require("packer").startup(function(use)
   use({ "lewis6991/gitsigns.nvim" })
 
   -- Presentation
-  use({ "kyazdani42/nvim-tree.lua" })
   use({ "RRethy/vim-illuminate" })
   use({ "alvarosevilla95/luatab.nvim" })
   use({ "tjdevries/express_line.nvim" })
 
   -- General plugins
-  use({ "godlygeek/tabular" })
   use({
     "numToStr/Comment.nvim",
     config = function()
@@ -80,7 +77,6 @@ require("packer").startup(function(use)
     end,
   })
   use({ "tpope/vim-surround" })
-  use({ "tpope/vim-endwise" })
   use({ "mg979/vim-visual-multi", branch = "master" })
   use({ "matze/vim-move" })
   use({ "windwp/nvim-autopairs" })

@@ -3,14 +3,16 @@ local function _map(mode)
     vim.api.nvim_set_keymap(mode, lhs, rhs, opt or {})
   end
 end
+
 local map = _map("")
 local nmap = _map("n")
 local vmap = _map("v")
 local imap = _map("i")
 local omap = _map("o")
+local tmap = _map("t")
 
-vim.g.mapleader = " "
 -- map <space> <leader>
+vim.g.mapleader = " "
 
 --disable help
 nmap("<F1>", "")
@@ -58,11 +60,6 @@ imap("<Tab-j>", "<Esc>", { noremap = true })
 
 nmap("<leader>n", ":tabn<cr>", { noremap = true })
 nmap("<leader>N", ":tabp<cr>", { noremap = true })
-
-nmap("<leader>J", ":TmuxNavigateDown<cr>", { noremap = true, silent = true })
-nmap("<leader>K", ":TmuxNavigateUp<cr>", { noremap = true, silent = true })
-nmap("<leader>H", ":TmuxNavigateLeft<cr>", { noremap = true, silent = true })
-nmap("<leader>L", ":TmuxNavigateRight<cr>", { noremap = true, silent = true })
 
 --------------------------------------------------
 --Buffer
@@ -133,6 +130,13 @@ nmap("<F4>", ":Twilight<CR>", { noremap = true, silent = true })
 --------------------------------------------------
 nmap("<leader>u", ":UndotreeShow<CR>", { noremap = true })
 
+-- Tree
+nmap("<leader>T", ":Explore<CR>", { noremap = true })
+
+-- Terminal
+tmap("<Esc>", "<C-\\><C-N>", { noremap = true, silent = true })
+
+-- Exports
 local M = {
   map = map,
   nmap = nmap,
