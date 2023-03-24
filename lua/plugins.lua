@@ -17,6 +17,7 @@ require("packer").startup(function(use)
 
   -- Local plugins
   local_use("stylua.nvim", "wesleimp/stylua.nvim")
+  local_use("mix-credo.nvim", "wesleimp/mix-credo.nvim")
 
   use({ "williamboman/mason.nvim" })
   use({ "williamboman/mason-lspconfig.nvim" })
@@ -90,7 +91,7 @@ require("packer").startup(function(use)
   -- Themes
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "ellisonleao/gruvbox.nvim" })
-  use({ "folke/tokyonight.nvim" })
+  use({ "rose-pine/neovim", as = "rose-pine" })
 
   use({
     "norcalli/nvim-colorizer.lua",

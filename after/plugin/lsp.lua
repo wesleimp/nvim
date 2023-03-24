@@ -181,9 +181,10 @@ local function config(conf)
   }, conf or {})
 end
 
+require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
-    "sumneko_lua",
+    "lua_ls",
     "rust_analyzer",
     "gopls",
     "elixirls",
@@ -215,16 +216,7 @@ lspconfig.gopls.setup(config({
 lspconfig.elixirls.setup(config())
 lspconfig.rust_analyzer.setup(config())
 
--- local luacmd
--- if ismac then
---   luacmd = { "lua-language-server" }
--- else
---   local sumneko_root_path = vim.fn.expand("~/lua-language-server")
---   local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
---   luacmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" }
--- end
-lspconfig.sumneko_lua.setup(config({
-  -- cmd = luacmd,
+lspconfig.lua_ls.setup(config({
   settings = {
     Lua = {
       runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
@@ -267,5 +259,5 @@ end
 require("luasnip.loaders.from_vscode").lazy_load({
   paths = snippets_paths(),
   include = nil, -- Load all languages
-  exclude = { "elixir" },
+  exclude = { },
 })
