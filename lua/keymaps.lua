@@ -131,7 +131,7 @@ nmap("<F4>", ":Twilight<CR>", { noremap = true, silent = true })
 nmap("<leader>u", ":UndotreeShow<CR>", { noremap = true })
 
 -- Tree
-nmap("<leader>T", ":Explore<CR>", { noremap = true })
+nmap("<leader>T", ":edit %:p:h<CR>", { noremap = true })
 
 -- Terminal
 tmap("<Esc>", "<C-\\><C-N>", { noremap = true, silent = true })

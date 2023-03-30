@@ -68,6 +68,8 @@ opt.wildignore:append(
 g.netrw_browse_split = 0
 g.netrw_banner = 0
 g.netrw_winsize = 25
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 
 -- filetype
 vim.cmd("filetype plugin indent on")
