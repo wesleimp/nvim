@@ -215,6 +215,7 @@ lspconfig.gopls.setup(config({
 
 lspconfig.elixirls.setup(config())
 lspconfig.rust_analyzer.setup(config())
+lspconfig.ocamllsp.setup(config())
 
 lspconfig.lua_ls.setup(config({
   settings = {

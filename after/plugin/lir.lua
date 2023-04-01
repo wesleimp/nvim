@@ -26,14 +26,12 @@ lir.setup({
   mappings = {
     ["<CR>"] = actions.edit,
     ["-"] = actions.up,
-
     ["K"] = actions.mkdir,
     ["a"] = actions.newfile,
     ["R"] = actions.rename,
     ["Y"] = actions.yank_path,
     ["D"] = actions.delete,
     ["."] = actions.toggle_show_hidden,
-
     -- mmv
     ["M"] = (has_mmv and mmv_actions.mmv) or nil,
   },
