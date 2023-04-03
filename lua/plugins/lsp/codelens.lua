@@ -32,7 +32,6 @@ M.refresh_virtlines = function()
         local range = lens.range
         local text = string.rep(" ", lens.range.start.character) .. title
 
-        print(vim.inspect(range))
         vim.api.nvim_buf_set_extmark(0, ns, range.start.line - 1, 0, {
           virt_lines = {
             { { text, "VirtNonText" } },
