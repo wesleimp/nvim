@@ -39,6 +39,7 @@ require("packer").startup(function(use)
     end,
   })
   use({ "jose-elias-alvarez/null-ls.nvim" })
+  use({ "simrat39/inlay-hints.nvim" })
 
   -- Sql
   use({ "tpope/vim-dadbod" })
@@ -124,3 +125,4 @@ require("packer").startup(function(use)
 end)
 
 require("plugins.telescope")
+require("plugins.lsp")

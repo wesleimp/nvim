@@ -1,5 +1,12 @@
+local autocmd = vim.api.nvim_create_autocmd
+local autocmd_clear = vim.api.nvim_clear_autocmds
+
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+
+local _ = require("plugins.lsp.handlers")
+local _ = require("plugins.lsp.inlay")
+local codelens = require("plugins.lsp.codelens")
 
 local source_mapping = {
   buffer = "[Buffer]",
@@ -15,10 +22,10 @@ lspkind.init({ mode = "text" })
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
-      and vim.api
-      .nvim_buf_get_lines(0, line - 1, line, true)[1]
-      :sub(col, col)
-      :match("%s")
+    and vim.api
+        .nvim_buf_get_lines(0, line - 1, line, true)[1]
+        :sub(col, col)
+        :match("%s")
       == nil
 end
 
@@ -67,7 +74,7 @@ cmp.setup({
     fields = { "abbr", "menu", "kind" },
     format = function(entry, item)
       item.kind =
-      string.format("%s %s", lspkind.presets.default[item.kind], item.kind)
+        string.format("%s %s", lspkind.presets.default[item.kind], item.kind)
 
       item.menu = source_mapping[entry.source.name]
 
@@ -90,13 +97,11 @@ vim.diagnostic.config({
     format = nil,
   },
   signs = true,
-
   -- options for floating windows:
   float = {
     show_header = true,
     border = "rounded",
   },
-
   -- general purpose
   severity_sort = true,
   update_in_insert = false,
@@ -106,7 +111,51 @@ local function nmap(lhs, rhs, opts)
   vim.keymap.set("n", lhs, rhs, opts)
 end
 
-local on_attach = function(_, bufnr)
+local augroup_format =
+  vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
+local autocmd_format = function(async, filter)
+  vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    buffer = 0,
+    callback = function()
+      vim.lsp.buf.format({ async = async, filter = filter })
+    end,
+  })
+end
+
+local augroup_codelens =
+  vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
+local filetype_attach = setmetatable({
+  ocaml = function()
+    autocmd_format(false)
+
+    -- Display type information
+    autocmd_clear({ group = augroup_codelens, buffer = 0 })
+    autocmd({ "BufEnter", "BufWritePost", "CursorHold" }, {
+      group = augroup_codelens,
+      buffer = 0,
+      callback = codelens.refresh_virtlines,
+    })
+
+    nmap(
+      "<space>vl",
+      codelens.toggle_virtlines,
+      { silent = true, desc = "[T]oggle [T]ypes", buffer = 0 }
+    )
+  end,
+  elixir = function()
+    autocmd_format(false)
+  end,
+  rust = function()
+    autocmd_format(false)
+  end,
+}, {
+  __index = function()
+    return function() end
+  end,
+})
+
+local on_attach = function(client, bufnr)
   -- Mappings.
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -120,6 +169,8 @@ local on_attach = function(_, bufnr)
   nmap("<leader>sd", function()
     vim.diagnostic.open_float(0, { scope = "line" })
   end, opts)
+
+  nmap("<space>rr", "<cmd>LspRestart<CR>", opts)
 
   nmap("[d", function()
     vim.diagnostic.goto_prev({
@@ -160,13 +211,26 @@ local on_attach = function(_, bufnr)
       bufnr = bufnr,
     })
   end, opts)
+
+  if false and client.server_capabilities.codeLensProvider then
+    autocmd_clear({ group = augroup_codelens, buffer = bufnr })
+    autocmd({ "BufEnter" }, {
+      group = augroup_codelens,
+      callback = vim.lsp.codelens.refresh,
+      buffer = bufnr,
+      once = true,
+    })
+    autocmd({ "BufWritePost", "CursorHold" }, {
+      group = augroup_codelens,
+      callback = vim.lsp.codelens.refresh,
+      buffer = bufnr,
+    })
+  end
+
+  local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+  filetype_attach[filetype]()
 end
 
-vim.lsp.handlers["textDocument/hover"] =
-vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-
-vim.lsp.handlers["textDocument/signatureHelp"] =
-vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 ------------------------------------------------------------
 -- Language servers
 ------------------------------------------------------------
@@ -260,5 +324,5 @@ end
 require("luasnip.loaders.from_vscode").lazy_load({
   paths = snippets_paths(),
   include = nil, -- Load all languages
-  exclude = { },
+  exclude = {},
 })
