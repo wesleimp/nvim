@@ -113,6 +113,12 @@ nmap(
   { noremap = true, silent = true }
 )
 
+nmap(
+  "<leader>di",
+  ":lua require('telescope.builtin').diagnostics()<CR>",
+  { noremap = true, silent = true }
+)
+
 map("<f11>", ":lua require('plugins.telescope').search_nvimconf()<cr>")
 map("<f12>", ":lua require('plugins.telescope').search_dotfiles()<cr>")
 
@@ -131,7 +137,7 @@ nmap("<F4>", ":Twilight<CR>", { noremap = true, silent = true })
 nmap("<leader>u", ":UndotreeShow<CR>", { noremap = true })
 
 -- Tree
-nmap("<leader>T", ":edit %:p:h<CR>", { noremap = true, silent = true })
+nmap("<leader>T", ":Explore<CR>", { noremap = true, silent = true })
 
 -- Terminal
 tmap("<Esc>", "<C-\\><C-N>", { noremap = true, silent = true })

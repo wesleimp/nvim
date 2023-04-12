@@ -71,15 +71,6 @@ require("packer").startup(function(use)
   use({ "alvarosevilla95/luatab.nvim" })
   use({ "tjdevries/express_line.nvim" })
 
-  -- File tree
-  use({ "tamago324/lir.nvim" })
-  use({
-    "tamago324/lir-mmv.nvim",
-    cond = function()
-      return vim.fn.executable("mmv") == 1
-    end,
-  })
-
   -- General plugins
   use({
     "numToStr/Comment.nvim",
