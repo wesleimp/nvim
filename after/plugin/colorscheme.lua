@@ -20,6 +20,8 @@ local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)
 end
 
+vim.cmd([[highlight IncludedC guibg=#373b41]])
+
 hl("Bar", {
   cterm = { italic = true, bold = true },
 })

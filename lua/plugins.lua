@@ -17,7 +17,6 @@ require("packer").startup(function(use)
 
   -- Local plugins
   local_use("stylua.nvim", "wesleimp/stylua.nvim")
-  local_use("mix-credo.nvim", "wesleimp/mix-credo.nvim")
 
   use({ "williamboman/mason.nvim" })
   use({ "williamboman/mason-lspconfig.nvim" })

@@ -22,10 +22,10 @@ lspkind.init({ mode = "text" })
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
-      and vim.api
-      .nvim_buf_get_lines(0, line - 1, line, true)[1]
-      :sub(col, col)
-      :match("%s")
+    and vim.api
+        .nvim_buf_get_lines(0, line - 1, line, true)[1]
+        :sub(col, col)
+        :match("%s")
       == nil
 end
 
@@ -42,7 +42,7 @@ cmp.setup({
     }),
   },
   mapping = {
-    ["<C-u>"] = cmp.mapping.scroll_docs( -4),
+    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<CR>"] = cmp.mapping.confirm({
@@ -63,8 +63,8 @@ cmp.setup({
     ["<C-p>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -74,7 +74,7 @@ cmp.setup({
     fields = { "abbr", "menu", "kind" },
     format = function(entry, item)
       item.kind =
-          string.format("%s %s", lspkind.presets.default[item.kind], item.kind)
+        string.format("%s %s", lspkind.presets.default[item.kind], item.kind)
 
       item.menu = source_mapping[entry.source.name]
 
@@ -112,7 +112,7 @@ local function nmap(lhs, rhs, opts)
 end
 
 local augroup_format =
-    vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
+  vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
 local autocmd_format = function(async, filter)
   vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
   vim.api.nvim_create_autocmd("BufWritePre", {
@@ -124,7 +124,7 @@ local autocmd_format = function(async, filter)
 end
 
 local augroup_codelens =
-    vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
+  vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
 local filetype_attach = setmetatable({
   ocaml = function()
     autocmd_format(false)
@@ -154,8 +154,7 @@ local filetype_attach = setmetatable({
   end,
 }, {
   __index = function()
-    return function()
-    end
+    return function() end
   end,
 })
 
@@ -284,6 +283,7 @@ lspconfig.gopls.setup(config({
 lspconfig.elixirls.setup(config())
 lspconfig.rust_analyzer.setup(config())
 lspconfig.ocamllsp.setup(config())
+lspconfig.solargraph.setup(config())
 
 lspconfig.lua_ls.setup(config({
   settings = {
@@ -305,6 +305,7 @@ null_ls.setup(config({
   sources = {
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.diagnostics.credo,
   },
 }))
 
