@@ -17,6 +17,7 @@ require("packer").startup(function(use)
 
   -- Local plugins
   local_use("stylua.nvim", "wesleimp/stylua.nvim")
+  local_use("elixir-tools.nvim", "elixir-tools/elixir-tools.nvim")
 
   use({ "williamboman/mason.nvim" })
   use({ "williamboman/mason-lspconfig.nvim" })

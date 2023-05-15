@@ -1,20 +1,11 @@
 vim.opt.termguicolors = true
+vim.o.background = "dark"
 
 require("rose-pine").setup({
-  groups = {
-    background = "#000000",
-  },
+  groups = {},
 })
 
-require("gruvbox").setup({
-  contrast = "hard",
-  bold = false,
-  palette_overrides = {
-    dark0_hard = "#000000",
-  },
-})
-
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd("colorscheme rose-pine")
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)
