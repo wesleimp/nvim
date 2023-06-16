@@ -146,9 +146,6 @@ local filetype_attach = setmetatable({
   lua = function()
     autocmd_format(false)
   end,
-  elixir = function()
-    autocmd_format(false)
-  end,
   rust = function()
     autocmd_format(false)
   end,
@@ -252,10 +249,10 @@ require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
     "lua_ls",
-    "rust_analyzer",
-    "gopls",
-    "elixirls",
-    "tsserver",
+    -- "rust_analyzer",
+    -- "gopls",
+    -- "elixirls",
+    -- "tsserver",
   },
 })
 

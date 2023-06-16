@@ -108,10 +108,20 @@ require("packer").startup(function(use)
   use({ "nvim-telescope/telescope-fzy-native.nvim" })
   use({ "nvim-telescope/telescope-ui-select.nvim" })
   use({ "nvim-telescope/telescope-file-browser.nvim" })
+  use({ "ThePrimeagen/harpoon" })
 
   use({ "rcarriga/nvim-notify" })
 
+  -- Testing
   use({ "vim-test/vim-test" })
+  use({
+    "nvim-neotest/neotest",
+    requires = {
+      "antoinemadec/FixCursorHold.nvim",
+      "jfpedroza/neotest-elixir",
+    },
+  })
+
   use({ "lewis6991/impatient.nvim" })
 end)
 

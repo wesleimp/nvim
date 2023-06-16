@@ -83,6 +83,19 @@ nmap("<Leader>tf", ":w|:TestFile<CR>", { silent = true })
 nmap("<Leader>tn", ":w|:TestNearest<CR>", { silent = true })
 nmap("<Leader>tl", ":w|:TestLast<CR>", { silent = true })
 
+-- testing
+nmap(
+  "<leader>-",
+  ':lua require("neotest").run.run(vim.fn.expand("%"))<cr>',
+  { noremap = true, silent = true }
+)
+
+nmap(
+  "<leader>=",
+  '<cmd>lua require("neotest").summary.toggle()<cr>',
+  { noremap = true, silent = true }
+)
+
 --------------------------------------------------
 -- Telescope
 --------------------------------------------------
