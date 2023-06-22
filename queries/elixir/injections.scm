@@ -35,3 +35,9 @@
   right: (string (quoted_content) @injection.content))
   (#set! injection.language "graphql")
   (#set! injection.include-children true))
+
+; Moduledoc
+((identifier) @_identifier (#eq? @_identifier "moduledoc")
+ (arguments (string (quoted_content) @injection.content))
+ (#set! injection.language "markdown_inline")
+ (#set! injection.include-children true))

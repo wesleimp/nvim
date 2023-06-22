@@ -6,7 +6,9 @@ require("gruvbox").setup({
   bold = false,
 })
 
-vim.cmd("colorscheme gruvbox")
+-- vim.cmd("colorscheme gruvbox")
+
+require("colorbuddy").colorscheme("sitrusbuddy")
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)

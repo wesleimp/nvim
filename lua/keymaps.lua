@@ -58,8 +58,8 @@ vmap("<Tab-j>", "<Esc>", { noremap = true })
 omap("<Tab-j>", "<Esc>", { noremap = true })
 imap("<Tab-j>", "<Esc>", { noremap = true })
 
-nmap("<leader>n", ":tabn<cr>", { noremap = true })
-nmap("<leader>N", ":tabp<cr>", { noremap = true })
+nmap("<C-[>", ":tabn<cr>", { noremap = true, silent = true })
+nmap("<C-]>", ":tabp<cr>", { noremap = true, silent = true })
 
 --------------------------------------------------
 --Buffer
@@ -134,9 +134,6 @@ nmap(
 
 map("<f11>", ":lua require('plugins.telescope').search_nvimconf()<cr>")
 map("<f12>", ":lua require('plugins.telescope').search_dotfiles()<cr>")
-
--- File browser
-map("<C-t>", ":lua require('plugins.telescope').file_browser()<cr>")
 
 --------------------------------------------------
 -- Focusing

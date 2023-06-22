@@ -63,15 +63,27 @@ require("el").setup({
   generator = function(_, _)
     local mode = extensions.gen_mode({ format_string = " %s " })
     local items = {
-      { mode, required = true },
+      {
+        mode,
+        required = true,
+      },
       { git_branch },
       { " " },
-      { sections.split, required = true },
+      {
+        sections.split,
+        required = true,
+      },
       { git_icon },
-      { sections.maximum_width(builtin.file_relative, 0.60), required = true },
+      {
+        sections.maximum_width(builtin.file_relative, 0.60),
+        required = true,
+      },
       { sections.collapse_builtin({ { " " }, { builtin.modified_flag } }) },
-      { sections.split, required = true },
-      { diagnostic_display },
+      {
+        sections.split,
+        required = true,
+      },
+      { show_diagnostics },
       { show_current_func },
       { git_changes },
       { "[" },
