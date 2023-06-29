@@ -12,3 +12,9 @@ command("FmtFile", function()
     vim.cmd("!mix format %")
   end
 end, {})
+
+if vim.fn.executable("format-sql") then
+  command("FormatSQL", function()
+    require("plugins.format_sql").format()
+  end, {})
+end

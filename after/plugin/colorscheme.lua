@@ -1,10 +1,10 @@
 vim.opt.termguicolors = true
 vim.o.background = "dark"
 
-require("gruvbox").setup({
-  contrast = "hard",
-  bold = false,
-})
+-- require("gruvbox").setup({
+--   contrast = "hard",
+--   bold = false,
+-- })
 
 -- vim.cmd("colorscheme gruvbox")
 
@@ -25,17 +25,9 @@ highlight DiagnosticUnderlineHint cterm=undercurl gui=undercurl
 highlight link LspReferenceRead DiffChange
 highlight link LspReferenceText DiffChange
 highlight link LspReferenceWrite DiffChange
-highlight link LspSignatureActiveParameter GruvboxOrange
+highlight link LspSignatureActiveParameter SitrusOrange
 ]])
 
 hl("Bar", {
   cterm = { italic = true, bold = true },
-})
-
-hl("SignColumn", {
-  bg = "none",
-})
-
-hl("LineNr", {
-  bg = "none",
 })

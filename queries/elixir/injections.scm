@@ -41,3 +41,10 @@
  (arguments (string (quoted_content) @injection.content))
  (#set! injection.language "markdown_inline")
  (#set! injection.include-children true))
+
+; sql
+((binary_operator
+   left: (identifier) @identifier (#eq? @identifier "sql_query")
+   right: (string (quoted_content) @injection.content))
+  (#set! injection.language "sql")
+  (#set! injection.include-children true))
