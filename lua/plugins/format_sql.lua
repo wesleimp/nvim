@@ -1,6 +1,6 @@
 local Job = require("plenary.job")
 
-function run_formatter(text)
+local function run_formatter(text)
   local split = vim.split(text, "\n")
   local result = table.concat(vim.list_slice(split, 2, #split - 1), "\n")
 
@@ -25,7 +25,7 @@ local embedded_sql = vim.treesitter.query.parse(
 ]]
 )
 
-function root_node(bufnr)
+local function root_node(bufnr)
   local parser = vim.treesitter.get_parser(bufnr, "elixir", {})
   local tree = parser:parse()[1]
   return tree:root()
