@@ -40,7 +40,7 @@ require("packer").startup(function(use)
     end,
   })
   use({ "jose-elias-alvarez/null-ls.nvim" })
-  use({ "simrat39/inlay-hints.nvim" })
+  use({ "lvimuser/lsp-inlayhints.nvim" })
 
   -- Sql
   use({ "tpope/vim-dadbod" })
@@ -80,6 +80,7 @@ require("packer").startup(function(use)
     end,
   })
   use({ "tpope/vim-surround" })
+  use({ "tpope/vim-abolish" })
   use({ "mg979/vim-visual-multi", branch = "master" })
   use({ "matze/vim-move" })
   use({ "windwp/nvim-autopairs" })
@@ -94,6 +95,7 @@ require("packer").startup(function(use)
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "ellisonleao/gruvbox.nvim" })
   use({ "tjdevries/colorbuddy.nvim" })
+  use({ "AlexvZyl/nordic.nvim" })
 
   use({
     "norcalli/nvim-colorizer.lua",

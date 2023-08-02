@@ -1,14 +1,20 @@
 vim.opt.termguicolors = true
 vim.o.background = "dark"
 
--- require("gruvbox").setup({
---   contrast = "hard",
---   bold = false,
--- })
+require("gruvbox").setup({
+  contrast = "hard",
+  bold = false,
+})
 
--- vim.cmd("colorscheme gruvbox")
+require("nordic").setup({
+  telescope = {
+    style = "classic",
+  },
+})
 
-require("colorbuddy").colorscheme("sitrusbuddy")
+vim.cmd("colorscheme nordic")
+
+-- require("colorbuddy").colorscheme("sitrusbuddy")
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)

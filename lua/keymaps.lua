@@ -132,6 +132,30 @@ nmap(
   { noremap = true, silent = true }
 )
 
+nmap(
+  "<leader>ls",
+  ":lua require('telescope.builtin').lsp_document_symbols()<CR>",
+  { noremap = true, silent = true }
+)
+
+nmap(
+  "<leader>li",
+  ":lua require('telescope.builtin').lsp_implementations()<CR>",
+  { noremap = true, silent = true }
+)
+
+nmap(
+  "<leader>ld",
+  ":lua require('telescope.builtin').lsp_definitions()<CR>",
+  { noremap = true, silent = true }
+)
+
+nmap(
+  "<leader>lr",
+  ":lua require('telescope.builtin').lsp_references()<CR>",
+  { noremap = true, silent = true }
+)
+
 map("<f11>", ":lua require('plugins.telescope').search_nvimconf()<cr>")
 map("<f12>", ":lua require('plugins.telescope').search_dotfiles()<cr>")
 

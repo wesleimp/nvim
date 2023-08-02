@@ -5,7 +5,6 @@ local cmp = require("cmp")
 local luasnip = require("luasnip")
 
 local _ = require("plugins.lsp.handlers")
-local _ = require("plugins.lsp.inlay")
 local codelens = require("plugins.lsp.codelens")
 
 local source_mapping = {
@@ -301,8 +300,8 @@ local null_ls = require("null-ls")
 null_ls.setup(config({
   sources = {
     null_ls.builtins.formatting.stylua,
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.diagnostics.credo,
+    -- null_ls.builtins.diagnostics.eslint,
+    -- null_ls.builtins.diagnostics.credo,
   },
 }))
 
