@@ -1,24 +1,22 @@
 vim.opt.termguicolors = true
 vim.o.background = "dark"
 
-require("gruvbox").setup({
-  contrast = "hard",
-  bold = false,
-})
-
-require("nordic").setup({
-  telescope = {
-    style = "classic",
+require("tokyonight").setup({
+  style = "night",
+  styles = {
+    keywords = { italic = false },
   },
 })
 
-vim.cmd("colorscheme nordic")
-
--- require("colorbuddy").colorscheme("sitrusbuddy")
+vim.cmd("colorscheme tokyonight")
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)
 end
+
+hl("Bar", {
+  cterm = { italic = true, bold = true },
+})
 
 vim.cmd([[
 highlight IncludedC guibg=#373b41
@@ -33,7 +31,3 @@ highlight link LspReferenceText DiffChange
 highlight link LspReferenceWrite DiffChange
 highlight link LspSignatureActiveParameter SitrusOrange
 ]])
-
-hl("Bar", {
-  cterm = { italic = true, bold = true },
-})
