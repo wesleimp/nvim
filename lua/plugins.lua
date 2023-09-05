@@ -71,6 +71,7 @@ require("packer").startup(function(use)
   use({ "RRethy/vim-illuminate" })
   use({ "alvarosevilla95/luatab.nvim" })
   use({ "tjdevries/express_line.nvim" })
+  use({ "nvim-lualine/lualine.nvim" })
 
   -- General plugins
   use({

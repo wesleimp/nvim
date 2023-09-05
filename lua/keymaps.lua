@@ -42,16 +42,6 @@ map("<leader>p", '"+p<esc>', { noremap = true })
 --No highlight after search
 nmap("<leader><esc>", ":noh<CR>", { noremap = true, silent = true })
 
---------------------------------------------------
---Navigation
---------------------------------------------------
-
--- Disable arrow keys :-)
-map("<Up>", "<NOP>", { noremap = true })
-map("<Down>", "<NOP>", { noremap = true })
-map("<Left>", "<NOP>", { noremap = true })
-map("<Right>", "<NOP>", { noremap = true })
-
 -- Escapehell
 nmap("<Tab-j>", "<Esc>", { noremap = true })
 vmap("<Tab-j>", "<Esc>", { noremap = true })
