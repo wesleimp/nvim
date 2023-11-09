@@ -19,6 +19,7 @@ require("packer").startup(function(use)
   local_use("stylua.nvim", "wesleimp/stylua.nvim")
   local_use("elixir-tools.nvim", "elixir-tools/elixir-tools.nvim")
   local_use("sitrusbuddy.nvim", "wesleimp/sitrusbuddy.nvim")
+  local_use("elixir-keys.nvim", "wesleimp/elixir-keys.nvim")
 
   use({ "williamboman/mason.nvim" })
   use({ "williamboman/mason-lspconfig.nvim" })
@@ -39,8 +40,9 @@ require("packer").startup(function(use)
       require("nvim-lsp-installer").setup({})
     end,
   })
-  use({ "jose-elias-alvarez/null-ls.nvim" })
+  use({ "nvimtools/none-ls.nvim" })
   use({ "lvimuser/lsp-inlayhints.nvim" })
+  use({ "ray-x/lsp_signature.nvim" })
 
   -- Sql
   use({ "tpope/vim-dadbod" })
@@ -48,7 +50,7 @@ require("packer").startup(function(use)
   use({ "kristijanhusak/vim-dadbod-ui" })
 
   -- Diagnostics
-  use({ "j-hui/fidget.nvim" })
+  use({ "j-hui/fidget.nvim", tag = "legacy" })
 
   -- Focusing
   use({ "folke/zen-mode.nvim" })
@@ -95,8 +97,7 @@ require("packer").startup(function(use)
   -- Themes
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "ellisonleao/gruvbox.nvim" })
-  use({ "tjdevries/colorbuddy.nvim" })
-  use({ "folke/tokyonight.nvim" })
+  use({ "catppuccin/nvim", as = "catppuccin" })
 
   use({
     "norcalli/nvim-colorizer.lua",

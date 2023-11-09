@@ -30,13 +30,18 @@ M.refresh_virtlines = function()
 
       for _, lens in ipairs(result) do
         local title = lens.command.title
-        local range = lens.range
-        local text = string.rep(" ", lens.range.start.character) .. title
+        local start_line = lens.range.start.line
 
-        vim.api.nvim_buf_set_extmark(bufnr, ns, range.start.line, 0, {
+        local buf_line =
+          vim.api.nvim_buf_get_text(bufnr, start_line, 0, start_line, -1, {})[1]
+
+        local ident = #string.match(buf_line, "^%s*")
+        local text = string.rep(" ", ident) .. title
+
+        vim.api.nvim_buf_set_extmark(bufnr, ns, start_line, 0, {
           virt_lines_above = true,
           virt_lines = {
-            { { text, "VirtNonText" } },
+            { { text, "NonText" } },
           },
         })
       end

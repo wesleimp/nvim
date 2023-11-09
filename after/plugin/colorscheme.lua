@@ -1,14 +1,12 @@
 vim.opt.termguicolors = true
 vim.o.background = "dark"
 
-require("tokyonight").setup({
-  style = "night",
-  styles = {
-    keywords = { italic = false },
-  },
+require("gruvbox").setup({
+  bold = false,
+  contrast = "hard",
 })
 
-vim.cmd("colorscheme tokyonight")
+vim.cmd("colorscheme gruvbox")
 
 local hl = function(thing, opts)
   vim.api.nvim_set_hl(0, thing, opts)

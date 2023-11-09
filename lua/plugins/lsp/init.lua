@@ -18,6 +18,11 @@ local source_mapping = {
 local lspkind = require("lspkind")
 lspkind.init({ mode = "text" })
 
+local signature = require("lsp_signature")
+signature.setup({
+  hint_prefix = "",
+})
+
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
@@ -127,7 +132,8 @@ local augroup_codelens =
 local filetype_attach = setmetatable({
   ocaml = function()
     autocmd_format(false)
-
+  end,
+  elixir = function()
     -- Display type information
     autocmd_clear({ group = augroup_codelens, buffer = 0 })
     autocmd({ "BufEnter", "BufWritePost", "CursorHold" }, {
@@ -211,6 +217,10 @@ local on_attach = function(client, bufnr)
     })
   end, opts)
 
+  nmap("<leader>s", function()
+    signature.toggle_float_win()
+  end, { silent = true, noremap = true, desc = "toggle signature" })
+
   if false and client.server_capabilities.codeLensProvider then
     autocmd_clear({ group = augroup_codelens, buffer = bufnr })
     autocmd({ "BufEnter" }, {
@@ -276,7 +286,14 @@ lspconfig.gopls.setup(config({
   },
 }))
 
-lspconfig.elixirls.setup(config())
+lspconfig.elixirls.setup(config({
+  settings = {
+    elixirLS = {
+      dialyzerEnabled = true,
+      suggestSpecs = true,
+    },
+  },
+}))
 lspconfig.rust_analyzer.setup(config())
 lspconfig.ocamllsp.setup(config())
 lspconfig.solargraph.setup(config())

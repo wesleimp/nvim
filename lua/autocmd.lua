@@ -37,29 +37,6 @@ autocmd({ "BufNewFile", "BufRead" }, {
   command = "set ft=dockerfile",
 })
 
--- Toggle relative numbers when leave or enter buffer
-local numtoggle_group = augroup("numtoggle", {})
-autocmd({ "BufEnter", "FocusGained", "InsertLeave", "CmdlineLeave", "WinEnter" }, {
-  pattern = "*",
-  group = numtoggle_group,
-  callback = function()
-    if vim.o.nu and vim.api.nvim_get_mode().mode ~= "i" then
-      vim.opt.relativenumber = true
-    end
-  end,
-})
-
-autocmd({ "BufLeave", "FocusLost", "InsertEnter", "CmdlineEnter", "WinLeave" }, {
-  pattern = "*",
-  group = numtoggle_group,
-  callback = function()
-    if vim.o.nu then
-      vim.opt.relativenumber = false
-      vim.cmd("redraw")
-    end
-  end,
-})
-
 autocmd({ "TermOpen" }, {
   pattern = "*",
   command = "setlocal nonumber norelativenumber",
