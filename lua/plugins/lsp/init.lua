@@ -6,6 +6,7 @@ local luasnip = require("luasnip")
 
 local _ = require("plugins.lsp.handlers")
 local codelens = require("plugins.lsp.codelens")
+local elixir_cmds = require("plugins.lsp.elixir.commands")
 
 local source_mapping = {
   buffer = "[Buffer]",
@@ -130,10 +131,10 @@ end
 local augroup_codelens =
   vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
 local filetype_attach = setmetatable({
-  ocaml = function()
+  ocaml = function(_)
     autocmd_format(false)
   end,
-  elixir = function()
+  elixir = function(client)
     -- Display type information
     autocmd_clear({ group = augroup_codelens, buffer = 0 })
     autocmd({ "BufEnter", "BufWritePost", "CursorHold" }, {
@@ -141,22 +142,22 @@ local filetype_attach = setmetatable({
       buffer = 0,
       callback = codelens.refresh_virtlines,
     })
+    local opts = { silent = true, buffer = 0 }
+    nmap("<space>vl", codelens.toggle_virtlines, opts)
 
-    nmap(
-      "<space>vl",
-      codelens.toggle_virtlines,
-      { silent = true, desc = "[T]oggle [T]ypes", buffer = 0 }
-    )
+    -- Manipulate pipes
+    nmap("<leader>efp", elixir_cmds.from_pipe(client), opts)
+    nmap("<leader>etp", elixir_cmds.to_pipe(client), opts)
   end,
-  lua = function()
+  lua = function(_)
     autocmd_format(false)
   end,
-  rust = function()
+  rust = function(_)
     autocmd_format(false)
   end,
 }, {
-  __index = function()
-    return function() end
+  __index = function(_)
+    return function(_) end
   end,
 })
 
@@ -237,7 +238,7 @@ local on_attach = function(client, bufnr)
   end
 
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-  filetype_attach[filetype]()
+  filetype_attach[filetype](client)
 end
 
 ------------------------------------------------------------

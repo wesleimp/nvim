@@ -36,7 +36,7 @@ M.refresh_virtlines = function()
           vim.api.nvim_buf_get_text(bufnr, start_line, 0, start_line, -1, {})[1]
 
         local ident = #string.match(buf_line, "^%s*")
-        local text = string.rep(" ", ident) .. title
+        local text = string.gsub(string.rep(" ", ident) .. title, "\n", " ")
 
         vim.api.nvim_buf_set_extmark(bufnr, ns, start_line, 0, {
           virt_lines_above = true,
