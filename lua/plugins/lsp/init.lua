@@ -116,23 +116,23 @@ local function nmap(lhs, rhs, opts)
   vim.keymap.set("n", lhs, rhs, opts)
 end
 
-local augroup_format =
-  vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
-local autocmd_format = function(async, filter)
-  vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    buffer = 0,
-    callback = function()
-      vim.lsp.buf.format({ async = async, filter = filter })
-    end,
-  })
-end
+-- local augroup_format =
+--   vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
+-- local autocmd_format = function(async, filter)
+--   vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
+--   vim.api.nvim_create_autocmd("BufWritePre", {
+--     buffer = 0,
+--     callback = function()
+--       vim.lsp.buf.format({ async = async, filter = filter })
+--     end,
+--   })
+-- end
 
 local augroup_codelens =
   vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
 local filetype_attach = setmetatable({
   ocaml = function(_)
-    autocmd_format(false)
+    -- autocmd_format(false)
   end,
   elixir = function(client)
     -- Display type information
@@ -150,10 +150,10 @@ local filetype_attach = setmetatable({
     nmap("<leader>etp", elixir_cmds.to_pipe(client), opts)
   end,
   lua = function(_)
-    autocmd_format(false)
+    -- autocmd_format(false)
   end,
   rust = function(_)
-    autocmd_format(false)
+    -- autocmd_format(false)
   end,
 }, {
   __index = function(_)

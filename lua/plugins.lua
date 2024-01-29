@@ -44,6 +44,8 @@ require("packer").startup(function(use)
   use({ "lvimuser/lsp-inlayhints.nvim" })
   use({ "ray-x/lsp_signature.nvim" })
 
+  use({ "stevearc/conform.nvim" })
+
   -- Sql
   use({ "tpope/vim-dadbod" })
   use({ "kristijanhusak/vim-dadbod-completion" })
@@ -97,7 +99,8 @@ require("packer").startup(function(use)
   -- Themes
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "ellisonleao/gruvbox.nvim" })
-  use({ "catppuccin/nvim", as = "catppuccin" })
+  use({ "tjdevries/colorbuddy.nvim" })
+  use({ "tjdevries/gruvbuddy.nvim" })
 
   use({
     "norcalli/nvim-colorizer.lua",
