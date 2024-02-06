@@ -100,11 +100,6 @@ nmap(
   { noremap = true, silent = true }
 )
 nmap(
-  "<C-b>",
-  ":lua require('telescope.builtin').buffers()<cr>",
-  { noremap = true, silent = true }
-)
-nmap(
   "<leader>fs",
   ":lua require('telescope.builtin').grep_string({search = vim.fn.expand('<cword>')})<CR>",
   { noremap = true, silent = true }
@@ -170,6 +165,10 @@ tmap("<Esc>", "<C-\\><C-N>", { noremap = true, silent = true })
 local M = {
   map = map,
   nmap = nmap,
+  imap = imap,
+  vmap = vmap,
+  omap = omap,
+  tmap = tmap,
 }
 
 return M

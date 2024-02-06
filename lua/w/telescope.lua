@@ -102,10 +102,10 @@ telescope.setup({
   },
 })
 
-telescope.load_extension("fzy_native")
+telescope.load_extension("fzf")
 telescope.load_extension("ui-select")
 telescope.load_extension("notify")
-telescope.load_extension("harpoon")
+telescope.load_extension("neoclip")
 
 local M = {}
 M.search_dotfiles = function()

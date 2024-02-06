@@ -4,9 +4,9 @@ local autocmd_clear = vim.api.nvim_clear_autocmds
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
-local _ = require("plugins.lsp.handlers")
-local codelens = require("plugins.lsp.codelens")
-local elixir_cmds = require("plugins.lsp.elixir.commands")
+local _ = require("w.lsp.handlers")
+local codelens = require("w.lsp.codelens")
+local elixir_cmds = require("w.lsp.elixir.commands")
 
 local source_mapping = {
   buffer = "[Buffer]",
