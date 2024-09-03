@@ -4,7 +4,7 @@ return {
   { "nvim-lua/popup.nvim" },
   { "tjdevries/cyclist.vim" },
   { "tjdevries/express_line.nvim", dev = false },
-  { "tjdevries/overlength.vim" },
+  -- { "tjdevries/overlength.vim" },
 
   { "tjdevries/green_light.nvim" },
 

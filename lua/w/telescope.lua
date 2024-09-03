@@ -6,6 +6,7 @@ end
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 local themes = require("telescope.themes")
+local credo_ext = require("w.telescope.credo")
 
 local bchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
 
@@ -92,6 +93,7 @@ telescope.setup({
     },
   },
   extensions = {
+    credo = credo_ext,
     fzy = {
       override_generic_sorter = false, -- override the generic sorter
       override_file_sorter = true, -- override the file sorter

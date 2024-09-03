@@ -100,7 +100,7 @@ nmap(
   { noremap = true, silent = true }
 )
 nmap(
-  "<leader>fs",
+  "<leader>fd",
   ":lua require('telescope.builtin').grep_string({search = vim.fn.expand('<cword>')})<CR>",
   { noremap = true, silent = true }
 )
@@ -153,13 +153,8 @@ nmap("<F4>", ":Twilight<CR>", { noremap = true, silent = true })
 --------------------------------------------------
 -- Misc
 --------------------------------------------------
-nmap("<leader>u", ":UndotreeShow<CR>", { noremap = true })
-
--- Tree
-nmap("<leader>T", ":Explore<CR>", { noremap = true, silent = true })
-
 -- Terminal
-tmap("<Esc>", "<C-\\><C-N>", { noremap = true, silent = true })
+-- tmap("<Esc>", "<C-\\><C-N>", { noremap = true, silent = true })
 
 -- Exports
 local M = {
