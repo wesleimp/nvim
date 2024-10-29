@@ -15,6 +15,7 @@ require("sets")
 require("keymaps")
 require("cmd")
 require("autocmd")
+require("terminal")
 
 vim.g.VM_leader = ","
 vim.g.format_on_save = 0

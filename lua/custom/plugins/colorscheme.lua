@@ -2,7 +2,12 @@ return {
   { "ellisonleao/gruvbox.nvim" },
   { "tjdevries/colorbuddy.nvim" },
   { "tjdevries/gruvbuddy.nvim" },
-  { "norcalli/nvim-colorizer.lua" },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
+    end,
+  },
   { "navarasu/onedark.nvim" },
   {
     "maxmx03/solarized.nvim",

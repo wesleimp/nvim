@@ -41,3 +41,9 @@ autocmd({ "TermOpen" }, {
   pattern = "*",
   command = "setlocal nonumber norelativenumber",
 })
+
+autocmd({ "BufNewFile", "BufRead" }, {
+  group = wesleimp_group,
+  pattern = { "*.env", ".env.*" },
+  command = "set ft=env",
+})

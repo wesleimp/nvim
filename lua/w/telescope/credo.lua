@@ -12,7 +12,7 @@ function M.issues()
         "credo",
         "--format",
         "flycheck",
-      }),
+      }, {}),
       sorter = conf.generic_sorter({}),
       previewer = false,
     })
