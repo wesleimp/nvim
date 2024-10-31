@@ -15,12 +15,12 @@ autocmd("TextYankPost", {
   end,
 })
 
--- -- Substitute trainling space
--- autocmd({ "BufWritePre" }, {
---   group = wesleimp_group,
---   pattern = "*",
---   command = "%s/\\s\\+$//e",
--- })
+-- Substitute trainling space
+autocmd({ "BufWritePre" }, {
+  group = wesleimp_group,
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
+})
 
 -- Create folder on save if not exists
 autocmd({ "BufWritePre" }, {

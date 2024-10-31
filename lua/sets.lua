@@ -1,73 +1,34 @@
 local opt = vim.opt
-local g = vim.g
 
--- History
-opt.history = 50
+----- Interesting Options -----
 
--- Display
-opt.ls = 2
-opt.showmode = false
-opt.showcmd = true
-opt.cmdheight = 1
-opt.modeline = true
-opt.ruler = true
-opt.title = true
+-- You have to turn this one on :)
+opt.inccommand = "split"
+
+-- Best search settings :)
+opt.smartcase = true
+opt.ignorecase = true
+
+----- Personal Preferences -----
 opt.number = true
 opt.relativenumber = true
-opt.encoding = "utf8"
-opt.previewheight = 5
-opt.completeopt = "menu,menuone,noselect,preview,noinsert"
-opt.guifont = ""
-opt.termguicolors = true
-opt.list = true
-opt.listchars:append("tab:→\\ ,eol:↲,nbsp:␣,trail:•")
-opt.scrolloff = 5
 opt.splitbelow = true
 opt.splitright = true
+opt.signcolumn = "yes"
+opt.shada = { "'10", "<0", "s10", "h" }
+opt.swapfile = false
 
--- Cursor highlight
-opt.cursorline = true
-
--- Line wrapping
-opt.wrap = false
+-- Don't have `o` add a comment
+opt.formatoptions:remove("o")
+opt.wrap = true
 opt.linebreak = true
-opt.showbreak = "❯ "
-
--- Auto indent what you can
-opt.autoindent = true
-opt.smartindent = true
-
--- Searching
-opt.ignorecase = true
-opt.smartcase = true
-opt.gdefault = true
-opt.hlsearch = true
-opt.showmatch = true
-
--- Enable jumping into files in a search buffer
-opt.hidden = true
-
--- Make backspace a bit nicer
-opt.backspace = { "indent", "start", "eol" }
-
--- Indentation
-opt.shiftwidth = 2
-opt.softtabstop = 2
 opt.tabstop = 2
-opt.shiftround = true
+opt.softtabstop = 2
+opt.shiftwidth = 2
 opt.expandtab = true
+opt.termguicolors = true
+opt.cursorline = true
+-- opt.colorcolumn = "80"
+-- opt.signcolumn = "yes"
 
-opt.mouse = "a"
-opt.colorcolumn = "80"
-opt.laststatus = 2
-opt.wildmenu = true
-opt.wildignore:append(
-  "*deps/*,*_build/*,**/coverage/*,**/node_modules/*,**/.git/*"
-)
-
-g.netrw_browse_split = 0
-g.netrw_banner = 0
-g.netrw_winsize = 25
-
--- filetype
-vim.cmd("filetype plugin indent on")
+opt.more = false

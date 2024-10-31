@@ -1,20 +1,6 @@
-if true then
-  return
-end
 local neotest = require("neotest")
 
 neotest.setup({
-  log_level = vim.log.levels.DEBUG,
-  quickfix = {
-    open = false,
-  },
-  status = {
-    virtual_text = true,
-    signs = false,
-  },
-  output = {
-    open_on_run = false,
-  },
   icons = {
     running_animated = {
       "⠋",
@@ -27,11 +13,6 @@ neotest.setup({
       "⠧",
       "⠇",
       "⠏",
-    },
-  },
-  strategies = {
-    integrated = {
-      width = 180,
     },
   },
   adapters = {
@@ -64,7 +45,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 local mappings = {
   ["<leader>nr"] = function()
-    neotest.run.run({ vim.fn.expand("%:p") })
+    neotest.run.run(vim.fn.expand("%:p"))
   end,
   ["<leader>nx"] = function()
     neotest.run.stop()

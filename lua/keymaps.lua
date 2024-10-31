@@ -1,6 +1,6 @@
 local function _map(mode)
   return function(lhs, rhs, opt)
-    vim.api.nvim_set_keymap(mode, lhs, rhs, opt or {})
+    vim.keymap.set(mode, lhs, rhs, opt or {})
   end
 end
 
@@ -40,13 +40,7 @@ map("<leader>y", '"+y<esc>', { noremap = true })
 map("<leader>p", '"+p<esc>', { noremap = true })
 
 --No highlight after search
-nmap("<leader><esc>", ":noh<CR>", { noremap = true, silent = true })
-
--- Escapehell
-nmap("<Tab-j>", "<Esc>", { noremap = true })
-vmap("<Tab-j>", "<Esc>", { noremap = true })
-omap("<Tab-j>", "<Esc>", { noremap = true })
-imap("<Tab-j>", "<Esc>", { noremap = true })
+nmap("<leader><CR>", ":noh<CR>", { noremap = true, silent = true })
 
 nmap("<C-[>", ":tabn<cr>", { noremap = true, silent = true })
 nmap("<C-]>", ":tabp<cr>", { noremap = true, silent = true })
@@ -54,17 +48,20 @@ nmap("<C-]>", ":tabp<cr>", { noremap = true, silent = true })
 --------------------------------------------------
 --Buffer
 --------------------------------------------------
---Buffer navigation
-map("<leader>gn", ":bn<cr>")
-map("<leader>gp", ":bp<cr>")
-map("<leader>dd", ":bd<cr>")
-
 -- Pane switching
 map("<C-j>", "<C-W>j")
 map("<C-k>", "<C-W>k")
 map("<C-h>", "<C-W>h")
 map("<C-l>", "<C-W>l")
 
+map("<left>", "gT")
+map("<right>", "gt")
+
+-- These mappings control the size of splits (height/width)
+map("<M-,>", "<c-w>5<")
+map("<M-.>", "<c-w>5>")
+map("<M-t>", "<C-W>+")
+map("<M-s>", "<C-W>-")
 --------------------------------------------------
 -- vim-test
 --------------------------------------------------

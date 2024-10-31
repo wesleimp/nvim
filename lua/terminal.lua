@@ -13,11 +13,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 -- Easily hit escape in terminal mode.
-vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", { buffer = 0 })
-vim.keymap.set("t", "<C-q>", "<c-\\><c-n>", { buffer = 0 })
+vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
+vim.keymap.set("t", "<M-c>", "<c-\\><c-n>")
 
 -- Open a terminal at the bottom of the screen with a fixed height.
-vim.keymap.set("n", "T", function()
+vim.keymap.set("n", "<leader>T", function()
   vim.cmd.new()
   vim.cmd.wincmd("J")
   vim.api.nvim_win_set_height(0, 12)
