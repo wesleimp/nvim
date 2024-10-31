@@ -35,24 +35,12 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("custom.plugins", {
+  change_detection = {
+    notify = false,
+  },
   dev = {
     -- directory where you store your local plugin projects
     path = "~/plugins",
     fallback = false,
-  },
-  ui = {
-    icons = {
-      cmd = "⌘",
-      config = "🛠",
-      event = "📅",
-      ft = "📂",
-      init = "⚙",
-      keys = "🗝",
-      plugin = "🔌",
-      runtime = "💻",
-      source = "📄",
-      start = "🚀",
-      task = "📌",
-    },
   },
 })

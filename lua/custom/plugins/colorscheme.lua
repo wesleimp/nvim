@@ -14,10 +14,17 @@ return {
     end,
   },
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
     config = function()
-      require("rose-pine").setup({})
+      require("tokyonight").setup({
+        style = "night",
+        styles = {
+          keywords = { italic = false },
+        },
+      })
     end,
   },
   {
