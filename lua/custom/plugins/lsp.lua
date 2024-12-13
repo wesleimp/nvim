@@ -84,23 +84,6 @@ return {
           },
         },
 
-        -- ocamllsp = {
-        --   manual_install = true,
-        --   settings = {
-        --     codelens = { enable = true },
-        --     inlayHints = { enable = true },
-        --   },
-        --
-        --   filetypes = {
-        --     "ocaml",
-        --     "ocaml.interface",
-        --     "ocaml.menhir",
-        --     "ocaml.cram",
-        --   },
-        --
-        --   -- TODO: Check if i still need the filtypes stuff i had before
-        -- },
-
         lexical = {
           cmd = {
             vim.fn.expand("~/.local/share/nvim/mason/bin/lexical"),
@@ -108,6 +91,8 @@ return {
           },
           root_dir = require("lspconfig.util").root_pattern({ "mix.exs" }),
         },
+
+        terraformls = true,
       }
 
       local servers_to_install = vim.tbl_filter(function(key)
@@ -216,23 +201,6 @@ return {
           if disable_semantic_tokens[filetype] then
             client.server_capabilities.semanticTokensProvider = nil
           end
-        end,
-      })
-
-      -- Autoformatting Setup
-      require("conform").setup({
-        formatters_by_ft = {
-          lua = { "stylua" },
-        },
-      })
-
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        callback = function(args)
-          require("conform").format({
-            bufnr = args.buf,
-            lsp_fallback = true,
-            quiet = true,
-          })
         end,
       })
     end,

@@ -11,10 +11,12 @@ local source_mapping = {
   nvim_lsp = "[LSP]",
   path = "[Path]",
   luasnip = "[LuaSnip]",
+  copilot = "[Copilot]",
 }
 
 cmp.setup({
   sources = {
+    { name = "copilot" },
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "path" },
@@ -46,6 +48,7 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "n" }),
   },
 
   -- Enable luasnip to handle snippet expansion for nvim-cmp

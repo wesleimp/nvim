@@ -2,7 +2,21 @@ return {
   {
     "ellisonleao/gruvbox.nvim",
     config = function()
-      require("gruvbox").setup({})
+      require("gruvbox").setup({
+        terminal_colors = true, -- add neovim terminal colors
+        undercurl = true,
+        underline = true,
+        bold = true,
+        italic = {
+          strings = false,
+          emphasis = false,
+          comments = true,
+          operators = false,
+          folds = true,
+        },
+        dim_inactive = false,
+        transparent_mode = false,
+      })
     end,
   },
   { "tjdevries/colorbuddy.nvim" },
@@ -14,17 +28,12 @@ return {
     end,
   },
   {
-    "folke/tokyonight.nvim",
+    "ramojus/mellifluous.nvim",
     lazy = false,
     priority = 1000,
     opts = {},
     config = function()
-      require("tokyonight").setup({
-        style = "night",
-        styles = {
-          keywords = { italic = false },
-        },
-      })
+      require("mellifluous").setup({}) -- optional, see configuration section.
     end,
   },
   {

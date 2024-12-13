@@ -17,6 +17,15 @@ opt.splitright = true
 opt.signcolumn = "yes"
 opt.shada = { "'10", "<0", "s10", "h" }
 opt.swapfile = false
+opt.backspace = { "indent", "start", "eol" }
+opt.listchars = {
+  tab = "→\\ ",
+  eol = "↲",
+  nbsp = "␣",
+  trail = "•",
+  extends = "⟩",
+  precedes = "⟨",
+}
 
 -- Don't have `o` add a comment
 opt.formatoptions:remove("o")
@@ -28,7 +37,10 @@ opt.shiftwidth = 2
 opt.expandtab = true
 opt.termguicolors = true
 opt.cursorline = true
+opt.cursorcolumn = true
 -- opt.colorcolumn = "80"
 -- opt.signcolumn = "yes"
 
 opt.more = false
+
+opt.ruler = true

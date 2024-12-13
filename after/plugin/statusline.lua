@@ -1,3 +1,7 @@
+if true then
+  return
+end
+
 -- TODO: Need to add those sweet sweet lsp workspace diagnostic counts
 if not pcall(require, "el") then
   -- TODO: Add in a nice default statusline here.

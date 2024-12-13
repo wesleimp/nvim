@@ -13,7 +13,6 @@ require("globals")
 -- require("plugins")
 require("sets")
 require("keymaps")
-require("cmd")
 require("autocmd")
 require("terminal")
 
