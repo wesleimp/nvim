@@ -1,6 +1,8 @@
+---@diagnostic disable: missing-fields
 local opt = vim.opt
 
 ----- Interesting Options -----
+vim.g.have_nerd_font = true
 
 -- You have to turn this one on :)
 opt.inccommand = "split"
@@ -10,6 +12,7 @@ opt.smartcase = true
 opt.ignorecase = true
 
 ----- Personal Preferences -----
+opt.mouse = "a"
 opt.number = true
 opt.relativenumber = true
 opt.splitbelow = true
@@ -38,6 +41,7 @@ opt.expandtab = true
 opt.termguicolors = true
 opt.cursorline = true
 opt.cursorcolumn = true
+opt.scrolloff = 8
 -- opt.colorcolumn = "80"
 -- opt.signcolumn = "yes"
 
