@@ -1,3 +1,4 @@
+---@diagnostic disable:missing-fields
 require("custom.snippets")
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
