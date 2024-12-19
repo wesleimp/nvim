@@ -1,7 +1,9 @@
-require("custom.snippets")
+---@diagnostic disable:missing-fields
+if true then
+  return
+end
 
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
-vim.opt.shortmess:append("c")
+require("custom.snippets")
 
 local lspkind = require("lspkind")
 

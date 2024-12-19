@@ -3,25 +3,35 @@ return {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        filetypes = {
-          javascript = true,
-          typescript = true,
-          elixir = true,
-          lua = true,
-          go = true,
-          rust = true,
-          ["*"] = false, -- least permissible
+    keys = {
+      { "<leader>cp", "<cmd>Copilot panel<cr>", desc = "Open copilot panel" },
+    },
+    opts = {
+      suggestion = { enabled = false },
+      panel = {
+        enabled = false,
+        keymap = {
+          jump_prev = "[[",
+          jump_next = "]]",
+          accept = "<CR>",
+          refresh = "gr",
         },
-      })
-    end,
+      },
+      filetypes = {
+        javascript = true,
+        typescript = true,
+        elixir = true,
+        lua = true,
+        go = true,
+        rust = true,
+        ["*"] = false, -- least permissible
+      },
+    },
   },
-  {
-    "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   config = function()
+  --     require("copilot_cmp").setup()
+  --   end,
+  -- },
 }

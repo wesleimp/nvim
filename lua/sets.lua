@@ -1,4 +1,8 @@
+---@diagnostic disable:missing-fields
 local opt = vim.opt
+local g = vim.g
+
+g.have_nerd_font = true
 
 ----- Interesting Options -----
 
@@ -10,6 +14,7 @@ opt.smartcase = true
 opt.ignorecase = true
 
 ----- Personal Preferences -----
+opt.mouse = "a"
 opt.number = true
 opt.relativenumber = true
 opt.splitbelow = true
@@ -26,6 +31,8 @@ opt.listchars = {
   extends = "⟩",
   precedes = "⟨",
 }
+opt.completeopt = { "menu", "menuone", "noselect" }
+opt.shortmess:append("c")
 
 -- Don't have `o` add a comment
 opt.formatoptions:remove("o")
@@ -38,9 +45,12 @@ opt.expandtab = true
 opt.termguicolors = true
 opt.cursorline = true
 opt.cursorcolumn = true
+opt.scrolloff = 8
 -- opt.colorcolumn = "80"
 -- opt.signcolumn = "yes"
 
 opt.more = false
 
 opt.ruler = true
+
+opt.undofile = true

@@ -1,6 +1,7 @@
 vim.opt.termguicolors = true
 vim.o.background = "dark"
 
+local function sort() end
 -- require("colorbuddy").colorscheme("gruvbuddy")
 --
 vim.cmd("colorscheme mellifluous")

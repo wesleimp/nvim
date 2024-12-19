@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
   { "simrat39/inlay-hints.nvim" },
   { "j-hui/fidget.nvim", branch = "legacy" },
@@ -25,18 +26,104 @@ return {
       { "folke/neodev.nvim" },
       -- Formatting plugin
       { "stevearc/conform.nvim" },
+      {
+        "saghen/blink.cmp",
+        dependencies = {
+          "rafamadriz/friendly-snippets",
+          { "giuxtaposition/blink-cmp-copilot" },
+        },
+        version = "v0.*",
+        opts = {
+          completion = {
+            menu = {
+              draw = {
+                columns = {
+                  { "label", "label_description", gap = 1 },
+                  { "kind" },
+                  { "source_name" },
+                },
+              },
+            },
+            documentation = {
+              auto_show = true,
+            },
+          },
+          keymap = {
+            preset = "default",
+            ["<C-m>"] = { "select_and_accept" },
+            ["<CR>"] = { "accept", "fallback" },
+            ["<C-k>"] = { "snippet_forward", "fallback" },
+            ["<C-j>"] = { "snippet_backward", "fallback" },
+            ["<Tab>"] = { "fallback" },
+          },
+          appearance = {
+            use_nvim_cmp_as_default = true,
+            nerd_font_variant = "mono",
+          },
+          sources = {
+            completion = {
+              enable_providers = {
+                "lsp",
+                "path",
+                "luasnip",
+                "buffer",
+                "copilot",
+              },
+            },
+            providers = {
+              copilot = {
+                name = "copilot",
+                module = "blink-cmp-copilot",
+                score_offset = 100,
+                async = true,
+                transform_items = function(_, items)
+                  local CompletionItemKind =
+                    require("blink.cmp.types").CompletionItemKind
+                  local kind_idx = #CompletionItemKind + 1
+                  CompletionItemKind[kind_idx] = "Copilot"
+                  for _, item in ipairs(items) do
+                    item.kind = kind_idx
+                  end
+                  return items
+                end,
+              },
+            },
+          },
+          snippets = {
+            expand = require("luasnip").lsp_expand,
+            jump = function(direction)
+              if direction == 1 then
+                if require("luasnip").expandable() then
+                  return require("luasnip").expand_or_jump()
+                else
+                  return require("luasnip").jumpable(1)
+                    and require("luasnip").jump(1)
+                end
+              else
+                return require("luasnip").jumpable(-1)
+                  and require("luasnip").jump(-1)
+              end
+            end,
+            active = function(filter)
+              filter = filter or {}
+              filter.direction = filter.direction or 1
+
+              if filter.direction == 1 then
+                return require("luasnip").expand_or_jumpable()
+              else
+                return require("luasnip").jumpable(filter.direction)
+              end
+            end,
+          },
+        },
+      },
+      opts_extend = { "sources.completion.enabled_providers" },
     },
-    -- config = function()
-    --   require("w.lsp")
-    -- end,
     config = function()
-      require("neodev").setup({})
+      require("neodev").setup()
+      require("custom.snippets")
 
-      local capabilities = nil
-      if pcall(require, "cmp_nvim_lsp") then
-        capabilities = require("cmp_nvim_lsp").default_capabilities()
-      end
-
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
       local lspconfig = require("lspconfig")
 
       local servers = {
@@ -139,17 +226,6 @@ return {
             vim.lsp.get_client_by_id(args.data.client_id),
             "must have valid client"
           )
-
-          -- nmap("<leader>gD", vim.lsp.buf.declaration, opts)
-          -- nmap("<leader>gd", vim.lsp.buf.definition, opts)
-          -- nmap("<leader>rn", vim.lsp.buf.rename, opts)
-          -- nmap("<leader>k", vim.lsp.buf.hover, opts)
-          -- nmap("<leader>D", vim.lsp.buf.type_definition, opts)
-          -- nmap("<leader>ca", vim.lsp.buf.code_action, opts)
-          -- nmap("<leader>f", vim.lsp.buf.format or vim.lsp.buf.formatting, opts)
-          -- nmap("<leader>sd", function()
-          --   vim.diagnostic.open_float(0, { scope = "line" })
-          -- end, opts)
 
           local builtin = require("telescope.builtin")
           vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
