@@ -6,6 +6,7 @@ return {
     config = function()
       require("copilot").setup({
         suggestion = { enabled = false },
+        panel = { enabled = false, auto_refresh = true },
         filetypes = {
           javascript = true,
           typescript = true,

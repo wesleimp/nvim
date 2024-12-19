@@ -25,7 +25,15 @@ return {
         },
         sections = {
           lualine_a = { "mode" },
-          lualine_b = { "branch", "diff" },
+          lualine_b = {
+            {
+              "branch",
+              fmt = function(str)
+                return str:sub(1, 15) .. "..."
+              end,
+            },
+            "diff",
+          },
           lualine_c = { { "filename", path = 3 } },
           lualine_x = { "diagnostics", "filetype" },
           lualine_y = { "progress" },

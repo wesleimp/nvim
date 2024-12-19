@@ -1,3 +1,4 @@
+local ls = require("luasnip")
 return {
   { "simrat39/inlay-hints.nvim" },
   { "j-hui/fidget.nvim", branch = "legacy" },
@@ -25,18 +26,84 @@ return {
       { "folke/neodev.nvim" },
       -- Formatting plugin
       { "stevearc/conform.nvim" },
+      {
+        "saghen/blink.cmp",
+        dependencies = {
+          "rafamadriz/friendly-snippets",
+          "giuxtaposition/blink-cmp-copilot",
+        },
+        version = "v0.*",
+        opts = {
+          completion = {
+            menu = {
+              draw = {
+                columns = {
+                  { "label", "label_description", gap = 1 },
+                  { "kind" },
+                  { "source_name" },
+                },
+              },
+            },
+          },
+          keymap = {
+            preset = "default",
+            ["<C-m>"] = { "select_and_accept" },
+            ["<CR>"] = { "accept", "fallback" },
+            ["<C-k>"] = { "snippet_forward", "fallback" },
+            ["<C-j>"] = { "snippet_backward", "fallback" },
+            ["<Tab>"] = { "fallback" },
+          },
+          appearance = {
+            use_nvim_cmp_as_default = true,
+            nerd_font_variant = "mono",
+          },
+          documentation = {
+            auto_show = true,
+          },
+          sources = {
+            default = { "lsp", "path", "luasnip", "buffer", "copilot" },
+            providers = {
+              copilot = {
+                name = "copilot",
+                module = "blink-cmp-copilot",
+                score_offset = 100,
+                async = true,
+              },
+            },
+          },
+          signature = { enabled = true },
+          snippets = {
+            stop = ls.unlink_current,
+            expand = ls.lsp_expand,
+            jump = function(direction)
+              if direction == 1 then
+                if ls.expandable() then
+                  return ls.expand_or_jump()
+                else
+                  return ls.jumpable(1) and ls.jump(1)
+                end
+              else
+                return ls.jumpable(-1) and ls.jump(-1)
+              end
+            end,
+            active = function(filter)
+              filter = filter or {}
+              filter.direction = filter.direction or 1
+
+              if filter.direction == 1 then
+                return ls.expand_or_jumpable()
+              else
+                return ls.jumpable(filter.direction)
+              end
+            end,
+          },
+        },
+      },
     },
-    -- config = function()
-    --   require("w.lsp")
-    -- end,
     config = function()
-      require("neodev").setup({})
+      require("neodev").setup()
 
-      local capabilities = nil
-      if pcall(require, "cmp_nvim_lsp") then
-        capabilities = require("cmp_nvim_lsp").default_capabilities()
-      end
-
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
       local lspconfig = require("lspconfig")
 
       local servers = {

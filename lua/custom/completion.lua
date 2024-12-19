@@ -1,3 +1,6 @@
+if true then
+  return
+end
 require("custom.snippets")
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }

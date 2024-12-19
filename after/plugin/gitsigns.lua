@@ -4,8 +4,9 @@ if not ok then
 end
 
 gitsigns.setup({
-  numhl = false,
+  numhl = true,
   linehl = false,
+  current_line_blame = true,
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
