@@ -9,5 +9,9 @@ local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("elixir", {
   s("el", fmt("<%= {} %>{}", { i(1), i(0) })),
-  s("ei", fmt("<%= if {} do %>{}<% end %>{}", { i(1), i(2), i(0) })),
+  s("eli", fmt("<%= if {} do %>{}<% end %>{}", { i(1), i(2), i(0) })),
+  s(
+    "elf",
+    fmt("<%= for {} <- {} do %>{}<% end %>{}", { i(1), i(2), i(3), i(0) })
+  ),
 })

@@ -6,7 +6,7 @@ end
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 local themes = require("telescope.themes")
-local credo_ext = require("w.telescope.credo")
+local credo_ext = require("user.telescope.credo")
 
 local bchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
 
@@ -64,11 +64,11 @@ telescope.setup({
     colorscheme = { enable_preview = true },
     find_files = {
       hidden = true,
-      file_ignore_patterns = { ".git/" },
+      file_ignore_patterns = { ".git/", "deps/", "_build/" },
       previewer = false,
     },
     live_grep = {
-      file_ignore_patterns = { ".git/" },
+      file_ignore_patterns = { ".git/", "deps/", "_build/" },
     },
     buffers = {
       sort_mru = true,
@@ -124,49 +124,6 @@ M.search_nvimconf = function()
     cwd = vim.env.NVIMCONF,
     hidden = true,
   })
-end
-
-local action_state = require("telescope.actions.state")
-M.file_browser = function()
-  local opts = {
-    file_ignore_patterns = { ".git/" },
-    hidden = true,
-    sorting_strategy = "ascending",
-    scroll_strategy = "cycle",
-    previewer = false,
-    layout_config = {
-      prompt_position = "top",
-    },
-
-    attach_mappings = function(prompt_bufnr, map)
-      local current_picker = action_state.get_current_picker(prompt_bufnr)
-
-      local modify_cwd = function(new_cwd)
-        local finder = current_picker.finder
-
-        finder.path = new_cwd
-        finder.files = true
-        current_picker:refresh(false, { reset_prompt = true })
-      end
-
-      map("i", "-", function()
-        modify_cwd(current_picker.cwd .. "/..")
-      end)
-
-      map("i", "~", function()
-        modify_cwd(vim.fn.expand("~"))
-      end)
-
-      map("n", "yy", function()
-        local entry = action_state.get_selected_entry()
-        vim.fn.setreg("+", entry.value)
-      end)
-
-      return true
-    end,
-  }
-
-  telescope.extensions.file_browser.file_browser(opts)
 end
 
 return M

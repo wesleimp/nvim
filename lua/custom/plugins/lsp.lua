@@ -26,9 +26,6 @@ return {
       -- Formatting plugin
       { "stevearc/conform.nvim" },
     },
-    -- config = function()
-    --   require("w.lsp")
-    -- end,
     config = function()
       require("neodev").setup({})
 

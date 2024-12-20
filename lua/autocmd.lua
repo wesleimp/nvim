@@ -27,7 +27,7 @@ autocmd({ "BufWritePre" }, {
   group = wesleimp_group,
   pattern = "*",
   callback = function()
-    require("w.mkdir").run()
+    require("user.mkdir").run()
   end,
 })
 
