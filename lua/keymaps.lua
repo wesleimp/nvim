@@ -42,8 +42,9 @@ map("<leader>p", '"+p<esc>', { noremap = true })
 --No highlight after search
 nmap("<leader><CR>", ":noh<CR>", { noremap = true, silent = true })
 
-nmap("<C-[>", ":tabn<cr>", { noremap = true, silent = true })
-nmap("<C-]>", ":tabp<cr>", { noremap = true, silent = true })
+nmap("<leader>cn", ":cnext<cr>", { noremap = true, silent = true })
+nmap("<leader>cp", ":cprev<cr>", { noremap = true, silent = true })
+nmap("<leader>co", ":copen<cr>", { noremap = true, silent = true })
 
 --------------------------------------------------
 --Buffer
