@@ -33,7 +33,12 @@ return {
     priority = 1000,
     opts = {},
     config = function()
-      require("mellifluous").setup({}) -- optional, see configuration section.
+      require("mellifluous").setup({
+
+        plugins = {
+          telescope = false,
+        },
+      }) -- optional, see configuration section.
     end,
   },
 }

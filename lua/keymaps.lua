@@ -22,6 +22,12 @@ nmap("Y", "yg$", { noremap = true })
 nmap("n", "nzzzv", { noremap = true })
 nmap("N", "Nzzzv", { noremap = true })
 
+nmap("<leader><leader>r", "<cmd>source %<CR>")
+
+nmap("<M-n>", "<cmd>cnext<CR>")
+nmap("<M-p>", "<cmd>cprev<CR>")
+nmap("<M-o>", ":copen<cr>", { noremap = true, silent = true })
+
 -- line selection without identation
 nmap("vv", "^vg_", { noremap = true })
 
@@ -41,10 +47,6 @@ map("<leader>p", '"+p<esc>', { noremap = true })
 
 --No highlight after search
 nmap("<leader><CR>", ":noh<CR>", { noremap = true, silent = true })
-
-nmap("<leader>cn", ":cnext<cr>", { noremap = true, silent = true })
-nmap("<leader>cp", ":cprev<cr>", { noremap = true, silent = true })
-nmap("<leader>co", ":copen<cr>", { noremap = true, silent = true })
 
 --------------------------------------------------
 --Buffer

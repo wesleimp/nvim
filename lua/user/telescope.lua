@@ -3,22 +3,27 @@ if not ok then
   return
 end
 
+local pickers = require("telescope.pickers")
+local conf = require("telescope.config").values
+local finders = require("telescope.finders")
+
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
-local themes = require("telescope.themes")
-local credo_ext = require("user.telescope.credo")
 
-local bchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
-
-local function dropdown(opts)
-  return themes.get_dropdown(vim.tbl_deep_extend("force", opts or {}, {
-    borderchars = {
-      bchars,
-      prompt = bchars,
-      results = bchars,
-      preview = bchars,
-    },
-  }))
+local credo_issues = function()
+  pickers
+    .new({}, {
+      prompt_title = "Credo Issues",
+      finder = finders.new_oneshot_job({
+        "mix",
+        "credo",
+        "--format",
+        "flycheck",
+      }, {}),
+      sorter = conf.generic_sorter({}),
+      previewer = false,
+    })
+    :find()
 end
 
 telescope.setup({
@@ -36,11 +41,10 @@ telescope.setup({
     qflist_previewer = previewers.vim_buffer_qflist.new,
     file_previewer = previewers.vim_buffer_cat.new,
 
-    borderchars = bchars,
     path_display = { "absolute", "truncate" },
     layout_config = {
       horizontal = {
-        prompt_position = "top",
+        prompt_position = "bottom",
         preview_width = 0.5,
       },
     },
@@ -81,7 +85,9 @@ telescope.setup({
         n = { ["<c-x>"] = "delete_buffer" },
       },
     },
-    git_branches = dropdown(),
+    git_branches = {
+      layout_config = { horizontal = { preview_width = 0.55 } },
+    },
     git_bcommits = {
       layout_config = { horizontal = { preview_width = 0.55 } },
     },
@@ -93,7 +99,7 @@ telescope.setup({
     },
   },
   extensions = {
-    credo = credo_ext,
+    credo = credo_issues,
     fzy = {
       override_generic_sorter = false, -- override the generic sorter
       override_file_sorter = true, -- override the file sorter
