@@ -90,6 +90,7 @@ return {
         },
 
         terraformls = true,
+        zls = true,
       }
 
       local servers_to_install = vim.tbl_filter(function(key)
@@ -177,7 +178,7 @@ return {
           vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, { buffer = 0 })
           vim.keymap.set(
             "n",
-            "f",
+            "<leader>f",
             vim.lsp.buf.format or vim.lsp.buf.formatting,
             { buffer = 0 }
           )

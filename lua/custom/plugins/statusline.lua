@@ -29,7 +29,10 @@ return {
             {
               "branch",
               fmt = function(str)
-                return str:sub(1, 15) .. "..."
+                if #str > 15 then
+                  return str:sub(1, 15) .. "..."
+                end
+                return str
               end,
             },
             "diff",
