@@ -5,7 +5,13 @@ return {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        suggestion = { enabled = false },
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-l>",
+          },
+        },
         filetypes = {
           javascript = true,
           typescript = true,
@@ -21,7 +27,7 @@ return {
   {
     "zbirenbaum/copilot-cmp",
     config = function()
-      require("copilot_cmp").setup()
+      -- require("copilot_cmp").setup()
     end,
   },
 }

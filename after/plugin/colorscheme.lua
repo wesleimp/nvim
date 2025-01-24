@@ -3,4 +3,4 @@
 vim.opt.termguicolors = true
 vim.o.background = "dark"
 
-vim.cmd("colorscheme mellifluous")
+vim.cmd("colorscheme gruvbuddy")

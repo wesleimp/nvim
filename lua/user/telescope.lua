@@ -42,6 +42,7 @@ telescope.setup({
     file_previewer = previewers.vim_buffer_cat.new,
 
     path_display = { "absolute", "truncate" },
+    layout_strategy = "flex",
     layout_config = {
       horizontal = {
         prompt_position = "bottom",

@@ -12,12 +12,12 @@ local source_mapping = {
   nvim_lsp = "[LSP]",
   path = "[Path]",
   luasnip = "[LuaSnip]",
-  copilot = "[Copilot]",
+  -- copilot = "[Copilot]",
 }
 
 cmp.setup({
   sources = {
-    { name = "copilot" },
+    -- { name = "copilot" },
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "path" },

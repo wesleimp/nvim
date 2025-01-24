@@ -1,3 +1,5 @@
+---@diagnostic disable:missing-fields
+
 return {
   { "simrat39/inlay-hints.nvim" },
   { "j-hui/fidget.nvim", branch = "legacy" },
@@ -89,8 +91,19 @@ return {
           root_dir = require("lspconfig.util").root_pattern({ "mix.exs" }),
         },
 
-        terraformls = true,
+        ocamllsp = {
+          -- manual_install = true,
+          -- cmd = { "dune", "tools", "exec", "ocamllsp" },
+          settings = {
+            codelens = { enable = true },
+            inlayHints = { enable = true },
+            syntaxDocumentation = { enable = true },
+          },
+
+          server_capabilities = { semanticTokensProvider = false },
+        },
         zls = true,
+        terraformls = true,
       }
 
       local servers_to_install = vim.tbl_filter(function(key)
