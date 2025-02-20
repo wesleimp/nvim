@@ -69,11 +69,11 @@ telescope.setup({
     colorscheme = { enable_preview = true },
     find_files = {
       hidden = true,
-      file_ignore_patterns = { ".git/", "deps/", "_build/" },
+      file_ignore_patterns = { ".git/", "deps/", "_build/", "node_modules/" },
       previewer = false,
     },
     live_grep = {
-      file_ignore_patterns = { ".git/", "deps/", "_build/" },
+      file_ignore_patterns = { ".git/", "deps/", "_build/", "node_modules/" },
     },
     buffers = {
       sort_mru = true,

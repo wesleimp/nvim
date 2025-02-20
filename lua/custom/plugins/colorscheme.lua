@@ -21,7 +21,6 @@ return {
   },
   { "tjdevries/colorbuddy.nvim" },
   { "tjdevries/gruvbuddy.nvim" },
-  { "navarasu/onedark.nvim" },
   {
     "norcalli/nvim-colorizer.lua",
     config = function()

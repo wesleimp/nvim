@@ -12,6 +12,10 @@ return {
   "romainl/vim-qf",
 
   { "matze/vim-move" },
+  {
+    "OXY2DEV/helpview.nvim",
+    lazy = false,
+  },
 
   {
     "luukvbaal/statuscol.nvim",
