@@ -5,6 +5,10 @@ require("conform").setup({
     go = { "gofmt" },
     markdown = { "markdownlint" },
     yaml = { "yamllint" },
+    javascript = { "prettier" },
+    typescript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescriptreact = { "prettier" },
   },
 })
 

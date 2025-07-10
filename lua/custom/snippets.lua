@@ -39,7 +39,7 @@ ls.config.set_config({
 })
 
 require("luasnip.loaders.from_vscode").load({
-  include = { "elixir", "eelixir", "go", "lua" },
+  include = { "elixir", "eelixir", "go", "lua", "react", "typescript", "html" },
 })
 
 for _, ft_path in

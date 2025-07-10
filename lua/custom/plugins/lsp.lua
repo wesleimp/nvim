@@ -92,18 +92,6 @@ return {
           root_dir = require("lspconfig.util").root_pattern({ "mix.exs" }),
         },
 
-        ocamllsp = {
-          -- manual_install = true,
-          -- cmd = { "dune", "tools", "exec", "ocamllsp" },
-          settings = {
-            codelens = { enable = true },
-            inlayHints = { enable = true },
-            syntaxDocumentation = { enable = true },
-          },
-
-          server_capabilities = { semanticTokensProvider = false },
-        },
-        zls = true,
         terraformls = true,
       }
 

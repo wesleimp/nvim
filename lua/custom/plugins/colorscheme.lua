@@ -22,22 +22,16 @@ return {
   { "tjdevries/colorbuddy.nvim" },
   { "tjdevries/gruvbuddy.nvim" },
   {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup()
     end,
   },
-  {
-    "ramojus/mellifluous.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-    config = function()
-      require("mellifluous").setup({
-        plugins = {
-          telescope = false,
-        },
-      }) -- optional, see configuration section.
-    end,
-  },
+  { dir = "~/git/min-theme.nvim" },
 }
