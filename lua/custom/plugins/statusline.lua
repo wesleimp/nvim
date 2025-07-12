@@ -1,4 +1,26 @@
+local function lsp_clients()
+  return require("lsp-progress").progress({
+    format = function(_)
+      local active_clients = vim.lsp.get_clients()
+      local client_names = {}
+      for _, client in ipairs(active_clients) do
+        if client and client.name ~= "" then
+          table.insert(client_names, "[" .. client.name .. "]")
+        end
+      end
+      return "LSP:" .. table.concat(client_names, "")
+    end,
+  })
+end
+
 return {
+  {
+    "linrongbin16/lsp-progress.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("lsp-progress").setup({})
+    end,
+  },
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -38,7 +60,7 @@ return {
             "diff",
           },
           lualine_c = { { "filename", path = 3 } },
-          lualine_x = { "diagnostics", "filetype" },
+          lualine_x = { lsp_clients, "diagnostics", "filetype" },
           lualine_y = { "progress" },
           lualine_z = { "location" },
         },
