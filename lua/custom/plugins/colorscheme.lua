@@ -14,7 +14,7 @@ return {
           operators = false,
           folds = true,
         },
-        dim_inactive = false,
+        dim_inactive = true,
         transparent_mode = false,
       })
     end,

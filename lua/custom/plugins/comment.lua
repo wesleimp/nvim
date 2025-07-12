@@ -3,54 +3,46 @@ return {
     "numToStr/Comment.nvim",
     config = function()
       require("Comment").setup({
-
-        -- LHS of operator-pending mapping in NORMAL + VISUAL mode
-        opleader = {
-          -- line-comment keymap
-          line = "gc",
-          -- block-comment keymap
-          block = "gb",
-        },
-
-        -- Create basic (operator-pending) and extended mappings for NORMAL + VISUAL mode
-        mappings = {
-
-          -- operator-pending mapping
-          -- Includes:
-          --  `gcc`               -> line-comment  the current line
-          --  `gcb`               -> block-comment the current line
-          --  `gc[count]{motion}` -> line-comment  the region contained in {motion}
-          --  `gb[count]{motion}` -> block-comment the region contained in {motion}
-          basic = true,
-
-          -- extra mapping
-          -- Includes `gco`, `gcO`, `gcA`
-          extra = true,
-        },
-
-        -- LHS of toggle mapping in NORMAL + VISUAL mode
+        ---Add a space b/w comment and the line
+        padding = true,
+        ---Whether the cursor should stay at its position
+        sticky = true,
+        ---Lines to be ignored while (un)comment
+        ignore = nil,
+        ---LHS of toggle mappings in NORMAL mode
         toggler = {
-          -- line-comment keymap
-          --  Makes sense to be related to your opleader.line
+          ---Line-comment toggle keymap
           line = "gcc",
-
-          -- block-comment keymap
-          --  Make sense to be related to your opleader.block
+          ---Block-comment toggle keymap
           block = "gbc",
         },
-
-        -- Pre-hook, called before commenting the line
-        --    Can be used to determine the commentstring value
-        -- pre_hook = nil,
-
-        -- Post-hook, called after commenting is done
-        --    Can be used to alter any formatting / newlines / etc. after commenting
-        -- post_hook = nil,
-
-        -- Can be used to ignore certain lines when doing linewise motions.
-        --    Can be string (lua regex)
-        --    Or function (that returns lua regex)
-        -- ignore = nil,
+        ---LHS of operator-pending mappings in NORMAL and VISUAL mode
+        opleader = {
+          ---Line-comment keymap
+          line = "gc",
+          ---Block-comment keymap
+          block = "gb",
+        },
+        ---LHS of extra mappings
+        extra = {
+          ---Add comment on the line above
+          above = "gcO",
+          ---Add comment on the line below
+          below = "gco",
+          ---Add comment at the end of line
+          eol = "gcA",
+        },
+        ---Enable keybindings
+        ---NOTE: If given `false` then the plugin won't create any mappings
+        mappings = {
+          ---Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
+          basic = true,
+          ---Extra mapping; `gco`, `gcO`, `gcA`
+          extra = true,
+        },
+        ---Function to call before (un)comment
+        pre_hook = nil, ---Function to call after (un)comment
+        post_hook = nil,
       })
 
       local comment_ft = require("Comment.ft")

@@ -3,7 +3,6 @@ return {
   { "nvim-lua/plenary.nvim", dev = false },
   { "nvim-lua/popup.nvim" },
   "milisims/nvim-luaref",
-  "tpope/vim-surround",
   "godlygeek/tabular", -- Quickly align text by pattern
   "tpope/vim-repeat", -- Repeat actions better
   "tpope/vim-abolish", -- Cool things with words!
