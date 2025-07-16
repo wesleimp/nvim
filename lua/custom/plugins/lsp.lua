@@ -203,6 +203,13 @@ return {
           end
         end,
       })
+
+      require("null-ls").setup({
+        sources = {
+          require("user.typos").actions,
+          require("user.typos").diagnostics,
+        },
+      })
     end,
   },
 }
