@@ -28,7 +28,7 @@ nmap("<M-n>", "<cmd>cnext<CR>")
 nmap("<M-p>", "<cmd>cprev<CR>")
 nmap("<M-o>", ":copen<cr>", { noremap = true, silent = true })
 
--- line selection without identation
+-- line selection without indentation
 nmap("vv", "^vg_", { noremap = true })
 
 --remap :W, :Q etc if you press the shift key for too long
