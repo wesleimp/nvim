@@ -36,8 +36,6 @@ return {
         capabilities = require("cmp_nvim_lsp").default_capabilities()
       end
 
-      local lspconfig = require("lspconfig")
-
       local servers = {
         bashls = true,
         gopls = {
@@ -92,7 +90,10 @@ return {
           root_dir = require("lspconfig.util").root_pattern({ "mix.exs" }),
         },
 
+        biome = true,
         terraformls = true,
+        nginx_language_server = true,
+        pyright = true,
       }
 
       local servers_to_install = vim.tbl_filter(function(key)
@@ -117,19 +118,28 @@ return {
         ensure_installed = ensure_installed,
       })
 
+      vim.lsp.config("*", {
+        capabilities = capabilities,
+      })
+
       for name, config in pairs(servers) do
         if config == true then
           config = {}
         end
-        config = vim.tbl_deep_extend("force", {}, {
-          capabilities = capabilities,
-        }, config)
 
-        lspconfig[name].setup(config)
+        -- Only call vim.lsp.config if there are server-specific settings
+        if next(config) ~= nil then
+          -- Remove manual_install flag as it's not an LSP config field
+          local lsp_config = vim.tbl_deep_extend("force", {}, config)
+          lsp_config.manual_install = nil
+          vim.lsp.config(name, lsp_config)
+        end
+
+        vim.lsp.enable(name)
       end
 
       local disable_semantic_tokens = {
-        lua = true,
+        -- lua = true,
       }
 
       vim.api.nvim_create_autocmd("LspAttach", {
@@ -140,61 +150,60 @@ return {
             "must have valid client"
           )
 
-          -- nmap("<leader>gD", vim.lsp.buf.declaration, opts)
-          -- nmap("<leader>gd", vim.lsp.buf.definition, opts)
-          -- nmap("<leader>rn", vim.lsp.buf.rename, opts)
-          -- nmap("<leader>k", vim.lsp.buf.hover, opts)
-          -- nmap("<leader>D", vim.lsp.buf.type_definition, opts)
-          -- nmap("<leader>ca", vim.lsp.buf.code_action, opts)
-          -- nmap("<leader>f", vim.lsp.buf.format or vim.lsp.buf.formatting, opts)
-          -- nmap("<leader>sd", function()
-          --   vim.diagnostic.open_float(0, { scope = "line" })
-          -- end, opts)
-
           local builtin = require("telescope.builtin")
           vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
           vim.keymap.set(
             "n",
             "<leader>gd",
             builtin.lsp_definitions,
-            { buffer = 0 }
+            { buffer = 0, desc = "Go to definition" }
           )
           vim.keymap.set(
             "n",
             "<leader>gr",
             builtin.lsp_references,
-            { buffer = 0 }
+            { buffer = 0, desc = "Go to references" }
           )
           vim.keymap.set(
             "n",
             "<leader>gD",
             vim.lsp.buf.declaration,
-            { buffer = 0 }
+            { buffer = 0, desc = "Go to declaration" }
           )
           vim.keymap.set(
             "n",
             "<leader>gT",
             vim.lsp.buf.type_definition,
-            { buffer = 0 }
+            { buffer = 0, desc = "Go to type definition" }
           )
-          vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, { buffer = 0 })
+          vim.keymap.set(
+            "n",
+            "<leader>k",
+            vim.lsp.buf.hover,
+            { buffer = 0, desc = "Hover" }
+          )
           vim.keymap.set(
             "n",
             "<leader>f",
             vim.lsp.buf.format or vim.lsp.buf.formatting,
-            { buffer = 0 }
+            { buffer = 0, desc = "Format buffer" }
           )
 
           vim.keymap.set("n", "<space>sd", function()
             vim.diagnostic.open_float({ scope = "line" })
-          end, { buffer = 0 })
+          end, { buffer = 0, desc = "Show diagnostics" })
 
-          vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, { buffer = 0 })
+          vim.keymap.set(
+            "n",
+            "<space>rn",
+            vim.lsp.buf.rename,
+            { buffer = 0, desc = "Rename" }
+          )
           vim.keymap.set(
             "n",
             "<space>ca",
             vim.lsp.buf.code_action,
-            { buffer = 0 }
+            { buffer = 0, desc = "Code action" }
           )
 
           local filetype = vim.bo[bufnr].filetype
@@ -204,12 +213,9 @@ return {
         end,
       })
 
-      require("null-ls").setup({
-        sources = {
-          require("user.typos").actions,
-          require("user.typos").diagnostics,
-        },
-      })
+      -- require("null-ls").setup({
+      --   sources = { },
+      -- })
     end,
   },
 }

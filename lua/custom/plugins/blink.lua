@@ -19,27 +19,34 @@ return {
       },
       appearance = {
         nerd_font_variant = "mono",
+        use_nvim_cmp_as_default = false,
       },
       cmdline = { enabled = false },
       signature = { enabled = true },
       completion = {
         documentation = { auto_show = true },
+        accept = {
+          -- experimental auto-brackets support
+          auto_brackets = {
+            enabled = true,
+          },
+        },
         menu = {
           draw = {
-            padding = { 0, 1 },
+            -- padding = { 0, 1 },
             treesitter = { "lsp" },
-            components = {
-              source_name = {
-                text = function(ctx)
-                  return "[" .. ctx.source_name .. "]"
-                end,
-              },
-            },
-            columns = {
-              { "label" },
-              { "kind" },
-              { "source_name" },
-            },
+            -- components = {
+            --   source_name = {
+            --     text = function(ctx)
+            --       return "[" .. ctx.source_name .. "]"
+            --     end,
+            --   },
+            -- },
+            -- columns = {
+            --   { "label" },
+            --   { "kind" },
+            --   { "source_name" },
+            -- },
           },
         },
       },

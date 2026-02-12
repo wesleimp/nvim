@@ -44,30 +44,59 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 local mappings = {
-  ["<leader>nr"] = function()
-    neotest.run.run(vim.fn.expand("%:p"))
-  end,
-  ["<leader>nx"] = function()
-    neotest.run.stop()
-  end,
-  ["<leader>nl"] = neotest.run.run_last,
-  ["<leader>na"] = neotest.run.attach,
-  ["<leader>no"] = function()
-    neotest.output.open({ enter = true, last_run = true })
-  end,
-  ["<leader>ni"] = function()
-    neotest.output.open({ enter = true })
-  end,
-  ["<leader>ns"] = neotest.summary.toggle,
-  ["<leader>ne"] = neotest.output_panel.toggle,
-  ["[n"] = function()
-    neotest.jump.prev({ status = "failed" })
-  end,
-  ["]n"] = function()
-    neotest.jump.next({ status = "failed" })
-  end,
+  ["<leader>nr"] = {
+    callback = function()
+      neotest.run.run(vim.fn.expand("%:p"))
+    end,
+    desc = "Run tests in current file",
+  },
+  ["<leader>nx"] = {
+    callback = function()
+      neotest.run.stop()
+    end,
+    desc = "Stop running tests",
+  },
+  ["<leader>nl"] = { callback = neotest.run.run_last, desc = "Run last test" },
+  ["<leader>na"] = { callback = neotest.run.attach, desc = "Attach to test" },
+  ["<leader>no"] = {
+    callback = function()
+      neotest.output.open({ enter = true, last_run = true })
+    end,
+    desc = "Open output for last run",
+  },
+  ["<leader>ni"] = {
+    callback = function()
+      neotest.output.open({ enter = true })
+    end,
+    desc = "Open output for current test",
+  },
+  ["<leader>ns"] = {
+    callback = neotest.summary.toggle,
+    desc = "Toggle summary",
+  },
+  ["<leader>ne"] = {
+    callback = neotest.output_panel.toggle,
+    desc = "Toggle output panel",
+  },
+  ["[n"] = {
+    callback = function()
+      neotest.jump.prev({ status = "failed" })
+    end,
+    desc = "Previous failed test",
+  },
+  ["]n"] = {
+    callback = function()
+      neotest.jump.next({ status = "failed" })
+    end,
+    desc = "Next failed test",
+  },
 }
 
 for keys, mapping in pairs(mappings) do
-  vim.api.nvim_set_keymap("n", keys, "", { callback = mapping, noremap = true })
+  vim.api.nvim_set_keymap(
+    "n",
+    keys,
+    "",
+    { callback = mapping.callback, desc = mapping.desc, noremap = true }
+  )
 end

@@ -18,18 +18,22 @@ vim.g.mapleader = " "
 nmap("<F1>", "")
 imap("<F1>", "")
 
-nmap("Y", "yg$", { noremap = true })
-nmap("n", "nzzzv", { noremap = true })
-nmap("N", "Nzzzv", { noremap = true })
+nmap("Y", "yg$", { noremap = true, desc = "Yank to end of line" })
+nmap("n", "nzzzv", { noremap = true, desc = "Next search result centered" })
+nmap("N", "Nzzzv", { noremap = true, desc = "Previous search result centered" })
 
 nmap("<leader><leader>r", "<cmd>source %<CR>")
 
-nmap("<M-n>", "<cmd>cnext<CR>")
-nmap("<M-p>", "<cmd>cprev<CR>")
-nmap("<M-o>", ":copen<cr>", { noremap = true, silent = true })
+nmap("<leader>cn", "<cmd>cnext<CR>", { desc = "Next quickfix item" })
+nmap("<leader>cp", "<cmd>cprev<CR>", { desc = "Previous quickfix item" })
+nmap(
+  "<leader>cc",
+  ":copen<cr>",
+  { noremap = true, silent = true, desc = "Open quickfix list" }
+)
 
 -- line selection without indentation
-nmap("vv", "^vg_", { noremap = true })
+nmap("vv", "^vg_", { noremap = true, desc = "Select line without indentation" })
 
 --remap :W, :Q etc if you press the shift key for too long
 vim.cmd([[
@@ -42,11 +46,23 @@ cabbrev Qa qa
 ]])
 
 --Register copy/paster
-map("<leader>y", '"+y<esc>', { noremap = true })
-map("<leader>p", '"+p<esc>', { noremap = true })
+map(
+  "<leader>y",
+  '"+y<esc>',
+  { noremap = true, desc = "Yank to system clipboard" }
+)
+map(
+  "<leader>p",
+  '"+p<esc>',
+  { noremap = true, desc = "Paste from system clipboard" }
+)
 
 --No highlight after search
-nmap("<leader><CR>", ":noh<CR>", { noremap = true, silent = true })
+nmap(
+  "<leader><CR>",
+  ":noh<CR>",
+  { noremap = true, silent = true, desc = "No highlight" }
+)
 
 --------------------------------------------------
 --Buffer
@@ -68,22 +84,25 @@ map("<M-s>", "<C-W>-")
 --------------------------------------------------
 -- vim-test
 --------------------------------------------------
-nmap("<Leader>tt", ":w|:TestSuite<CR>", { silent = true })
-nmap("<Leader>tf", ":w|:TestFile<CR>", { silent = true })
-nmap("<Leader>tn", ":w|:TestNearest<CR>", { silent = true })
-nmap("<Leader>tl", ":w|:TestLast<CR>", { silent = true })
-
--- testing
 nmap(
-  "<leader>-",
-  ':lua require("neotest").run.run(vim.fn.expand("%"))<cr>',
-  { noremap = true, silent = true }
+  "<Leader>tt",
+  ":w|:TestSuite<CR>",
+  { silent = true, desc = "Run test suite" }
 )
-
 nmap(
-  "<leader>=",
-  '<cmd>lua require("neotest").summary.toggle()<cr>',
-  { noremap = true, silent = true }
+  "<Leader>tf",
+  ":w|:TestFile<CR>",
+  { silent = true, desc = "Run test file" }
+)
+nmap(
+  "<Leader>tn",
+  ":w|:TestNearest<CR>",
+  { silent = true, desc = "Run nearest test" }
+)
+nmap(
+  "<Leader>tl",
+  ":w|:TestLast<CR>",
+  { silent = true, desc = "Run last test" }
 )
 
 --------------------------------------------------
@@ -92,53 +111,53 @@ nmap(
 nmap(
   "<C-p>",
   ":lua require('telescope.builtin').find_files()<cr>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "Find files" }
 )
 nmap(
   "<C-f>",
   ":lua require('telescope.builtin').live_grep({ hidden = true })<cr>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "Live grep" }
 )
 nmap(
   "<leader>fd",
   ":lua require('telescope.builtin').grep_string({search = vim.fn.expand('<cword>')})<CR>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "Grep current word" }
 )
 
 nmap(
   "<leader>ht",
   ":lua require('telescope.builtin').help_tags()<CR>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "Help tags" }
 )
 
 nmap(
   "<leader>di",
   ":lua require('telescope.builtin').diagnostics()<CR>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "Diagnostics" }
 )
 
 nmap(
   "<leader>ls",
   ":lua require('telescope.builtin').lsp_document_symbols()<CR>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "LSP Document Symbols" }
 )
 
 nmap(
   "<leader>li",
   ":lua require('telescope.builtin').lsp_implementations()<CR>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "LSP Implementations" }
 )
 
 nmap(
   "<leader>ld",
   ":lua require('telescope.builtin').lsp_definitions()<CR>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "LSP Definitions" }
 )
 
 nmap(
   "<leader>lr",
   ":lua require('telescope.builtin').lsp_references()<CR>",
-  { noremap = true, silent = true }
+  { noremap = true, silent = true, desc = "LSP References" }
 )
 
 map("<f11>", ":lua require('plugins.telescope').search_nvimconf()<cr>")
@@ -147,8 +166,16 @@ map("<f12>", ":lua require('plugins.telescope').search_dotfiles()<cr>")
 --------------------------------------------------
 -- Focusing
 --------------------------------------------------
-nmap("<F3>", ":ZenMode<CR>", { noremap = true, silent = true })
-nmap("<F4>", ":Twilight<CR>", { noremap = true, silent = true })
+nmap(
+  "<F3>",
+  ":ZenMode<CR>",
+  { noremap = true, silent = true, desc = "Zen Mode" }
+)
+nmap(
+  "<F4>",
+  ":Twilight<CR>",
+  { noremap = true, silent = true, desc = "Twilight" }
+)
 
 --------------------------------------------------
 -- Misc
