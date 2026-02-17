@@ -3,6 +3,8 @@ require("conform").setup({
     elixir = { "mix" },
     lua = { "stylua" },
     go = { "gofmt" },
+    json = { "jq" },
+    sql = { "pg_format", "sql-formatter" },
     markdown = { "markdownlint" },
     yaml = { "yamllint" },
     javascript = { "prettier", "biomejs" },
@@ -10,15 +12,7 @@ require("conform").setup({
     javascriptreact = { "prettier" },
     typescriptreact = { "prettier" },
   },
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    require("conform").format({
-      bufnr = args.buf or 0,
-      lsp_fallback = true,
-      quiet = true,
-    })
-  end,
+  format_after_save = {
+    lsp_fallback = true,
+  },
 })

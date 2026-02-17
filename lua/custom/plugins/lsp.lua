@@ -31,10 +31,14 @@ return {
     config = function()
       require("neodev").setup({})
 
-      local capabilities = nil
-      if pcall(require, "cmp_nvim_lsp") then
-        capabilities = require("cmp_nvim_lsp").default_capabilities()
-      end
+      local capabilities = require("blink.cmp").get_lsp_capabilities({
+        workspace = {
+          didChangeWatchedFiles = {
+            dynamicRegistration = true, -- needs fswatch on linux
+            relativePatternSupport = true,
+          },
+        },
+      }, true)
 
       local servers = {
         bashls = true,
@@ -59,7 +63,32 @@ return {
         tailwindcss = true,
 
         -- Probably want to disable formatting for this lang server
-        ts_ls = true,
+        ts_ls = {
+          settings = {
+            javascript = {
+              inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+              },
+            },
+            typescript = {
+              inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+              },
+            },
+          },
+        },
 
         jsonls = {
           settings = {
@@ -109,7 +138,6 @@ return {
       local ensure_installed = {
         "stylua",
         "lua_ls",
-        "delve",
         -- "tailwind-language-server",
       }
 
@@ -206,16 +234,17 @@ return {
             { buffer = 0, desc = "Code action" }
           )
 
+          local ms = require("vim.lsp.protocol").Methods
+          if client:supports_method(ms.textDocument_codeLens, 0) then
+            vim.lsp.inlay_hint.enable(true)
+          end
+
           local filetype = vim.bo[bufnr].filetype
           if disable_semantic_tokens[filetype] then
             client.server_capabilities.semanticTokensProvider = nil
           end
         end,
       })
-
-      -- require("null-ls").setup({
-      --   sources = { },
-      -- })
     end,
   },
 }

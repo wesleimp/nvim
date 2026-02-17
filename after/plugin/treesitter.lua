@@ -1,88 +1,120 @@
 ---@diagnostic disable:missing-fields
 require("nvim-treesitter.configs").setup({
   ensure_installed = {
-    "vimdoc",
-    "lua",
-    "rust",
+    "awk",
+    "bash",
+    "cpp",
+    "css",
+    "csv",
+    "diff",
+    "dockerfile",
+    "fish",
+    "git_config",
+    "git_rebase",
+    "gitattributes",
+    "gitcommit",
+    "gitignore",
     "go",
     "gomod",
-    "elixir",
-    "heex",
+    "gosum",
+    "gowork",
+    "graphql",
+    "hcl",
+    "html",
+    "http",
+    "ini",
+    "javascript",
+    "jq",
     "json",
-    "dockerfile",
-    "yaml",
+    "lua",
+    "make",
+    "markdown",
+    "markdown_inline",
+    "python",
+    "query",
+    "regex",
+    "sql",
+    "ssh_config",
+    "templ",
+    "terraform",
+    "toml",
     "vim",
+    "vimdoc",
+    "yaml",
   },
   highlight = {
-    enable = true, -- false will disable the whole extension
-    additional_vim_regex_highlighting = true,
-  },
-  incremental_selection = {
     enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
   },
   indent = {
     enable = true,
   },
-  query_linter = {
+  endwise = {
     enable = true,
-    use_virtual_text = true,
-    lint_events = { "BufWrite", "CursorHold" },
   },
+  autopairs = {
+    enable = true,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<C-space>",
+      node_incremental = "<C-space>",
+      node_decremental = "<bs>",
+      scope_incremental = "<noop>",
+    },
+  },
+  auto_install = false,
   textobjects = {
-    select = {
+    enable = true,
+    lookahead = true,
+    swap = {
       enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
+      swap_next = {
+        ["<leader>a"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<leader>A"] = "@parameter.inner",
       },
     },
     move = {
       enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
+      set_jumps = true,
       goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
+        ["]f"] = "@function.inner",
+        ["]c"] = "@class.inner",
+        ["]a"] = "@parameter.inner",
       },
       goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
+        ["]F"] = "@function.inner",
+        ["]C"] = "@class.inner",
+        ["]A"] = "@parameter.inner",
       },
       goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
+        ["[f"] = "@function.inner",
+        ["[c"] = "@class.inner",
+        ["[a"] = "@parameter.inner",
       },
       goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
+        ["[F"] = "@function.inner",
+        ["[C"] = "@class.inner",
+        ["[A"] = "@parameter.inner",
       },
     },
-  },
-  playground = {
-    enable = true,
-    updatetime = 25,
-    keybindings = {
-      toggle_query_editor = "o",
-      toggle_hl_groups = "i",
-      toggle_injected_languages = "t",
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
 
-      -- This shows stuff like literal strings, commas, etc.
-      toggle_anonymous_nodes = "a",
-      toggle_language_display = "I",
-      focus_language = "f",
-      unfocus_language = "F",
-      update = "R",
-      goto_node = "<cr>",
-      show_help = "?",
+        ["ac"] = "@conditional.outer",
+        ["ic"] = "@conditional.inner",
+
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+
+        ["av"] = "@variable.outer",
+        ["iv"] = "@variable.inner",
+      },
     },
   },
 })

@@ -35,18 +35,18 @@ return {
           draw = {
             -- padding = { 0, 1 },
             treesitter = { "lsp" },
-            -- components = {
-            --   source_name = {
-            --     text = function(ctx)
-            --       return "[" .. ctx.source_name .. "]"
-            --     end,
-            --   },
-            -- },
-            -- columns = {
-            --   { "label" },
-            --   { "kind" },
-            --   { "source_name" },
-            -- },
+            components = {
+              source_name = {
+                text = function(ctx)
+                  return "[" .. ctx.source_name .. "]"
+                end,
+              },
+            },
+            columns = {
+              { "label" },
+              { "kind" },
+              { "source_name" },
+            },
           },
         },
       },
