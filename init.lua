@@ -6,19 +6,15 @@
                                    /_/
 --]]
 
-pcall(require, "impatient")
-
-require("globals")
-
--- require("plugins")
 require("sets")
-require("keymaps")
 require("autocmd")
+require("keymaps")
 require("terminal")
 
 vim.g.VM_leader = ","
 vim.g.format_on_save = 0
 vim.g.tmux_navigator_no_mappings = 1
+vim.o.background = "dark"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -43,3 +39,5 @@ require("lazy").setup("custom.plugins", {
     fallback = false,
   },
 })
+
+vim.cmd("colorscheme gruvbox")

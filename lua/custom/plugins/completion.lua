@@ -1,12 +1,13 @@
 return {
+  -- Main completion engine
   {
     "saghen/blink.cmp",
     dependencies = {
       "rafamadriz/friendly-snippets",
-      "fang2hou/blink-copilot",
       "L3MON4D3/LuaSnip",
     },
     version = "1.*",
+    event = "InsertEnter",
     setup = function()
       require("custom.snippets")
     end,
@@ -33,7 +34,6 @@ return {
         },
         menu = {
           draw = {
-            -- padding = { 0, 1 },
             treesitter = { "lsp" },
             components = {
               source_name = {
@@ -50,20 +50,61 @@ return {
           },
         },
       },
-      snippets = { preset = "luasnip" },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = {
+          "lsp",
+          "path",
+          "buffer",
+          "snippets",
+        },
         providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            score_offset = 100,
-            async = true,
+          lsp = {
+            fallbacks = { "lazydev" },
           },
         },
       },
-      fuzzy = { implementation = "prefer_rust_with_warning" },
     },
-    opts_extend = { "sources.default" },
+  },
+
+  -- GitHub Copilot
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-l>",
+          },
+        },
+        filetypes = {
+          javascript = true,
+          typescript = true,
+          elixir = true,
+          lua = true,
+          go = true,
+          rust = true,
+          ["*"] = false, -- least permissible
+        },
+      })
+    end,
+  },
+
+  -- Autopairs
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup({
+        fast_wrap = {
+          chars = { "{", "[", "(", '"', "'", "`" },
+          end_key = "L",
+          highlight = "HopNextKey",
+        },
+      })
+    end,
   },
 }

@@ -3,28 +3,8 @@ if not ok then
   return
 end
 
-local pickers = require("telescope.pickers")
-local conf = require("telescope.config").values
-local finders = require("telescope.finders")
-
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
-
-local credo_issues = function()
-  pickers
-    .new({}, {
-      prompt_title = "Credo Issues",
-      finder = finders.new_oneshot_job({
-        "mix",
-        "credo",
-        "--format",
-        "flycheck",
-      }, {}),
-      sorter = conf.generic_sorter({}),
-      previewer = false,
-    })
-    :find()
-end
 
 telescope.setup({
   defaults = {
@@ -100,7 +80,6 @@ telescope.setup({
     },
   },
   extensions = {
-    credo = credo_issues,
     fzy = {
       override_generic_sorter = false, -- override the generic sorter
       override_file_sorter = true, -- override the file sorter
@@ -113,24 +92,3 @@ telescope.setup({
 
 telescope.load_extension("fzf")
 telescope.load_extension("ui-select")
-telescope.load_extension("notify")
-telescope.load_extension("neoclip")
-
-local M = {}
-M.search_dotfiles = function()
-  require("telescope.builtin").find_files({
-    prompt_title = "< .dotfiles >",
-    cwd = vim.env.DOTFILES,
-    hidden = true,
-  })
-end
-
-M.search_nvimconf = function()
-  require("telescope.builtin").find_files({
-    prompt_title = "< Nvim >",
-    cwd = vim.env.NVIMCONF,
-    hidden = true,
-  })
-end
-
-return M

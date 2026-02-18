@@ -1,29 +1,11 @@
-local function lsp_clients()
-  return require("lsp-progress").progress({
-    format = function(_)
-      local active_clients = vim.lsp.get_clients()
-      local client_names = {}
-      for _, client in ipairs(active_clients) do
-        if client and client.name ~= "" then
-          table.insert(client_names, "[" .. client.name .. "]")
-        end
-      end
-      return "LSP:" .. table.concat(client_names, "")
-    end,
-  })
-end
-
 return {
-  {
-    "linrongbin16/lsp-progress.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("lsp-progress").setup({})
-    end,
-  },
+  -- Status line
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    event = "VeryLazy",
     config = function()
       require("lualine").setup({
         options = {
@@ -60,7 +42,21 @@ return {
             "diff",
           },
           lualine_c = { { "filename", path = 3 } },
-          lualine_x = { lsp_clients, "diagnostics", "filetype" },
+          lualine_x = {
+            function()
+              local clients = vim.lsp.get_clients()
+              if #clients == 0 then
+                return ""
+              end
+              local names = {}
+              for _, client in ipairs(clients) do
+                table.insert(names, client.name)
+              end
+              return #names > 0 and "LSP: " .. table.concat(names, ", ") or ""
+            end,
+            "diagnostics",
+            "filetype",
+          },
           lualine_y = { "progress" },
           lualine_z = { "location" },
         },
@@ -75,4 +71,44 @@ return {
       })
     end,
   },
+
+  -- File explorer
+  {
+    "stevearc/oil.nvim",
+    cmd = "Oil",
+    keys = {
+      { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
+      {
+        "<leader>-",
+        function()
+          require("oil").toggle_float()
+        end,
+        desc = "Toggle oil float",
+      },
+    },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      { "echasnovski/mini.icons", opts = {} },
+    },
+    config = function()
+      require("oil").setup({
+        columns = { "icon" },
+        view_options = {
+          show_hidden = true,
+        },
+        keymaps = {
+          ["<C-p>"] = false,
+          ["<C-h>"] = "actions.preview",
+          ["<C-v>"] = "actions.select_split",
+        },
+      })
+    end,
+  },
+
+  -- Icons
+  {
+    "nvim-tree/nvim-web-devicons",
+    lazy = true,
+  },
 }
+

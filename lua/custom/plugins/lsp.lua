@@ -1,15 +1,6 @@
 ---@diagnostic disable:missing-fields
 
 return {
-  { "simrat39/inlay-hints.nvim" },
-  { "j-hui/fidget.nvim", branch = "legacy" },
-  { "jose-elias-alvarez/nvim-lsp-ts-utils" },
-  { "scalameta/nvim-metals" },
-  { "b0o/schemastore.nvim" },
-  { "nvim-lua/lsp_extensions.nvim" },
-  { "onsails/lspkind-nvim" },
-  { "nvimtools/none-ls.nvim" },
-  { "ray-x/lsp_signature.nvim" },
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -26,10 +17,41 @@ return {
       },
       { "folke/neodev.nvim" },
       -- Formatting plugin
-      { "stevearc/conform.nvim" },
+      {
+        "stevearc/conform.nvim",
+        opts = {
+          formatters_by_ft = {
+            elixir = { "mix" },
+            lua = { "stylua" },
+            go = { "gofmt" },
+            json = { "jq" },
+            sql = { "pg_format", "sql-formatter" },
+            markdown = { "markdownlint" },
+            yaml = { "yq", "yamllint" },
+            javascript = { "prettier", "biomejs" },
+            typescript = { "prettier", "biomejs" },
+            javascriptreact = { "prettier" },
+            typescriptreact = { "prettier" },
+            ["_"] = { "trim_whitespace", "trim_newlines" },
+          },
+          format_after_save = {
+            lsp_fallback = true,
+          },
+        },
+      },
     },
     config = function()
-      require("neodev").setup({})
+      require("neodev").setup({
+        library = {
+          enabled = true,
+          runtime = true,
+          types = true,
+          plugins = true,
+        },
+        setup_jsonls = false,
+        lspconfig = true,
+        pathStrict = true,
+      })
 
       local capabilities = require("blink.cmp").get_lsp_capabilities({
         workspace = {
@@ -57,7 +79,18 @@ return {
             },
           },
         },
-        lua_ls = true,
+        lua_ls = {
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = "Replace",
+              },
+              telemetry = {
+                enable = false,
+              },
+            },
+          },
+        },
         rust_analyzer = true,
         cssls = true,
         tailwindcss = true,
@@ -93,7 +126,6 @@ return {
         jsonls = {
           settings = {
             json = {
-              schemas = require("schemastore").json.schemas(),
               validate = { enable = true },
             },
           },
@@ -103,21 +135,27 @@ return {
           settings = {
             yaml = {
               schemaStore = {
-                enable = false,
-                url = "",
+                enable = true,
+                url = "https://www.schemastore.org/api/json/catalog.json",
               },
-              schemas = require("schemastore").yaml.schemas(),
             },
           },
         },
 
-        lexical = {
+        -- expert = true,
+        expert = {
           cmd = {
-            vim.fn.expand("~/.local/share/nvim/mason/bin/lexical"),
-            "server",
+            vim.fn.expand("~/.local/share/nvim/mason/bin/expert"),
+            "--stdio",
           },
-          root_dir = require("lspconfig.util").root_pattern({ "mix.exs" }),
         },
+        -- lexical = {
+        --   cmd = {
+        --     vim.fn.expand("~/.local/share/nvim/mason/bin/lexical"),
+        --     "server",
+        --   },
+        --   root_dir = require("lspconfig.util").root_pattern({ "mix.exs" }),
+        -- },
 
         biome = true,
         terraformls = true,
@@ -178,61 +216,50 @@ return {
             "must have valid client"
           )
 
+          local keymap = function(lhs, rhs, opts)
+            opts = vim.tbl_extend(
+              "keep",
+              opts or {},
+              { buffer = bufnr, silent = true }
+            )
+            vim.keymap.set("n", lhs, rhs, opts)
+          end
+
           local builtin = require("telescope.builtin")
           vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
-          vim.keymap.set(
-            "n",
+          keymap(
             "<leader>gd",
             builtin.lsp_definitions,
-            { buffer = 0, desc = "Go to definition" }
+            { desc = "Go to definition" }
           )
-          vim.keymap.set(
-            "n",
+          keymap(
             "<leader>gr",
             builtin.lsp_references,
-            { buffer = 0, desc = "Go to references" }
+            { desc = "Go to references" }
           )
-          vim.keymap.set(
-            "n",
+          keymap(
             "<leader>gD",
             vim.lsp.buf.declaration,
-            { buffer = 0, desc = "Go to declaration" }
+            { desc = "Go to declaration" }
           )
-          vim.keymap.set(
-            "n",
+          keymap(
             "<leader>gT",
             vim.lsp.buf.type_definition,
             { buffer = 0, desc = "Go to type definition" }
           )
-          vim.keymap.set(
-            "n",
-            "<leader>k",
-            vim.lsp.buf.hover,
-            { buffer = 0, desc = "Hover" }
-          )
-          vim.keymap.set(
-            "n",
+          keymap("<leader>k", vim.lsp.buf.hover, { desc = "Hover" })
+          keymap(
             "<leader>f",
             vim.lsp.buf.format or vim.lsp.buf.formatting,
-            { buffer = 0, desc = "Format buffer" }
+            { desc = "Format buffer" }
           )
 
-          vim.keymap.set("n", "<space>sd", function()
+          keymap("<space>sd", function()
             vim.diagnostic.open_float({ scope = "line" })
-          end, { buffer = 0, desc = "Show diagnostics" })
+          end, { desc = "Show diagnostics" })
 
-          vim.keymap.set(
-            "n",
-            "<space>rn",
-            vim.lsp.buf.rename,
-            { buffer = 0, desc = "Rename" }
-          )
-          vim.keymap.set(
-            "n",
-            "<space>ca",
-            vim.lsp.buf.code_action,
-            { buffer = 0, desc = "Code action" }
-          )
+          keymap("<space>rn", vim.lsp.buf.rename, { desc = "Rename" })
+          keymap("<space>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 
           local ms = require("vim.lsp.protocol").Methods
           if client:supports_method(ms.textDocument_codeLens, 0) then

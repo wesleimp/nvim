@@ -6,10 +6,7 @@ end
 
 local map = _map("")
 local nmap = _map("n")
-local vmap = _map("v")
 local imap = _map("i")
-local omap = _map("o")
-local tmap = _map("t")
 
 -- map <space> <leader>
 vim.g.mapleader = " "
@@ -81,29 +78,6 @@ map("<M-,>", "<c-w>5<")
 map("<M-.>", "<c-w>5>")
 map("<M-t>", "<C-W>+")
 map("<M-s>", "<C-W>-")
---------------------------------------------------
--- vim-test
---------------------------------------------------
-nmap(
-  "<Leader>tt",
-  ":w|:TestSuite<CR>",
-  { silent = true, desc = "Run test suite" }
-)
-nmap(
-  "<Leader>tf",
-  ":w|:TestFile<CR>",
-  { silent = true, desc = "Run test file" }
-)
-nmap(
-  "<Leader>tn",
-  ":w|:TestNearest<CR>",
-  { silent = true, desc = "Run nearest test" }
-)
-nmap(
-  "<Leader>tl",
-  ":w|:TestLast<CR>",
-  { silent = true, desc = "Run last test" }
-)
 
 --------------------------------------------------
 -- Telescope
@@ -159,38 +133,3 @@ nmap(
   ":lua require('telescope.builtin').lsp_references()<CR>",
   { noremap = true, silent = true, desc = "LSP References" }
 )
-
-map("<f11>", ":lua require('plugins.telescope').search_nvimconf()<cr>")
-map("<f12>", ":lua require('plugins.telescope').search_dotfiles()<cr>")
-
---------------------------------------------------
--- Focusing
---------------------------------------------------
-nmap(
-  "<F3>",
-  ":ZenMode<CR>",
-  { noremap = true, silent = true, desc = "Zen Mode" }
-)
-nmap(
-  "<F4>",
-  ":Twilight<CR>",
-  { noremap = true, silent = true, desc = "Twilight" }
-)
-
---------------------------------------------------
--- Misc
---------------------------------------------------
--- Terminal
--- tmap("<Esc>", "<C-\\><C-N>", { noremap = true, silent = true })
-
--- Exports
-local M = {
-  map = map,
-  nmap = nmap,
-  imap = imap,
-  vmap = vmap,
-  omap = omap,
-  tmap = tmap,
-}
-
-return M

@@ -1,13 +1,30 @@
 return {
-  { "vim-test/vim-test" },
-  {
-    "nvim-neotest/neotest",
-    dependencies = {
-      "nvim-neotest/nvim-nio",
-      "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "jfpedroza/neotest-elixir",
-    },
+  "nvim-neotest/neotest",
+  dependencies = {
+    "nvim-neotest/nvim-nio",
+    "jfpedroza/neotest-elixir",
+    "nvim-neotest/neotest-jest",
   },
+  config = function()
+    require("neotest").setup({
+      icons = {
+        running_animated = {
+          "⠋",
+          "⠙",
+          "⠹",
+          "⠸",
+          "⠼",
+          "⠴",
+          "⠦",
+          "⠧",
+          "⠇",
+          "⠏",
+        },
+      },
+      adapters = {
+        require("neotest-elixir"),
+        require("neotest-jest"),
+      },
+    })
+  end,
 }
