@@ -45,34 +45,29 @@ autocmd("TextYankPost", {
 })
 
 -- Substitute trainling space
--- autocmd({ "BufWritePre" }, {
---   group = wesleimp_group,
---   pattern = "*",
---   command = [[%s/\s\+$//e]],
--- })
+autocmd({ "BufWritePre" }, {
+  group = wesleimp_group,
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
+})
 
 -- Create folder on save if not exists
 autocmd({ "BufWritePre" }, {
   group = wesleimp_group,
   pattern = "*",
   callback = function()
-    require("user.mkdir").run()
-  end,
-})
+    local dir = vim.fn.expand("<afile>:p:h")
+    if dir:find("%l+://") == 1 then
+      return
+    end
 
-autocmd({ "BufNewFile", "BufRead" }, {
-  group = wesleimp_group,
-  pattern = { "*.dockerfile", "Dockerfile.*" },
-  command = "set ft=dockerfile",
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, "p")
+    end
+  end,
 })
 
 autocmd({ "TermOpen" }, {
   pattern = "*",
   command = "setlocal nonumber norelativenumber",
-})
-
-autocmd({ "BufNewFile", "BufRead" }, {
-  group = wesleimp_group,
-  pattern = { "*.env", ".env.*" },
-  command = "set ft=env",
 })

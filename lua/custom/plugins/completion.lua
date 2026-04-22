@@ -52,6 +52,7 @@ return {
       },
       sources = {
         default = {
+          "lazydev",
           "lsp",
           "path",
           "buffer",
@@ -60,51 +61,27 @@ return {
         providers = {
           lsp = {
             fallbacks = { "lazydev" },
+            min_keyword_length = 0,
+            score_offset = 0,
+          },
+          path = {
+            min_keyword_length = 0,
+          },
+          snippets = {
+            min_keyword_length = 2,
+          },
+          buffer = {
+            min_keyword_length = 5,
+            max_items = 5,
+          },
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 100,
           },
         },
       },
     },
-  },
-
-  -- GitHub Copilot
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          keymap = {
-            accept = "<C-l>",
-          },
-        },
-        filetypes = {
-          javascript = true,
-          typescript = true,
-          elixir = true,
-          lua = true,
-          go = true,
-          rust = true,
-          ["*"] = false, -- least permissible
-        },
-      })
-    end,
-  },
-
-  -- Autopairs
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = function()
-      require("nvim-autopairs").setup({
-        fast_wrap = {
-          chars = { "{", "[", "(", '"', "'", "`" },
-          end_key = "L",
-          highlight = "HopNextKey",
-        },
-      })
-    end,
   },
 }

@@ -29,7 +29,6 @@ hi def link envVariableUnassigned	Error
 
 hi def link envVariable			Identifier
 hi def link envVarAssign		Operator
-hi def link envVar		String
 hi def link envSpace			Error
 hi def link envQuotedVarOpen		Error
 hi def link envQuotedVarClose		Error

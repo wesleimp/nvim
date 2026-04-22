@@ -15,7 +15,17 @@ return {
           })
         end,
       },
-      { "folke/neodev.nvim" },
+      {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          },
+        },
+      },
       -- Formatting plugin
       {
         "stevearc/conform.nvim",
@@ -24,7 +34,6 @@ return {
             elixir = { "mix" },
             lua = { "stylua" },
             go = { "gofmt" },
-            json = { "jq" },
             sql = { "pg_format", "sql-formatter" },
             markdown = { "markdownlint" },
             yaml = { "yq", "yamllint" },
@@ -34,25 +43,11 @@ return {
             typescriptreact = { "prettier" },
             ["_"] = { "trim_whitespace", "trim_newlines" },
           },
-          format_after_save = {
-            lsp_fallback = true,
-          },
+          format_after_save = false,
         },
       },
     },
     config = function()
-      require("neodev").setup({
-        library = {
-          enabled = true,
-          runtime = true,
-          types = true,
-          plugins = true,
-        },
-        setup_jsonls = false,
-        lspconfig = true,
-        pathStrict = true,
-      })
-
       local capabilities = require("blink.cmp").get_lsp_capabilities({
         workspace = {
           didChangeWatchedFiles = {
@@ -176,7 +171,6 @@ return {
       local ensure_installed = {
         "stylua",
         "lua_ls",
-        -- "tailwind-language-server",
       }
 
       vim.list_extend(ensure_installed, servers_to_install)
@@ -248,11 +242,23 @@ return {
             { buffer = 0, desc = "Go to type definition" }
           )
           keymap("<leader>k", vim.lsp.buf.hover, { desc = "Hover" })
-          keymap(
-            "<leader>f",
-            vim.lsp.buf.format or vim.lsp.buf.formatting,
-            { desc = "Format buffer" }
-          )
+          keymap("<leader>ff", function()
+            require("conform").format(
+              { async = true, lsp_format = "fallback" },
+              function(err)
+                if not err then
+                  local mode = vim.api.nvim_get_mode().mode
+                  if vim.startswith(string.lower(mode), "v") then
+                    vim.api.nvim_feedkeys(
+                      vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+                      "n",
+                      true
+                    )
+                  end
+                end
+              end
+            )
+          end, { desc = "Format buffer" })
 
           keymap("<space>sd", function()
             vim.diagnostic.open_float({ scope = "line" })

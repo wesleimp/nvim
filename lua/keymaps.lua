@@ -56,9 +56,15 @@ map(
 
 --No highlight after search
 nmap(
-  "<leader><CR>",
-  ":noh<CR>",
+  "<leader><ESC>",
+  "<CMD>noh<CR>",
   { noremap = true, silent = true, desc = "No highlight" }
+)
+
+nmap(
+  "<leader>q",
+  vim.diagnostic.setloclist,
+  { desc = "Open diagnostic [Q]uickfix list" }
 )
 
 --------------------------------------------------
@@ -79,57 +85,9 @@ map("<M-.>", "<c-w>5>")
 map("<M-t>", "<C-W>+")
 map("<M-s>", "<C-W>-")
 
---------------------------------------------------
--- Telescope
---------------------------------------------------
-nmap(
-  "<C-p>",
-  ":lua require('telescope.builtin').find_files()<cr>",
-  { noremap = true, silent = true, desc = "Find files" }
-)
-nmap(
-  "<C-f>",
-  ":lua require('telescope.builtin').live_grep({ hidden = true })<cr>",
-  { noremap = true, silent = true, desc = "Live grep" }
-)
-nmap(
-  "<leader>fd",
-  ":lua require('telescope.builtin').grep_string({search = vim.fn.expand('<cword>')})<CR>",
-  { noremap = true, silent = true, desc = "Grep current word" }
-)
+-- TABS
+map("<M-n>", "<CMD>tabn<CR>")
+imap("<M-n>", "<CMD>tabn<CR>")
 
-nmap(
-  "<leader>ht",
-  ":lua require('telescope.builtin').help_tags()<CR>",
-  { noremap = true, silent = true, desc = "Help tags" }
-)
-
-nmap(
-  "<leader>di",
-  ":lua require('telescope.builtin').diagnostics()<CR>",
-  { noremap = true, silent = true, desc = "Diagnostics" }
-)
-
-nmap(
-  "<leader>ls",
-  ":lua require('telescope.builtin').lsp_document_symbols()<CR>",
-  { noremap = true, silent = true, desc = "LSP Document Symbols" }
-)
-
-nmap(
-  "<leader>li",
-  ":lua require('telescope.builtin').lsp_implementations()<CR>",
-  { noremap = true, silent = true, desc = "LSP Implementations" }
-)
-
-nmap(
-  "<leader>ld",
-  ":lua require('telescope.builtin').lsp_definitions()<CR>",
-  { noremap = true, silent = true, desc = "LSP Definitions" }
-)
-
-nmap(
-  "<leader>lr",
-  ":lua require('telescope.builtin').lsp_references()<CR>",
-  { noremap = true, silent = true, desc = "LSP References" }
-)
+map("<M-p>", "<CMD>tabp<CR>")
+imap("<M-p>", "<CMD>tabp<CR>")

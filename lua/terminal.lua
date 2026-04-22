@@ -22,4 +22,4 @@ vim.keymap.set("n", "<leader>to", function()
   vim.api.nvim_win_set_height(0, 12)
   vim.wo.winfixheight = true
   vim.cmd.term()
-end)
+end, { desc = "Open termanial" })
