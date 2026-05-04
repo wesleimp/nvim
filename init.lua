@@ -145,12 +145,15 @@ require("lazy").setup({
     },
     { "tjdevries/colorbuddy.nvim" },
     { "tjdevries/gruvbuddy.nvim" },
+    -- { "joshdick/onedark.vim" },
     { dir = "~/git/min-theme.nvim" },
     {
       "navarasu/onedark.nvim",
       opts = {
         highlights = {
           ["@constructor"] = { fg = "$light_grey", fmt = "bold" },
+          ["@punctuation.special"] = { fg = "$light_grey" },
+          ["@string.special.symbol.elixir"] = { fg = "$fg" },
         },
         diagnostics = { darker = false },
       },
@@ -536,6 +539,39 @@ require("lazy").setup({
       },
     },
 
+    {
+      "folke/trouble.nvim",
+      opts = {}, -- for default options, refer to the configuration section for custom setup.
+      cmd = "Trouble",
+      keys = {
+        {
+          "<leader>xx",
+          "<cmd>Trouble diagnostics toggle<cr>",
+          desc = "Diagnostics (Trouble)",
+        },
+        {
+          "<leader>xX",
+          "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+          desc = "Buffer Diagnostics (Trouble)",
+        },
+        {
+          "<leader>cl",
+          "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+          desc = "LSP Definitions / references / ... (Trouble)",
+        },
+        {
+          "<leader>xl",
+          "<cmd>Trouble loclist toggle<cr>",
+          desc = "Location List (Trouble)",
+        },
+        {
+          "<leader>xq",
+          "<cmd>Trouble qflist toggle<cr>",
+          desc = "Quickfix List (Trouble)",
+        },
+      },
+    },
+
     -- Testing
     {
       "vim-test/vim-test",
@@ -647,5 +683,5 @@ require("lazy").setup({
 
 -- Colorscheme and highlight
 -- vim.cmd("colorscheme rose-pine")
-vim.cmd("colorscheme onedark")
+vim.cmd("colorscheme gruvbuddy")
 vim.api.nvim_set_hl(0, "Whitespace", { link = "NonText" })

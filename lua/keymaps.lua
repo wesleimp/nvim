@@ -71,6 +71,11 @@ nmap(
   "<CMD>noh<CR>",
   { noremap = true, silent = true, desc = "No highlight" }
 )
+nmap(
+  "<leader><CR>",
+  "<CMD>noh<CR>",
+  { noremap = true, silent = true, desc = "No highlight" }
+)
 
 nmap(
   "<leader>q",

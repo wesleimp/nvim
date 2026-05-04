@@ -7,6 +7,8 @@ return {
       local builtin = require("telescope.builtin")
       local actions = require("telescope.actions")
 
+      local open_with_trouble = require("trouble.sources.telescope").open
+
       local ignore_patterns = { ".git/", "deps/", "_build/", "node_modules/" }
 
       telescope.setup({
@@ -38,6 +40,7 @@ return {
               end,
               ["<C-x>"] = false,
               ["<C-q>"] = actions.send_to_qflist,
+              ["<C-l>"] = open_with_trouble,
               ["<esc>"] = actions.close,
               ["<S-s>"] = actions.select_horizontal,
             },
