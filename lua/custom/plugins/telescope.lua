@@ -5,6 +5,7 @@ return {
     config = function()
       local telescope = require("telescope")
       local builtin = require("telescope.builtin")
+      local actions = require("telescope.actions")
 
       local ignore_patterns = { ".git/", "deps/", "_build/", "node_modules/" }
 
@@ -14,12 +15,40 @@ return {
           selection_caret = " ",
           results_title = false,
           color_devicons = true,
-          path_display = { "absolute", "truncate" },
+          -- path_display = { "absolute", "truncate" },
+          path_display = { "filename_first" },
+          -- selection_strategy = "reset",
+          -- sorting_strategy = "ascending",
+          scroll_strategy = "cycle",
+          vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--sort=path",
+          },
+          mappings = {
+            i = {
+              ["<C-w>"] = actions.send_selected_to_qflist,
+              ["<c-c>"] = function()
+                vim.cmd("stopinsert!")
+              end,
+              ["<C-x>"] = false,
+              ["<C-q>"] = actions.send_to_qflist,
+              ["<esc>"] = actions.close,
+              ["<S-s>"] = actions.select_horizontal,
+            },
+          },
         },
         pickers = {
+          colorscheme = {
+            enable_preview = true,
+          },
           find_files = {
             preview = false,
-            theme = "ivy",
             file_ignore_patterns = ignore_patterns,
             find_command = {
               "fd",
@@ -30,7 +59,6 @@ return {
             },
           },
           live_grep = {
-            theme = "ivy",
             file_ignore_patterns = ignore_patterns,
           },
         },

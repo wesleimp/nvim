@@ -53,6 +53,17 @@ map(
   '"+p<esc>',
   { noremap = true, desc = "Paste from system clipboard" }
 )
+map(
+  "<leader>py",
+  ':let @+ = expand("%:p")<CR>',
+  { noremap = true, desc = "Copy current path" }
+)
+
+map("<leader>dd", function()
+  vim.cmd("normal! yy")
+  vim.cmd("normal gcc") -- no bang, so plugins/mappings are respected
+  vim.cmd("normal! p")
+end, { noremap = true, desc = "Duplicate and comment current line" })
 
 --No highlight after search
 nmap(

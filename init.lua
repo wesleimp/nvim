@@ -4,6 +4,10 @@ local opt = vim.opt
 opt.smartcase = true -- Smart case sensitivity in search
 opt.ignorecase = true -- Case insensitive search by default
 opt.inccommand = "split" -- Show incremental substitution results in preview split
+opt.hlsearch = true
+opt.incsearch = true
+
+opt.textwidth = 0
 
 -- Display Settings
 opt.number = true -- Show line numbers
@@ -13,9 +17,17 @@ opt.cursorcolumn = true -- Highlight current column
 opt.colorcolumn = "80,120"
 opt.signcolumn = "yes" -- Always show sign column
 opt.scrolloff = 8 -- Lines to keep above/below cursor
+opt.smoothscroll = true
 opt.ruler = true -- Show cursor position
+opt.wildmenu = true
 opt.termguicolors = true -- Enable 24-bit RGB colors
 opt.more = false -- Disable 'more' prompt for long messages
+
+opt.completeopt = { "menu", "menuone", "noselect" }
+opt.backspace = { "indent", "eol", "start" }
+opt.termguicolors = true
+
+opt.laststatus = 2
 
 -- Editor Settings
 opt.mouse = "a" -- Enable mouse support
@@ -69,7 +81,7 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
   float = { border = "rounded", source = "if_many" },
-  underline = { severity = { min = vim.diagnostic.severity.WARN } },
+  underline = true,
 
   -- Can switch between these as you prefer
   virtual_text = true, -- Text shows up at the end of the line
@@ -134,6 +146,15 @@ require("lazy").setup({
     { "tjdevries/colorbuddy.nvim" },
     { "tjdevries/gruvbuddy.nvim" },
     { dir = "~/git/min-theme.nvim" },
+    {
+      "navarasu/onedark.nvim",
+      opts = {
+        highlights = {
+          ["@constructor"] = { fg = "$light_grey", fmt = "bold" },
+        },
+        diagnostics = { darker = false },
+      },
+    },
 
     -- Comment
     {
@@ -229,21 +250,21 @@ require("lazy").setup({
           end
 
           -- Navigation
-          map("n", "]c", function()
+          map("n", "]h", function()
             if vim.wo.diff then
-              vim.cmd.normal({ "]c", bang = true })
+              vim.cmd.normal({ "]h", bang = true })
             else
               gitsigns.nav_hunk("next")
             end
-          end, { desc = "Jump to next git [c]hange" })
+          end, { desc = "Jump to next git change" })
 
-          map("n", "[c", function()
+          map("n", "[h", function()
             if vim.wo.diff then
-              vim.cmd.normal({ "[c", bang = true })
+              vim.cmd.normal({ "[h", bang = true })
             else
               gitsigns.nav_hunk("prev")
             end
-          end, { desc = "Jump to previous git [c]hange" })
+          end, { desc = "Jump to previous git change" })
 
           -- Actions
           -- visual mode
@@ -386,6 +407,9 @@ require("lazy").setup({
         "MunifTanjim/nui.nvim",
       },
       lazy = false,
+      keys = {
+        { "<leader>-", "<CMD>Neotree<CR>", silent = true, noremap = true },
+      },
       opts = {
         enable_git_status = false,
         enable_diagnostics = false,
@@ -403,13 +427,6 @@ require("lazy").setup({
       cmd = "Oil",
       keys = {
         { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
-        {
-          "<leader>-",
-          function()
-            require("oil").toggle_float()
-          end,
-          desc = "Toggle oil float",
-        },
       },
       opts = {
         columns = { "icon" },
@@ -458,10 +475,14 @@ require("lazy").setup({
                 return str
               end,
             },
-            "diff",
           },
           lualine_c = { { "filename", path = 3 } },
           lualine_x = {
+            {
+              "diff",
+              colored = false,
+              symbols = { added = "A:", modified = "M:", removed = "R:" },
+            },
             function()
               local clients = vim.lsp.get_clients()
               if #clients == 0 then
@@ -471,7 +492,9 @@ require("lazy").setup({
               for _, client in ipairs(clients) do
                 table.insert(names, client.name)
               end
-              return #names > 0 and "LSP: " .. table.concat(names, ", ") or ""
+              return #names > 0
+                  and ("[LSP: " .. table.concat(names, ", ") .. "]")
+                or ""
             end,
             "diagnostics",
             "filetype",
@@ -489,6 +512,17 @@ require("lazy").setup({
         extensions = {},
       },
     },
+    {
+      "j-hui/fidget.nvim",
+      opts = {
+        text = {
+          spinner = "dots",
+        },
+        align = {
+          bottom = true,
+        },
+      },
+    },
 
     {
       "windwp/nvim-autopairs",
@@ -500,81 +534,6 @@ require("lazy").setup({
           highlight = "HopNextKey",
         },
       },
-    },
-    {
-      "nvim-treesitter/nvim-treesitter",
-      build = ":TSUpdate",
-      lazy = false,
-      branch = "main",
-      dependencies = {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-      },
-      main = "nvim-treesitter",
-      init = function()
-        vim.api.nvim_create_autocmd("FileType", {
-          callback = function()
-            -- Enable treesitter highlighting and disable regex syntax
-            pcall(vim.treesitter.start)
-            -- Enable treesitter-based indentation
-            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-          end,
-        })
-
-        local ensureInstalled = {
-          "awk",
-          "bash",
-          "cpp",
-          "css",
-          "csv",
-          "diff",
-          "dockerfile",
-          "elixir",
-          "erlang",
-          "fish",
-          "git_config",
-          "git_rebase",
-          "gitattributes",
-          "gitcommit",
-          "gitignore",
-          "go",
-          "gomod",
-          "gosum",
-          "gowork",
-          "graphql",
-          "hcl",
-          "heex",
-          "html",
-          "http",
-          "ini",
-          "javascript",
-          "jq",
-          "json",
-          "lua",
-          "make",
-          "markdown",
-          "markdown_inline",
-          "python",
-          "query",
-          "regex",
-          "sql",
-          "ssh_config",
-          "templ",
-          "terraform",
-          "toml",
-          "vim",
-          "vimdoc",
-          "yaml",
-        }
-        local alreadyInstalled =
-          require("nvim-treesitter.config").get_installed()
-        local parsersToInstall = vim
-          .iter(ensureInstalled)
-          :filter(function(parser)
-            return not vim.tbl_contains(alreadyInstalled, parser)
-          end)
-          :totable()
-        require("nvim-treesitter").install(parsersToInstall)
-      end,
     },
 
     -- Testing
@@ -686,4 +645,7 @@ require("lazy").setup({
   },
 })
 
-vim.cmd("colorscheme default")
+-- Colorscheme and highlight
+-- vim.cmd("colorscheme rose-pine")
+vim.cmd("colorscheme onedark")
+vim.api.nvim_set_hl(0, "Whitespace", { link = "NonText" })
