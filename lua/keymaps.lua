@@ -8,9 +8,6 @@ local map = _map("")
 local nmap = _map("n")
 local imap = _map("i")
 
--- map <space> <leader>
-vim.g.mapleader = " "
-
 --disable help
 nmap("<F1>", "")
 imap("<F1>", "")
