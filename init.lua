@@ -1,4 +1,6 @@
+vim.keymap.set("", "<Space>", "<Nop>", { silent = true, noremap = true })
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 local opt = vim.opt
 
@@ -382,11 +384,6 @@ require("nvim-autopairs").setup({
     highlight = "HopNextKey",
   },
 })
-
--- Treesj
-local treesj = require("treesj")
-treesj.setup({ use_default_keymaps = false })
-vim.keymap.set("n", "<leader>st", treesj.toggle, { desc = "Toggle split/join" })
 
 -- Which-key
 require("which-key").setup({ preset = "helix" })

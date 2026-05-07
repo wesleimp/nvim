@@ -1,3 +1,7 @@
+local treesj = require("treesj")
+treesj.setup({ use_default_keymaps = false })
+vim.keymap.set("n", "<leader>st", treesj.toggle, { desc = "Toggle split/join" })
+
 require("nvim-ts-autotag").setup()
 require("nvim-surround").setup()
 
