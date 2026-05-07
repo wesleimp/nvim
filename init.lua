@@ -34,6 +34,11 @@ opt.splitright = true
 opt.swapfile = false
 opt.shada = { "'10", "<0", "s10", "h" }
 opt.formatoptions:remove("o")
+opt.title = true
+opt.titlestring = '%t%( %M%)%( (%{expand("%:~:h")})%)%a (nvim)'
+
+opt.foldmethod = "manual"
+
 vim.g.have_nerd_font = true
 vim.filetype.add({
   extension = { conf = "bash" },
@@ -126,6 +131,7 @@ vim.pack.add({
 
   -- Colors
   "https://github.com/nkxxll/ghostty-default-style-dark.nvim",
+  "https://github.com/tjdevries/colorbuddy.nvim",
   "https://github.com/navarasu/onedark.nvim",
   {
     src = "https://github.com/rose-pine/neovim",
@@ -560,8 +566,4 @@ require("onedark").setup({
 
 require("user.treesitter")
 require("user.lsp")
-
--- Colorscheme and highlight
--- vim.cmd("colorscheme rose-pine")
--- vim.cmd("colorscheme default")
-vim.cmd("colorscheme ghostty-default-style-dark")
+require("user.colorscheme")
