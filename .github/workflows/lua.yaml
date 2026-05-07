@@ -27,9 +27,7 @@ jobs:
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           brew install lua@5.4 luarocks
-          echo "$(brew --prefix lua@5.4)/bin" >> $GITHUB_PATH
           export PATH="$(brew --prefix lua@5.4)/bin:$PATH"
-          luarocks --lua-version=5.4 config variables.LUA "$(brew --prefix lua@5.4)/bin/lua"
           luarocks --lua-version=5.4 install luacheck
 
       - name: Run luacheck
