@@ -113,7 +113,6 @@ vim.pack.add({
   "https://github.com/tpope/vim-repeat",
   "https://github.com/tpope/vim-abolish",
   "https://github.com/matze/vim-move",
-  "https://github.com/tpope/vim-rhubarb",
   "https://github.com/tpope/vim-eunuch",
   "https://github.com/tpope/vim-sleuth",
   "https://github.com/tpope/vim-speeddating",
@@ -126,6 +125,7 @@ vim.pack.add({
   "https://github.com/nvim-tree/nvim-web-devicons",
 
   -- Colors
+  "https://github.com/nkxxll/ghostty-default-style-dark.nvim",
   "https://github.com/navarasu/onedark.nvim",
   {
     src = "https://github.com/rose-pine/neovim",
@@ -167,10 +167,7 @@ vim.pack.add({
   "https://github.com/nvim-treesitter/nvim-treesitter-context",
   "https://github.com/windwp/nvim-ts-autotag",
   "https://github.com/windwp/nvim-autopairs",
-  {
-    src = "https://github.com/kylechui/nvim-surround",
-    version = vim.version.range("4.x"), -- Use for stability; omit to use `main` branch for the latest features
-  },
+  "https://github.com/nvim-mini/mini.surround",
   "https://github.com/RRethy/nvim-treesitter-endwise",
 
   -- Completion
@@ -192,7 +189,7 @@ vim.pack.add({
 
 -- Notification
 local notify = require("notify")
-notify.setup({ render = "compact", stages = "static" })
+notify.setup({ render = "simple", stages = "static" })
 vim.notify = notify
 
 -- Comment
@@ -381,7 +378,7 @@ require("nvim-autopairs").setup({
   fast_wrap = {
     chars = { "{", "[", "(", '"', "'", "`" },
     end_key = "L",
-    highlight = "HopNextKey",
+    highlight = "NonText",
   },
 })
 
@@ -567,4 +564,4 @@ require("user.lsp")
 -- Colorscheme and highlight
 -- vim.cmd("colorscheme rose-pine")
 -- vim.cmd("colorscheme default")
-vim.cmd("colorscheme onedark")
+vim.cmd("colorscheme ghostty-default-style-dark")
