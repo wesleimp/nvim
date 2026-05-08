@@ -197,8 +197,8 @@ function StatusLine()
     .. rel_path
     .. "%m%r%="
     .. diag_str
+    .. "%P [%l : %c]"
     .. (ft ~= "" and "[" .. ft .. "]" or "")
-    .. "[ %l:%c ] "
 end
 
 vim.o.statusline = "%!v:lua.StatusLine()"
