@@ -28,10 +28,6 @@
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
-    "ghostty-default-style-dark.nvim": {
-      "rev": "b09d4d51f614cd1c14444d8586e0ba3ba3119787",
-      "src": "https://github.com/nkxxll/ghostty-default-style-dark.nvim"
-    },
     "git-conflict.nvim": {
       "rev": "a1badcd070d176172940eb55d9d59029dad1c5a6",
       "src": "https://github.com/akinsho/git-conflict.nvim"
@@ -47,10 +43,6 @@
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
       "src": "https://github.com/folke/lazydev.nvim"
-    },
-    "lualine.nvim": {
-      "rev": "131a558e13f9f28b15cd235557150ccb23f89286",
-      "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mason-tool-installer.nvim": {
       "rev": "443f1ef8b5e6bf47045cb2217b6f748a223cf7dc",
@@ -129,17 +121,9 @@
       "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
       "src": "https://github.com/stevearc/oil.nvim"
     },
-    "onedark.nvim": {
-      "rev": "df4792accde9db0043121f32628bcf8e645d9aea",
-      "src": "https://github.com/navarasu/onedark.nvim"
-    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
-    "rose-pine": {
-      "rev": "6a961effd67f6130d36df6d1c05c48c739796dd2",
-      "src": "https://github.com/rose-pine/neovim"
     },
     "telescope-fzf-native.nvim": {
       "rev": "b25b749b9db64d375d782094e2b9dce53ad53a40",
@@ -152,6 +136,10 @@
     "telescope.nvim": {
       "rev": "f04ab730b8f9c6bf3f54a206d0dcddfd70c52d59",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
+    },
+    "tokyonight.nvim": {
+      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+      "src": "https://github.com/folke/tokyonight.nvim"
     },
     "treesj": {
       "rev": "5fa4e7ba3517f8fe743bb4488f9e9c7ce83330fc",

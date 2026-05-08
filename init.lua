@@ -130,13 +130,8 @@ vim.pack.add({
   "https://github.com/nvim-tree/nvim-web-devicons",
 
   -- Colors
-  "https://github.com/nkxxll/ghostty-default-style-dark.nvim",
   "https://github.com/tjdevries/colorbuddy.nvim",
-  "https://github.com/navarasu/onedark.nvim",
-  {
-    src = "https://github.com/rose-pine/neovim",
-    name = "rose-pine",
-  },
+  "https://github.com/folke/tokyonight.nvim",
 
   -- Comment
   "https://github.com/numToStr/Comment.nvim",
@@ -148,9 +143,6 @@ vim.pack.add({
 
   -- File navigation
   "https://github.com/stevearc/oil.nvim",
-
-  -- Status line
-  "https://github.com/nvim-lualine/lualine.nvim",
 
   -- UI
   "https://github.com/j-hui/fidget.nvim",
@@ -193,10 +185,68 @@ vim.pack.add({
 -- Plugin configuration
 --------------------------------------------------------------------------------
 
+-- Experimental UI2: floating cmdline and messages
+require("vim._core.ui2").enable({
+  enable = true,
+  msg = {
+    targets = {
+      [""] = "msg",
+      empty = "cmd",
+      bufwrite = "msg",
+      confirm = "cmd",
+      emsg = "pager",
+      echo = "msg",
+      echomsg = "msg",
+      echoerr = "pager",
+      completion = "cmd",
+      list_cmd = "pager",
+      lua_error = "pager",
+      lua_print = "msg",
+      progress = "pager",
+      rpc_error = "pager",
+      quickfix = "msg",
+      search_cmd = "cmd",
+      search_count = "cmd",
+      shell_cmd = "pager",
+      shell_err = "pager",
+      shell_out = "pager",
+      shell_ret = "msg",
+      undo = "pager",
+      verbose = "pager",
+      wildlist = "cmd",
+      wmsg = "msg",
+      typed_cmd = "cmd",
+    },
+    cmd = {
+      height = 0.5,
+    },
+    dialog = {
+      height = 0.5,
+    },
+    msg = {
+      height = 0.3,
+      timeout = 5000,
+    },
+    pager = {
+      height = 0.5,
+    },
+  },
+})
+
+require("tokyonight").setup({
+  style = "storm",
+  styles = {
+    keywords = { italic = false },
+  },
+})
+vim.cmd.colorscheme("tokyonight")
+
 -- Notification
 local notify = require("notify")
 notify.setup({ render = "simple", stages = "static" })
 vim.notify = notify
+
+require("user.statusline")
 
 -- Comment
 local comment_ft = require("Comment.ft")
@@ -326,49 +376,6 @@ require("oil").setup({
 })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
--- Lualine
-require("lualine").setup({
-  options = {
-    component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
-  },
-  sections = {
-    lualine_b = {
-      {
-        "branch",
-        fmt = function(str)
-          if #str > 15 then
-            return str:sub(1, 15) .. "..."
-          end
-          return str
-        end,
-      },
-    },
-    lualine_c = { { "filename", path = 3 } },
-    lualine_x = {
-      {
-        "diff",
-        colored = false,
-        symbols = { added = "A:", modified = "M:", removed = "R:" },
-      },
-      function()
-        local clients = vim.lsp.get_clients()
-        if #clients == 0 then
-          return ""
-        end
-        local names = {}
-        for _, client in ipairs(clients) do
-          table.insert(names, client.name)
-        end
-        return #names > 0 and ("[LSP: " .. table.concat(names, ", ") .. "]")
-          or ""
-      end,
-      "diagnostics",
-      "filetype",
-    },
-  },
-})
-
 -- Fidget
 require("fidget").setup({
   text = {
@@ -440,130 +447,6 @@ vim.keymap.set("n", "<leader>mo", function()
   require("neotest").output.open({ enter = true, auto_close = true })
 end, { noremap = true, silent = true, desc = "Open test output" })
 
---------------------------------------------------------------------------------
--- Telescope
---------------------------------------------------------------------------------
-local telescope = require("telescope")
-local builtin = require("telescope.builtin")
-local actions = require("telescope.actions")
-
-local ignore_patterns = { ".git/", "deps/", "_build/", "node_modules/" }
-
-telescope.setup({
-  defaults = {
-    prompt_prefix = "   ",
-    selection_caret = " ",
-    results_title = false,
-    color_devicons = true,
-    path_display = { "filename_first" },
-    scroll_strategy = "cycle",
-    vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-      "--sort=path",
-    },
-    mappings = {
-      i = {
-        ["<C-w>"] = actions.send_selected_to_qflist,
-        ["<c-c>"] = function()
-          vim.cmd("stopinsert!")
-        end,
-        ["<C-x>"] = false,
-        ["<C-q>"] = actions.send_to_qflist,
-        ["<esc>"] = actions.close,
-        ["<S-s>"] = actions.select_horizontal,
-      },
-    },
-  },
-  pickers = {
-    colorscheme = {
-      enable_preview = true,
-    },
-    find_files = {
-      preview = false,
-      file_ignore_patterns = ignore_patterns,
-      find_command = {
-        "fd",
-        "--type",
-        "f",
-        "--strip-cwd-prefix",
-        "--hidden",
-      },
-    },
-    live_grep = {
-      file_ignore_patterns = ignore_patterns,
-    },
-  },
-  extensions = {
-    ["ui-select"] = {
-      layout_config = { horizontal = { preview_width = 0.50 } },
-    },
-  },
-})
-
-telescope.load_extension("ui-select")
-
--- Telescope keymaps
-vim.keymap.set(
-  "n",
-  "<C-p>",
-  builtin.find_files,
-  { noremap = true, silent = true, desc = "Find files" }
-)
-vim.keymap.set("n", "<C-f>", function()
-  builtin.live_grep({ hidden = true })
-end, { noremap = true, silent = true, desc = "Live grep" })
-vim.keymap.set(
-  "n",
-  "<leader>fp",
-  builtin.find_files,
-  { noremap = true, silent = true, desc = "Find files" }
-)
-vim.keymap.set("n", "<leader>fd", function()
-  builtin.live_grep({ hidden = true })
-end, { noremap = true, silent = true, desc = "Live grep" })
-vim.keymap.set("n", "<leader>fs", function()
-  builtin.grep_string({ search = vim.fn.expand("<cword>") })
-end, { noremap = true, silent = true, desc = "Grep current word" })
-vim.keymap.set(
-  "n",
-  "<leader>ht",
-  builtin.help_tags,
-  { noremap = true, silent = true, desc = "Help tags" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>fi",
-  builtin.lsp_implementations,
-  { noremap = true, silent = true, desc = "LSP Implementations" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>fD",
-  builtin.lsp_definitions,
-  { noremap = true, silent = true, desc = "LSP Definitions" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>fr",
-  builtin.lsp_references,
-  { noremap = true, silent = true, desc = "LSP References" }
-)
-
-require("onedark").setup({
-  highlights = {
-    ["@constructor"] = { fg = "$light_grey", fmt = "bold" },
-    ["@punctuation.special"] = { fg = "$light_grey" },
-    ["@string.special.symbol.elixir"] = { fg = "$fg" },
-  },
-  diagnostics = { darker = false },
-})
-
+require("user.telescope")
 require("user.treesitter")
 require("user.lsp")
-require("user.colorscheme")
