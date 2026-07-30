@@ -128,10 +128,17 @@ vim.pack.add({
 
   -- Icons
   "https://github.com/nvim-tree/nvim-web-devicons",
+  "https://github.com/nvim-mini/mini.icons",
 
   -- Colors
-  "https://github.com/tjdevries/colorbuddy.nvim",
   "https://github.com/folke/tokyonight.nvim",
+  "https://github.com/ellisonleao/gruvbox.nvim",
+  "https://github.com/navarasu/onedark.nvim",
+  { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
+  { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
+
+  -- Statusline
+  "https://github.com/nvim-mini/mini.statusline",
 
   -- Comment
   "https://github.com/numToStr/Comment.nvim",
@@ -142,7 +149,7 @@ vim.pack.add({
   "https://github.com/tpope/vim-fugitive",
 
   -- File navigation
-  "https://github.com/stevearc/oil.nvim",
+  "https://github.com/barrettruth/canola.nvim",
 
   -- UI
   "https://github.com/j-hui/fidget.nvim",
@@ -190,7 +197,7 @@ require("vim._core.ui2").enable({
   enable = true,
   msg = {
     targets = {
-      [""] = "msg",
+      [""] = "cmd",
       empty = "cmd",
       bufwrite = "msg",
       confirm = "cmd",
@@ -239,14 +246,34 @@ require("tokyonight").setup({
     keywords = { italic = false },
   },
 })
-vim.cmd.colorscheme("tokyonight")
+
+require("catppuccin").setup({})
+require("rose-pine").setup({
+  italic = false,
+})
+require("onedark").setup({
+  variant = "moon",
+  styles = {
+    bold = true,
+    italic = false,
+    transparency = false,
+  },
+})
+
+-- require("onedark").load()
+vim.cmd.colorscheme("catppuccin-macchiato")
 
 -- Notification
 local notify = require("notify")
 notify.setup({ render = "simple", stages = "static" })
 vim.notify = notify
 
-require("user.statusline")
+local statusline = require("mini.statusline")
+statusline.setup()
+
+statusline.section_location = function()
+  return "%2l:%-2v"
+end
 
 -- Comment
 local comment_ft = require("Comment.ft")
@@ -256,6 +283,7 @@ comment_ft.set("conf", { "#%s", "#%s" })
 
 -- Git signs
 require("gitsigns").setup({
+  current_line_blame = true,
   on_attach = function(bufnr)
     local gitsigns = require("gitsigns")
 
@@ -397,6 +425,7 @@ require("nvim-autopairs").setup({
 
 -- Which-key
 require("which-key").setup({ preset = "helix" })
+
 vim.keymap.set("n", "<leader>?", function()
   require("which-key").show({ global = false })
 end, { desc = "Buffer Local Keymaps (which-key)" })

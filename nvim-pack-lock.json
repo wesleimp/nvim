@@ -12,9 +12,13 @@
       "rev": "f29d8bac6549bc1e7d699c83f680823d7def98bd",
       "src": "https://github.com/saghen/blink.lib"
     },
-    "colorbuddy.nvim": {
-      "rev": "8b968581e5c19d22a861d5f3fe5dbd83394fa681",
-      "src": "https://github.com/tjdevries/colorbuddy.nvim"
+    "canola.nvim": {
+      "rev": "b6e41f866ae01a1f14e73fd1f57317a15020987a",
+      "src": "https://github.com/barrettruth/canola.nvim"
+    },
+    "catppuccin": {
+      "rev": "c7c692a0ad3080710893abbae100171819a3e4be",
+      "src": "https://github.com/catppuccin/nvim"
     },
     "conform.nvim": {
       "rev": "dca1a190aa85f9065979ef35802fb77131911106",
@@ -36,6 +40,10 @@
       "rev": "dd3f588bacbeb041be6facf1742e42097f62165d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "gruvbox.nvim": {
+      "rev": "154eb5ff5b96d0641307113fa385eaf0d36d9796",
+      "src": "https://github.com/ellisonleao/gruvbox.nvim"
+    },
     "helpview.nvim": {
       "rev": "518789535a0cb146224a428edf93a70f98b795db",
       "src": "https://github.com/OXY2DEV/helpview.nvim"
@@ -51,6 +59,14 @@
     "mason.nvim": {
       "rev": "cb8445f8ce85d957416c106b780efd51c6298f89",
       "src": "https://github.com/williamboman/mason.nvim"
+    },
+    "mini.icons": {
+      "rev": "98faae31e9be1cc054ae63485e58ceb185efcad0",
+      "src": "https://github.com/nvim-mini/mini.icons"
+    },
+    "mini.statusline": {
+      "rev": "127997ebef7ef632161203b960c5ef9d158f4810",
+      "src": "https://github.com/nvim-mini/mini.statusline"
     },
     "mini.surround": {
       "rev": "2715e04bea3ec9244f15b421dc5b18c0fe326210",
@@ -88,11 +104,6 @@
       "rev": "8701bece920b38ea289b457f902e2ad184131a5d",
       "src": "https://github.com/rcarriga/nvim-notify"
     },
-    "nvim-surround": {
-      "rev": "2e93e154de9ff326def6480a4358bfc149d5da2c",
-      "src": "https://github.com/kylechui/nvim-surround",
-      "version": "4.0.0 - 5.0.0"
-    },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -117,17 +128,17 @@
       "rev": "4fc505ac7bd7692824a142e96e5f529c133862f8",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
-    "oil.nvim": {
-      "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
-      "src": "https://github.com/stevearc/oil.nvim"
+    "onedark.nvim": {
+      "rev": "df4792accde9db0043121f32628bcf8e645d9aea",
+      "src": "https://github.com/navarasu/onedark.nvim"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
-    "telescope-fzf-native.nvim": {
-      "rev": "b25b749b9db64d375d782094e2b9dce53ad53a40",
-      "src": "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+    "rose-pine": {
+      "rev": "6a961effd67f6130d36df6d1c05c48c739796dd2",
+      "src": "https://github.com/rose-pine/neovim"
     },
     "telescope-ui-select.nvim": {
       "rev": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2",
@@ -164,10 +175,6 @@
     "vim-repeat": {
       "rev": "65846025c15494983dafe5e3b46c8f88ab2e9635",
       "src": "https://github.com/tpope/vim-repeat"
-    },
-    "vim-rhubarb": {
-      "rev": "5496d7c94581c4c9ad7430357449bb57fc59f501",
-      "src": "https://github.com/tpope/vim-rhubarb"
     },
     "vim-sleuth": {
       "rev": "be69bff86754b1aa5adcbb527d7fcd1635a84080",

@@ -89,13 +89,13 @@ require("conform").setup({
     sql = { "pg_format", "sql-formatter" },
     markdown = { "markdownlint" },
     yaml = { "yq", "yamllint" },
-    javascript = { "prettier", "biomejs" },
-    typescript = { "prettier", "biomejs" },
-    javascriptreact = { "prettier" },
-    typescriptreact = { "prettier" },
+    javascript = { "prettier", "biomejs", "oxfmt" },
+    typescript = { "prettier", "biomejs", "oxfmt" },
+    javascriptreact = { "prettier", "oxfmt" },
+    typescriptreact = { "prettier", "oxfmt" },
     ["_"] = { "trim_whitespace", "trim_newlines" },
     zig = { "zigfmt" },
-    rust = {},
+    rust = { "rust_analyzer" },
   },
   format_on_save = function(bufnr)
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
@@ -132,7 +132,7 @@ require("mason").setup()
 require("mason-tool-installer").setup({
   ensure_installed = {
     "stylua",
-    "bashls",
+    -- "bashls",
     "gopls",
     "lua_ls",
     "rust_analyzer",
@@ -150,6 +150,16 @@ require("mason-tool-installer").setup({
 -- LSP capabilities (from blink.cmp)
 vim.lsp.config("*", {
   capabilities = require("blink.cmp").get_lsp_capabilities(),
+})
+
+vim.lsp.config("rust_analyzer", {
+  settings = {
+    ["rust-analyzer"] = {
+      lens = {
+        enable = false,
+      },
+    },
+  },
 })
 
 vim.lsp.config("lua_ls", {
@@ -173,14 +183,15 @@ vim.lsp.config("lua_ls", {
 })
 
 local ts_inlay_hints = {
-  includeInlayEnumMemberValueHints = true,
+  includeInlayEnumMemberValueHints = false,
   includeInlayFunctionLikeReturnTypeHints = true,
   includeInlayFunctionParameterTypeHints = true,
   includeInlayParameterNameHints = "all",
   includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-  includeInlayPropertyDeclarationTypeHints = true,
+  includeInlayPropertyDeclarationTypeHints = false,
   includeInlayVariableTypeHints = true,
 }
+
 vim.lsp.config("ts_ls", {
   settings = {
     javascript = { inlayHints = ts_inlay_hints },
@@ -243,7 +254,7 @@ vim.lsp.config("expert", {
 
 -- Enable all servers
 vim.lsp.enable({
-  "bashls",
+  -- "bashls",
   "gopls",
   "lua_ls",
   "rust_analyzer",
@@ -251,9 +262,11 @@ vim.lsp.enable({
   "tailwindcss",
   "zls",
   "ts_ls",
+  "vue_ls",
   "jsonls",
   "yamlls",
   "expert",
+  "oxlint",
 })
 
 -- LSP keymaps

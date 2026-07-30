@@ -6,22 +6,6 @@ local ignore_patterns = { ".git/", "deps/", "_build/", "node_modules/" }
 
 telescope.setup({
   defaults = {
-    prompt_prefix = "   ",
-    selection_caret = " ",
-    results_title = false,
-    color_devicons = true,
-    path_display = { "filename_first" },
-    scroll_strategy = "cycle",
-    vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-      "--sort=path",
-    },
     mappings = {
       i = {
         ["<C-w>"] = actions.send_selected_to_qflist,
